@@ -35,13 +35,13 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               children: [
                 SizedBox(
-                  height: Get.height* 0.05,
+                  height: Get.height * 0.05,
                 ),
                 Center(
                   child: Image.asset("assets/aapIcon/appIcon.png"),
                 ),
                 SizedBox(
-                  height: Get.height* 0.05,
+                  height: Get.height * 0.05,
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
@@ -51,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       "Login",
                       style: TextStyle(
                           fontFamily: 'Gilroy',
-                          color: Color(0xff181725),
+                          color: ColorConstants.textColor,
                           fontSize: 26,
                           fontWeight: FontWeight.w600,
                           letterSpacing: 1),
@@ -59,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: Get.height* 0.03,
+                  height: Get.height * 0.03,
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
@@ -68,15 +68,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Text(
                         "Enter your emails and password",
                         style: TextStyle(
-                            color: Colors.grey[500],
+                            color: ColorConstants.subTextColor,
                             fontSize: 16,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w400,
                             letterSpacing: 0.5,
                             fontFamily: 'Gilroy-m'),
                       )),
                 ),
                 SizedBox(
-                  height: Get.height* 0.05,
+                  height: Get.height * 0.05,
                 ),
                 Form(
                     key: _formkey,
@@ -90,10 +90,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 "Email",
                                 style: TextStyle(
                                     fontFamily: 'Gilroy-sb',
-                                    color: Color(0xff181725),
+                                    color: ColorConstants.textColor,
                                     fontSize: 18,
                                     fontWeight: FontWeight.w500),
                               )),
+                        ),
+                        SizedBox(
+                          height: Get.height * 0.01,
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
@@ -101,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             controller: emailController,
                             borderColor: ColorConstants.appColor,
                             textColor: null,
-                            hintText: "Enter Email",
+                            hintText: "Enter your email",
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Enter your email';
@@ -111,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: Get.height* 0.05,
+                          height: Get.height * 0.03,
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
@@ -126,13 +129,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                     fontWeight: FontWeight.w500),
                               )),
                         ),
+                        SizedBox(
+                          height: Get.height * 0.01,
+                        ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                           child: PasswordTextFilled(
                             controller: passwordController,
                             borderColor: ColorConstants.appColor,
                             textColor: null,
-                            hintText: "Enter Password",
+                            hintText: "Enter your password",
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Enter your Password';
@@ -142,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: Get.height* 0.03,
+                          height: Get.height * 0.03,
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
@@ -161,24 +167,26 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     )),
                 SizedBox(
-                  height: Get.height* 0.05,
+                  height: Get.height * 0.03,
                 ),
                 SizedBox(
                   height: Get.height * 0.084,
-                  width: Get.width * 0.65,
+                  width: Get.width,
                   child: Center(
                     child: MyButton(
                       title: "Log In",
                       loading: false,
                       bgColor: ColorConstants.appColor,
                       onTap: () {
-                        Get.off(Tab_view(index: 0,));
+                        Get.off(Tab_view(
+                          index: 0,
+                        ));
                       },
                     ),
                   ),
                 ),
                 SizedBox(
-                  height: Get.height* 0.05,
+                  height: Get.height * 0.1,
                 ),
                 RichText(
                     text: TextSpan(children: [
@@ -194,11 +202,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   )),
                   TextSpan(
                     text: "SignUp",
-                    style: TextStyle(color: Color(0xff53B175), fontSize: 16),
+                    style:
+                        TextStyle(color: ColorConstants.appColor, fontSize: 16),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () => (Get.to(SignupScreen())),
                   )
-                ]))
+                ])),
+                SizedBox(
+                  height: Get.height * 0.02,
+                ),
               ],
             ),
           ),

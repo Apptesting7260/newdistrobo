@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -85,10 +84,10 @@ class _OtpVerificationState extends State<OtpVerification> {
                       child: Text(
                         "Please enter the four digit otp we sent to your email.",
                         style: TextStyle(
-                            color: Color(0xff7c7c7c),
+                            color: ColorConstants.subTextColor,
                             fontSize: 16,
                             fontFamily: 'Gilroy-m',
-                            fontWeight: FontWeight.w500),
+                            fontWeight: FontWeight.w400),
                         textAlign: TextAlign.start,
                       )),
                 ),
@@ -124,46 +123,44 @@ class _OtpVerificationState extends State<OtpVerification> {
                 ),
 
                 SizedBox(
-                  height: Get.height * 0.03,
+                  height: Get.height * 0.05,
                 ),
                 Center(
-                  child: SizedBox(
-                      height: Get.height * 0.078,
-                      width: Get.width * 0.65,
-                      child:  Center(
-                          child: MyButton(
-                            bgColor: ColorConstants.appColor,
-                            title: "Verify",
-                            loading: !resendVisible.value,
-                            onTap: () {
-
-
-                                Get.to(() => CreatePassword());
-
-                            },
-                          ),
-                        ),
-                      )
-
+                    child: SizedBox(
+                  height: Get.height * 0.078,
+                  width: Get.width * 0.65,
+                  child: Center(
+                    child: MyButton(
+                      bgColor: ColorConstants.appColor,
+                      title: "Verify",
+                      loading: !resendVisible.value,
+                      onTap: () {
+                        Get.to(() => CreatePassword());
+                      },
+                    ),
                   ),
+                )),
 
                 SizedBox(
-                  height: 20,
+                  height: 25,
                 ),
                 Center(
                   child: RichText(
                       text: TextSpan(children: [
-                        TextSpan(
-                            text: "I don't received OTP!",
-                            style: TextStyle(
-                                color: Color(0xff030303),
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14)),
-                        TextSpan(
-                            text: " Resend again",
-                            style: TextStyle(
-                                color: ColorConstants.appColor, fontSize: 14))
-                      ])),
+                    TextSpan(
+                        text: "I don't received OTP!",
+                        style: TextStyle(
+                            color: Color(0xff030303),
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14)),
+                    TextSpan(
+                        text: " Resend again",
+                        style: TextStyle(
+                          color: ColorConstants.appColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ))
+                  ])),
                 )
               ],
             ),
@@ -172,9 +169,4 @@ class _OtpVerificationState extends State<OtpVerification> {
       ),
     );
   }
-
-
-
-
 }
-
