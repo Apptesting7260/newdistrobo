@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:newdistrobo/view/NvigationTabButton.dart';
 
 import '../Widgets/MyButton.dart';
 import '../Widgets/PasswordTextFilled.dart';
@@ -36,12 +37,13 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController phonecontroller = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmpasswordController = TextEditingController();
-@override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _dropdownFocus1.addListener(_onDropdownFocusChange1);
   }
+
   bool _isDropdownOpen1 = false;
   void _onDropdownFocusChange1() {
     setState(() {
@@ -50,6 +52,7 @@ class _SignupScreenState extends State<SignupScreen> {
       print(_isDropdownOpen1);
     });
   }
+
   bool _isValidPhoneNumber(String value) {
     return RegExp(r'^\d{10}$').hasMatch(value);
   }
@@ -64,13 +67,13 @@ class _SignupScreenState extends State<SignupScreen> {
             child: Column(
               children: [
                 SizedBox(
-                  height: Get.height* 0.05,
+                  height: Get.height * 0.05,
                 ),
                 Center(
                   child: Image.asset("assets/aapIcon/appIcon.png"),
                 ),
                 SizedBox(
-                  height: Get.height* 0.05,
+                  height: Get.height * 0.05,
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
@@ -80,7 +83,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       "Sign Up",
                       style: TextStyle(
                           fontFamily: 'Gilroy',
-                          color: Color(0xff181725),
+                          color: ColorConstants.textColor,
                           fontSize: 26,
                           fontWeight: FontWeight.w600,
                           letterSpacing: 1),
@@ -88,7 +91,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: Get.height* 0.05,
+                  height: Get.height * 0.05,
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
@@ -97,9 +100,9 @@ class _SignupScreenState extends State<SignupScreen> {
                       child: Text(
                         "Enter your credential to continue",
                         style: TextStyle(
-                            color: Colors.grey[500],
+                            color: ColorConstants.subTextColor,
                             fontSize: 16,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w400,
                             letterSpacing: 0.5,
                             fontFamily: 'Gilroy-m'),
                       )),
@@ -122,11 +125,12 @@ class _SignupScreenState extends State<SignupScreen> {
                                     fontWeight: FontWeight.w500),
                               )),
                         ),
+                        SizedBox(height: Get.height * 0.01),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                           child: Container(
                             decoration: BoxDecoration(),
-                            child:  TextFilled(
+                            child: TextFilled(
                               controller: namecontroller,
                               borderColor: ColorConstants.appColor,
                               textColor: null,
@@ -157,12 +161,13 @@ class _SignupScreenState extends State<SignupScreen> {
                                     fontWeight: FontWeight.w500),
                               )),
                         ),
+                        SizedBox(height: Get.height * 0.01),
 
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                           child: Container(
                             decoration: BoxDecoration(),
-                            child:  TextFilled(
+                            child: TextFilled(
                               controller: lastnamecontroller,
                               borderColor: ColorConstants.appColor,
                               textColor: null,
@@ -192,12 +197,13 @@ class _SignupScreenState extends State<SignupScreen> {
                                     fontWeight: FontWeight.w500),
                               )),
                         ),
+                        SizedBox(height: Get.height * 0.01),
 
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                           child: Container(
                             decoration: BoxDecoration(),
-                            child:     Focus(
+                            child: Focus(
                               focusNode: _dropdownFocus1,
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButton2<String>(
@@ -220,8 +226,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                   },
                                   buttonStyleData: ButtonStyleData(
                                     height: Get.height * 0.07,
-                                    padding:
-                                    const EdgeInsets.only(left: 14, right: 14),
+                                    padding: const EdgeInsets.only(
+                                        left: 14, right: 14),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20),
                                       border: Border.all(
@@ -234,23 +240,23 @@ class _SignupScreenState extends State<SignupScreen> {
                                   ),
                                   iconStyleData: selectLocalGender == null
                                       ? IconStyleData(
-                                    icon: Icon(Icons.keyboard_arrow_down),
-                                    // Change to up arrow icon
-                                    iconSize: 30,
-                                    iconEnabledColor: Colors.black,
-                                  )
+                                          icon: Icon(Icons.keyboard_arrow_down),
+                                          // Change to up arrow icon
+                                          iconSize: 30,
+                                          iconEnabledColor: Colors.black,
+                                        )
                                       : IconStyleData(
-                                    icon: InkWell(
-                                      child: Icon(Icons.close),
-                                      onTap: () {
-                                        setState(() {
-                                          selectLocalGender = null;
-                                        });
-                                      },
-                                    ), // Change to down arrow icon
-                                    iconSize: 25,
-                                    //iconEnabledColor: Colors.black,
-                                  ),
+                                          icon: InkWell(
+                                            child: Icon(Icons.close),
+                                            onTap: () {
+                                              setState(() {
+                                                selectLocalGender = null;
+                                              });
+                                            },
+                                          ), // Change to down arrow icon
+                                          iconSize: 25,
+                                          //iconEnabledColor: Colors.black,
+                                        ),
                                   dropdownStyleData: DropdownStyleData(
                                     width: Get.width * 0.89,
                                     decoration: BoxDecoration(
@@ -260,20 +266,20 @@ class _SignupScreenState extends State<SignupScreen> {
                                     offset: const Offset(10, 0),
                                     scrollbarTheme: ScrollbarThemeData(
                                       radius: const Radius.circular(20),
-                                      thickness: MaterialStateProperty.all<double>(6),
+                                      thickness:
+                                          MaterialStateProperty.all<double>(6),
                                       thumbVisibility:
-                                      MaterialStateProperty.all<bool>(true),
+                                          MaterialStateProperty.all<bool>(true),
                                     ),
                                   ),
                                   menuItemStyleData: const MenuItemStyleData(
                                     height: 40,
-                                    padding: EdgeInsets.only(left: 14, right: 14),
+                                    padding:
+                                        EdgeInsets.only(left: 14, right: 14),
                                   ),
                                 ),
                               ),
-                            )
-
-                              ,
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -292,9 +298,10 @@ class _SignupScreenState extends State<SignupScreen> {
                                     fontWeight: FontWeight.w500),
                               )),
                         ),
+                        SizedBox(height: Get.height * 0.01),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                          child:  TextFilled(
+                          child: TextFilled(
                             controller: emailcontroller,
                             borderColor: ColorConstants.appColor,
                             textColor: null,
@@ -323,6 +330,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     fontWeight: FontWeight.w500),
                               )),
                         ),
+                        SizedBox(height: Get.height * 0.01),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                           child: TextFormField(
@@ -358,31 +366,29 @@ class _SignupScreenState extends State<SignupScreen> {
                                 ),
                                 hintStyle: TextStyle(fontFamily: 'Gilroy-rg'),
                                 focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(20.0)),
-                            borderSide:
-                            BorderSide(color: ColorConstants.appColor)),
-
-              contentPadding: EdgeInsets.all(18),
-              enabledBorder: OutlineInputBorder(
-                  borderRadius:
-                  BorderRadius.all(Radius.circular(20.0)),
-                  borderSide:
-                  BorderSide(color: Color(0xffBABABA))),
-              errorBorder: OutlineInputBorder(
-                  borderRadius:
-                  BorderRadius.all(Radius.circular(20.0)),
-                  borderSide:
-                  BorderSide(color: Color(0xffBABABA))),
-              focusedErrorBorder: OutlineInputBorder(
-                borderRadius:
-                BorderRadius.all(Radius.circular(20.0)),
-                borderSide: BorderSide(color: Color(0xffBABABA)),
-              ),
-
-              filled: true,
-              fillColor: Colors.white
-                            ),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20.0)),
+                                    borderSide: BorderSide(
+                                        color: ColorConstants.appColor)),
+                                contentPadding: EdgeInsets.all(18),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20.0)),
+                                    borderSide:
+                                        BorderSide(color: Color(0xffBABABA))),
+                                errorBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20.0)),
+                                    borderSide:
+                                        BorderSide(color: Color(0xffBABABA))),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20.0)),
+                                  borderSide:
+                                      BorderSide(color: Color(0xffBABABA)),
+                                ),
+                                filled: true,
+                                fillColor: Colors.white),
                           ),
                         ),
                         SizedBox(
@@ -401,6 +407,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     fontWeight: FontWeight.w500),
                               )),
                         ),
+                        SizedBox(height: Get.height * 0.01),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                           child: PasswordTextFilled(
@@ -432,12 +439,13 @@ class _SignupScreenState extends State<SignupScreen> {
                                     fontWeight: FontWeight.w500),
                               )),
                         ),
+                        SizedBox(height: Get.height * 0.01),
 
                         // for ******************** widget *************************
 
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                          child:  PasswordTextFilled(
+                          child: PasswordTextFilled(
                             controller: confirmpasswordController,
                             borderColor: ColorConstants.appColor,
                             textColor: null,
@@ -453,48 +461,49 @@ class _SignupScreenState extends State<SignupScreen> {
                       ],
                     )),
                 SizedBox(
-                  height: Get.height* 0.05,
+                  height: Get.height * 0.05,
                 ),
                 SizedBox(
-                    height: Get.height * 0.084,
-                    width: Get.width * 0.65,
-                    child:  Center(
-                        child: MyButton(
-                          loading: false,
-                          title: "Sign Up",
-                          bgColor: ColorConstants.appColor,
-                          onTap: () {
-
-                          },
-                        ),
-                      ),
-
-
+                  height: Get.height * 0.084,
+                  width: Get.width,
+                  child: Center(
+                    child: MyButton(
+                      loading: false,
+                      title: "Sign Up",
+                      bgColor: ColorConstants.appColor,
+                      onTap: () {
+                        Get.off(Tab_view(
+                          index: 0,
+                        ));
+                      },
+                    ),
+                  ),
                 ),
                 SizedBox(
-                  height: Get.height* 0.05,
+                  height: Get.height * 0.05,
                 ),
                 RichText(
                     text: TextSpan(children: [
-                      TextSpan(
-                          text: "Already have an acoount?",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14)),
-                      WidgetSpan(
-                          child: SizedBox(
-                            height: Get.height* 0.001,
-                          )),
-                      TextSpan(
-                        text: "Login",
-                        style: TextStyle(color: ColorConstants.appColor, fontSize: 14),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () => Get.to(LoginScreen()),
-                      )
-                    ])),
+                  TextSpan(
+                      text: "Already have an acoount? ",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16)),
+                  WidgetSpan(
+                      child: SizedBox(
+                    height: Get.height * 0.001,
+                  )),
+                  TextSpan(
+                    text: "Login",
+                    style:
+                        TextStyle(color: ColorConstants.appColor, fontSize: 16),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => Get.to(LoginScreen()),
+                  )
+                ])),
                 SizedBox(
-                  height: Get.height* 0.05,
+                  height: Get.height * 0.05,
                 ),
               ],
             ),
@@ -503,7 +512,4 @@ class _SignupScreenState extends State<SignupScreen> {
       ),
     );
   }
-
-
-
 }

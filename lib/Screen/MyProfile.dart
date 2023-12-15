@@ -38,9 +38,12 @@ class _MyProfileState extends State<MyProfile> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            SizedBox(
+              height: Get.height * 0.03,
+            ),
             Container(
               width: Get.width,
-              height: Get.height * 0.1,
+              height: Get.height * 0.16,
               decoration: BoxDecoration(color: Color(0xFFF2F3F2)),
               child: Row(
                 children: [
@@ -48,8 +51,8 @@ class _MyProfileState extends State<MyProfile> {
                     width: Get.width * 0.05,
                   ),
                   Container(
-                    width: Get.width * 0.15,
-                    height: Get.height * 0.08,
+                    width: Get.width * 0.2,
+                    height: Get.width * 0.2,
                     decoration: ShapeDecoration(
                       color: Color(0xFF53B175),
                       shape: OvalBorder(),
@@ -68,7 +71,7 @@ class _MyProfileState extends State<MyProfile> {
                     ),
                   ),
                   SizedBox(
-                    width: Get.width * 0.03,
+                    width: Get.width * 0.05,
                   ),
                   Text(
                     'John Due',
@@ -96,8 +99,8 @@ class _MyProfileState extends State<MyProfile> {
                         child: Image.asset(
                           "assets/images/profu.png",
                         ),
-                        radius: 30,
-                        backgroundColor: Color(0xFF97F2B6),
+                        radius: 24,
+                        backgroundColor: Color(0xFFF2F3F2),
                       ),
                       SizedBox(
                         width: Get.width * 0.03,
@@ -114,7 +117,7 @@ class _MyProfileState extends State<MyProfile> {
                         ),
                       ),
                       SizedBox(
-                        width: Get.width * 0.45,
+                        width: Get.width * 0.42,
                       ),
                       IconButton(
                           onPressed: () {},
@@ -132,10 +135,11 @@ class _MyProfileState extends State<MyProfile> {
                       CircleAvatar(
                         child: Image.asset(
                           'assets/images/myorder.png',
+                          height: Get.height * 0.03,
                           color: ColorConstants.appColor,
                         ),
-                        radius: 30,
-                        backgroundColor: Color(0xFF97F2B6),
+                        radius: 24,
+                        backgroundColor: Color(0xFFF2F3F2),
                       ),
                       SizedBox(
                         width: Get.width * 0.03,
@@ -168,12 +172,11 @@ class _MyProfileState extends State<MyProfile> {
                   Row(
                     children: [
                       CircleAvatar(
-                        child: Image.asset(
-                          "assets/images/profu.png",
-                        ),
-                        radius: 30,
-                        backgroundColor: Color(0xFF97F2B6),
-                      ),
+                          child: Image.asset(
+                            "assets/images/profu.png",
+                          ),
+                          radius: 24,
+                          backgroundColor: Color(0xFFF2F3F2)),
                       SizedBox(
                         width: Get.width * 0.03,
                       ),
@@ -207,9 +210,10 @@ class _MyProfileState extends State<MyProfile> {
                       CircleAvatar(
                         child: Image.asset(
                           "assets/images/profu.png",
+                          height: Get.height * 0.03,
                         ),
-                        radius: 30,
-                        backgroundColor: Color(0xFF97F2B6),
+                        radius: 24,
+                        backgroundColor: Color(0xFFF2F3F2),
                       ),
                       SizedBox(
                         width: Get.width * 0.03,
@@ -245,8 +249,8 @@ class _MyProfileState extends State<MyProfile> {
                         child: Image.asset(
                           "assets/images/profu.png",
                         ),
-                        radius: 30,
-                        backgroundColor: Color(0xFF97F2B6),
+                        radius: 24,
+                        backgroundColor: Color(0xFFF2F3F2),
                       ),
                       SizedBox(
                         width: Get.width * 0.03,
@@ -263,7 +267,7 @@ class _MyProfileState extends State<MyProfile> {
                         ),
                       ),
                       SizedBox(
-                        width: Get.width * 0.45,
+                        width: Get.width * 0.42,
                       ),
                       IconButton(
                           onPressed: () {},

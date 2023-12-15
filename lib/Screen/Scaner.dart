@@ -1,10 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:newdistrobo/Widgets/appColor.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 
 class ScanPage extends StatefulWidget {
   const ScanPage({super.key});
@@ -36,9 +34,11 @@ class _ScanPageState extends State<ScanPage>
     animationController = AnimationController(
       vsync: this,
       duration: Duration(seconds: 2),
-    )..addListener(() {
-      setState(() {});
-    })..repeat(reverse: true);
+    )
+      ..addListener(() {
+        setState(() {});
+      })
+      ..repeat(reverse: true);
     scanLineAnimation = Tween<double>(begin: 5, end: 20).animate(
       CurvedAnimation(
         parent: animationController!,
@@ -108,7 +108,6 @@ class _ScanPageState extends State<ScanPage>
                               0.3,
                       left: 0,
                       right: 0,
-
                       child: Container(
                         height: 2,
                         color: Colors.green,
@@ -124,9 +123,8 @@ class _ScanPageState extends State<ScanPage>
                 "Scanning will start automatically",
                 style: TextStyle(
                   fontFamily: 'Gilroy-m',
-                  fontWeight: FontWeight.bold,
                   fontSize: 16,
-                  color: Colors.grey,
+                  color: ColorConstants.subTextColor,
                 ),
               ),
               SizedBox(
@@ -141,7 +139,10 @@ class _ScanPageState extends State<ScanPage>
                   },
                   child: Text(
                     "Cancel",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: ColorConstants.appColor,
@@ -160,4 +161,3 @@ class _ScanPageState extends State<ScanPage>
     );
   }
 }
-

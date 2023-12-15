@@ -3,6 +3,8 @@ import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:newdistrobo/Screen/Scaner.dart';
+import 'package:newdistrobo/Widgets/appColor.dart';
 
 import '../Widgets/MyDrawer.dart';
 import '../Widgets/ProdactContantener.dart';
@@ -27,6 +29,32 @@ class _HomePageState extends State<HomePage> {
 
   // //////////////// location end /////////////////////////
 
+  List image = [
+    "assets/images/1.png",
+    "assets/images/2.png",
+    "assets/images/3.png",
+    "assets/images/4.png",
+    "assets/images/5.png",
+  ];
+
+  List imageCat = [
+    "assets/images/cat1.png",
+    "assets/images/cat2.png",
+    "assets/images/car3.png",
+    "assets/images/cat1.png",
+    "assets/images/car3.png",
+    "assets/images/cat1.png",
+  ];
+
+  List imageCatName = [
+    "Candy & Snacks",
+    "Vitamins & Energy Boosters",
+    "Personal & Health Care",
+    "Candy & Snacks",
+    "Vitamins & Energy Boosters",
+    "Personal & Health Care",
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -39,7 +67,6 @@ class _HomePageState extends State<HomePage> {
         endDrawer: DrawerClass(
           emailText: "",
         ),
-
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Column(
@@ -78,12 +105,12 @@ class _HomePageState extends State<HomePage> {
                                   fontFamily: 'Gilroy-m'),
                             ),
                             Text(
-                              "saran",
+                              "6391 Elgin St. Celina, Delaware 10299",
                               style: TextStyle(
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w400,
                                   fontFamily: 'Gilroy-rg',
                                   fontSize: 10,
-                                  color: Colors.grey[600]),
+                                  color: ColorConstants.subTextColor),
                             )
                           ],
                         ),
@@ -123,7 +150,8 @@ class _HomePageState extends State<HomePage> {
                           width: Get.width * 0.06,
                           child: Builder(builder: (context) {
                             return InkWell(
-                                onTap: () => Scaffold.of(context).openEndDrawer(),
+                                onTap: () =>
+                                    Scaffold.of(context).openEndDrawer(),
                                 child: Image.asset(
                                   'assets/images/menu.png',
                                   scale: 1,
@@ -152,7 +180,9 @@ class _HomePageState extends State<HomePage> {
                                     height: Get.height * 0.06,
                                     width: Get.width * 0.15,
                                     child: GestureDetector(
-                                        onTap: () {},
+                                        onTap: () {
+                                          Get.to(ScanPage());
+                                        },
                                         child: Image.asset(
                                             'assets/images/scano.png'))),
                                 prefixIcon: Image.asset(
@@ -213,27 +243,39 @@ class _HomePageState extends State<HomePage> {
                                   onTap: () {},
                                   child: Container(
                                     // width: Get.width * 1,
-                                    margin: EdgeInsets.symmetric(horizontal: 5.0),
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 5.0),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Container(
                                           // height: MediaQuery.of(context)
                                           //         .size
                                           //         .height *
                                           //     .19,
-                                          child: CachedNetworkImage(
-                                            imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd_anlQxAS6NrNRrUj1Bkz2BMSUX99xsDyCZvCORB1EzBHZxgxDcKCkLzzMEpYIIg46nQ&usqp=CAU",
-                                            width: Get.width * 1,
-                                            fit: BoxFit.cover,
-                                            placeholder: (context, url) =>
-                                                const Center(
-                                                    child:
-                                                        CircularProgressIndicator()),
-                                            // Optional: Show a loading indicator
-                                            errorWidget: (context, url, error) =>
-                                                const Icon(Icons
-                                                    .error), // Optional: Show an error icon
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10))),
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10)),
+                                            child: Image.asset(image[0]),
+                                            // child: CachedNetworkImage(
+                                            //   imageUrl:
+                                            //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd_anlQxAS6NrNRrUj1Bkz2BMSUX99xsDyCZvCORB1EzBHZxgxDcKCkLzzMEpYIIg46nQ&usqp=CAU",
+                                            //   width: Get.width * 1,
+                                            //   fit: BoxFit.cover,
+                                            //   placeholder: (context, url) =>
+                                            //       const Center(
+                                            //           child:
+                                            //               CircularProgressIndicator()),
+                                            //   // Optional: Show a loading indicator
+                                            //   errorWidget: (context, url,
+                                            //           error) =>
+                                            //       const Icon(Icons
+                                            //           .error), // Optional: Show an error icon
+                                            // ),
                                           ),
                                         ),
                                       ],
@@ -296,8 +338,8 @@ class _HomePageState extends State<HomePage> {
                             style: TextStyle(
                                 fontFamily: 'Gilroy-rg',
                                 color: Color.fromRGBO(233, 13, 65, 1),
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
                                 letterSpacing: 1),
                           ),
                         ),
@@ -305,72 +347,79 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * .02,
+                    height: MediaQuery.of(context).size.height * .03,
                   ),
-                  Container(
-                    height: Get.height * 0.155,
-                    width: Get.width,
-                    child: ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: 2,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(left: 32),
-                          child: Container(
-                            height: Get.height * 0.15,
-                            width: Get.width * 0.15,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 0.0),
+                    child: Container(
+                      height: Get.height * 0.155,
+                      width: Get.width,
+                      child: ListView.builder(
+                        physics: AlwaysScrollableScrollPhysics(),
+                        itemCount: 6,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 32),
                             child: GestureDetector(
                               onTap: () {
                                 setState(() {
                                   slugg;
                                 });
                               },
-                              child: Column(
-                                // mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                      height: Get.height * 0.08,
-                                      width: Get.width * 0.16,
+                              child: Container(
+                                // color: Colors.amber,
+                                width: Get.width * 0.2,
+                                child: Column(
+                                  // mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      height: Get.width * 0.2,
+                                      width: Get.width * 0.2,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                       ),
-
-                                      child: Image.network(
-                                        "https://img.freepik.com/free-vector/gradient-circular-economy-infographic_52683-78120.jpg",
-                                      )),
-                                  SizedBox(
-                                    height: Get.height * 0.005,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 6),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "Test",
-                                          style: const TextStyle(
-                                            fontSize: 10,
-                                            color: Color.fromRGBO(16, 24, 17, 1),
-                                          ),
-                                        ),
-                                      ],
+                                      child: Image.asset(imageCat[index]),
+                                      // child: Image.network(
+                                      //   "https://img.freepik.com/free-vector/gradient-circular-economy-infographic_52683-78120.jpg",
+                                      // )
                                     ),
-                                  )
-                                ],
+                                    SizedBox(
+                                      height: Get.height * 0.015,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 2),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            imageCatName[index],
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                              fontSize: 10,
+                                              color:
+                                                  Color.fromRGBO(16, 24, 17, 1),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
-
-
                             ),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     ),
                   ),
+                  SizedBox(
+                    height: Get.height * 0.01,
+                  ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 12, right: 12),
+                    padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Container(
                       height: Get.height * 0.16,
                       width: double.infinity,
@@ -392,22 +441,39 @@ class _HomePageState extends State<HomePage> {
                         itemBuilder: (context, index) {
                           return GestureDetector(
                             onTap: () {},
-                            child: Container(
-                                height: MediaQuery.of(context).size.height * .21,
-                                width: double.infinity,
-                                child: CachedNetworkImage(
-                                  imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd_anlQxAS6NrNRrUj1Bkz2BMSUX99xsDyCZvCORB1EzBHZxgxDcKCkLzzMEpYIIg46nQ&usqp=CAU',
-                                  placeholder: (context, url) =>
-                                      Center(child: CircularProgressIndicator()),
-                                  errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
-                                )),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 10),
+                              child: Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * .21,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20))),
+                                  width: double.infinity,
+                                  child: ClipRRect(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                    child: Image.asset(
+                                      image[index],
+                                      fit: BoxFit.cover,
+                                    ),
+                                    // child: CachedNetworkImage(
+                                    //   imageUrl:
+                                    //       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd_anlQxAS6NrNRrUj1Bkz2BMSUX99xsDyCZvCORB1EzBHZxgxDcKCkLzzMEpYIIg46nQ&usqp=CAU',
+                                    //   fit: BoxFit.cover,
+                                    //   placeholder: (context, url) => Center(
+                                    //       child: CircularProgressIndicator()),
+                                    //   errorWidget: (context, url, error) =>
+                                    //       Icon(Icons.error),
+                                    // ),
+                                  )),
+                            ),
                           );
                         },
                       ),
                     ),
                   ),
-
                   SizedBox(
                     height: Get.height * 0.03,
                   ),
@@ -424,7 +490,7 @@ class _HomePageState extends State<HomePage> {
                           style: TextStyle(
                               fontFamily: 'Gilroy',
                               color: Color(0xff181725),
-                              fontSize: 15,
+                              fontSize: 16,
                               fontWeight: FontWeight.w600,
                               letterSpacing: 1),
                         ),
@@ -439,8 +505,8 @@ class _HomePageState extends State<HomePage> {
                             style: TextStyle(
                                 fontFamily: 'Gilroy-rg',
                                 color: Color.fromRGBO(233, 13, 65, 1),
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
                                 letterSpacing: 1),
                           ),
                         ),
@@ -451,14 +517,17 @@ class _HomePageState extends State<HomePage> {
                     height: Get.height * 0.03,
                   ),
                   Container(
-                    height: Get.height * 0.45,
-
+                    height: Get.height * 0.39,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: 5,
                       itemBuilder: (context, index) {
-                      return ProductView();
-                    },),
+                        return Padding(
+                          padding: EdgeInsets.only(left: 18.0),
+                          child: ProductView(),
+                        );
+                      },
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -473,7 +542,7 @@ class _HomePageState extends State<HomePage> {
                           style: TextStyle(
                               fontFamily: 'Gilroy',
                               color: Color(0xff181725),
-                              fontSize: 15,
+                              fontSize: 16,
                               fontWeight: FontWeight.w600,
                               letterSpacing: 1),
                         ),
@@ -488,8 +557,8 @@ class _HomePageState extends State<HomePage> {
                             style: TextStyle(
                                 fontFamily: 'Gilroy-rg',
                                 color: Color.fromRGBO(233, 13, 65, 1),
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
                                 letterSpacing: 1),
                           ),
                         ),
@@ -500,24 +569,23 @@ class _HomePageState extends State<HomePage> {
                     height: Get.height * 0.03,
                   ),
                   Container(
-                    height: Get.height * 0.45,
-
+                    height: Get.height * 0.39,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: 5,
                       itemBuilder: (context, index) {
-                        return ProductView();
-                      },),
+                        return Padding(
+                          padding: EdgeInsets.only(left: 18.0),
+                          child: ProductView(),
+                        );
+                      },
+                    ),
                   )
-
-
-
                 ],
               ),
               SizedBox(
                 height: Get.height * 0.05,
               ),
-
             ],
           ),
         ),

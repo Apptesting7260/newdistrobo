@@ -17,13 +17,11 @@ class _ProductViewState extends State<ProductView> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-
-      },
+      onTap: () {},
       child: Card(
         child: Container(
-          height: Get.height * 0.45,
-          width: Get.width * 0.56,
+          // height: Get.height * 0.2,
+          width: Get.width * 0.38,
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.all(
@@ -32,87 +30,133 @@ class _ProductViewState extends State<ProductView> {
           child: Column(
             children: [
               SizedBox(
-                height: Get.height * 0.01,
+                height: Get.height * 0.018,
               ),
-              GestureDetector(
-                onTap: () {
-
-
-                  ;
-                },
-                child: Container(
-                  height: Get.height * 0.2,
-                  width: Get.width * 0.5,
-                  decoration: BoxDecoration(
-                      borderRadius:
-                      BorderRadius.circular(20)),
-                  child: ClipRRect(
-                    borderRadius:
-                    BorderRadius.circular(20),
-                    child: Image.network(
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd_anlQxAS6NrNRrUj1Bkz2BMSUX99xsDyCZvCORB1EzBHZxgxDcKCkLzzMEpYIIg46nQ&usqp=CAU",
-                      fit: BoxFit.cover,
+              Stack(
+                children: [
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      height: Get.height * 0.18,
+                      width: Get.width * 0.32,
+                      decoration: BoxDecoration(
+                          color: Color.fromRGBO(242, 243, 242, 1),
+                          borderRadius: BorderRadius.circular(20)),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.asset("assets/images/candyim5.png"),
+                        // child: Image.network(
+                        //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd_anlQxAS6NrNRrUj1Bkz2BMSUX99xsDyCZvCORB1EzBHZxgxDcKCkLzzMEpYIIg46nQ&usqp=CAU",
+                        //   fit: BoxFit.cover,
+                        // ),
+                      ),
                     ),
+                  ),
+                  Positioned(
+                    right: 8,
+                    top: 8,
+                    child: Container(
+                      child: Icon(
+                        Icons.favorite,
+                        size: 18,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: Get.height * 0.02,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15.0),
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Text(
+                    "Alien Jerky Weed Killer Hot Beef 3.25oz",
+                    style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Gilroy',
+                        color: Color.fromRGBO(9, 64, 94, 1)),
                   ),
                 ),
               ),
               SizedBox(
                 height: Get.height * 0.01,
               ),
-              GestureDetector(
-                onTap: () {
-
-                },
-                child: Text(
-                  "title",
-                  style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: 'Gilroy',
-                      color:
-                      Color.fromRGBO(9, 64, 94, 1)),
+              Padding(
+                padding: const EdgeInsets.only(left: 15.0),
+                child: Row(
+                  children: [
+                    Text(
+                      '\$9.99',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Gilroy',
+                          color: Color.fromRGBO(214, 51, 72, 1)),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(
-                height: Get.height * 0.01,
-              ),
-              Text(
-                "about",
-                style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: 'Gilroy',
-                    color:
-                    Color.fromRGBO(9, 64, 94, 1)),
-              ),
-              SizedBox(
-                height: Get.height * 0.01,
-              ),
-              Text(
-                '50',
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: 'Gilroy',
-                    color: Color.fromRGBO(
-                        214, 51, 72, 1)),
-              ),
-
-              SizedBox(
                 height: Get.height * 0.015,
               ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Container(
+              //       height: Get.height * 0.04,
+              //       width: Get.width * 0.08,
+              //       decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.all(Radius.circular(10)),
+              //           color: ColorConstants.appColor),
+              //       child: Icon(
+              //         Icons.add,
+              //         color: Colors.white,
+              //       ),
+              //     ),
+              //     SizedBox(
+              //       width: Get.width * 0.03,
+              //     ),
+              //     Text(
+              //       "1",
+              //       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              //     ),
+              //     SizedBox(
+              //       width: Get.width * 0.03,
+              //     ),
+              //     Container(
+              //       height: Get.height * 0.04,
+              //       width: Get.width * 0.08,
+              //       decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.all(Radius.circular(10)),
+              //           color: ColorConstants.appColor),
+              //       child: Icon(
+              //         Icons.remove,
+              //         color: Colors.white,
+              //       ),
+              //     )
+              //   ],
+              // )
               Container(
-                  child: MyButton(title: 'Add to Cart', onTap: () {  },bgColor: ColorConstants.appColor,
-                  width: Get.width*0.5,),
-                  )
-
-
-
+                child: MyButton(
+                  title: 'Add to Cart',
+                  onTap: () {},
+                  bgColor: ColorConstants.appColor,
+                  width: Get.width * 0.28,
+                  height: Get.height * 0.05,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                  ),
+                ),
+              )
             ],
           ),
         ),
       ),
     );
-
   }
 }

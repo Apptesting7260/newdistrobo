@@ -6,7 +6,6 @@ import 'package:newdistrobo/Widgets/appColor.dart';
 import '../Screen/Aboutus.dart';
 import '../Screen/HomePage.dart';
 
-
 // ignore: must_be_immutable
 class DrawerClass extends StatefulWidget {
   String? emailText;
@@ -18,7 +17,6 @@ class DrawerClass extends StatefulWidget {
 }
 
 class _DrawerClassState extends State<DrawerClass> {
-
   @override
   Widget build(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
@@ -31,7 +29,7 @@ class _DrawerClassState extends State<DrawerClass> {
           children: [
             Center(
               child: Container(
-                height: Get.height * 0.25,
+                height: Get.height * 0.27,
                 width: double.infinity,
                 color: ColorConstants.appColor,
                 child: Column(
@@ -49,7 +47,7 @@ class _DrawerClassState extends State<DrawerClass> {
                           )),
                     ),
                     Container(
-                      child:  Container(
+                      child: Container(
                         height: 70,
                         width: 70,
                         decoration: BoxDecoration(
@@ -59,48 +57,47 @@ class _DrawerClassState extends State<DrawerClass> {
                           borderRadius: BorderRadius.circular(70),
                           child: Image.asset(
                             "assets/images/demoPic.jpg",
-
                             fit: BoxFit.cover,
                           ),
                         ),
                       ),
 
-                    //       : Container(
-                    //     height: 90,
-                    //     width: 90,
-                    //     decoration: BoxDecoration(
-                    //         color: Colors.green,
-                    //         borderRadius: BorderRadius.circular(60)),
-                    //     child: CachedNetworkImage(
-                    //       imageUrl: profileDetailsController.profileModel
-                    //           .value.userDetails![0].profilePicture!
-                    //           .toString(),
-                    //       imageBuilder: (context, imageProvider) =>
-                    //           Container(
-                    //             width: 90.0,
-                    //             height: 90.0,
-                    //             decoration: BoxDecoration(
-                    //               shape: BoxShape.circle,
-                    //               image: DecorationImage(
-                    //                   image: imageProvider,
-                    //                   fit: BoxFit.cover),
-                    //             ),
-                    //           ),
-                    //       placeholder: (context, url) => Center(
-                    //         child: CircularProgressIndicator(
-                    //           color: Colors.white,
-                    //         ),
-                    //       ),
-                    //       errorWidget: (context, url, error) =>
-                    //           Icon(Icons.error),
-                    //     ),
-                    //   ),
+                      //       : Container(
+                      //     height: 90,
+                      //     width: 90,
+                      //     decoration: BoxDecoration(
+                      //         color: Colors.green,
+                      //         borderRadius: BorderRadius.circular(60)),
+                      //     child: CachedNetworkImage(
+                      //       imageUrl: profileDetailsController.profileModel
+                      //           .value.userDetails![0].profilePicture!
+                      //           .toString(),
+                      //       imageBuilder: (context, imageProvider) =>
+                      //           Container(
+                      //             width: 90.0,
+                      //             height: 90.0,
+                      //             decoration: BoxDecoration(
+                      //               shape: BoxShape.circle,
+                      //               image: DecorationImage(
+                      //                   image: imageProvider,
+                      //                   fit: BoxFit.cover),
+                      //             ),
+                      //           ),
+                      //       placeholder: (context, url) => Center(
+                      //         child: CircularProgressIndicator(
+                      //           color: Colors.white,
+                      //         ),
+                      //       ),
+                      //       errorWidget: (context, url, error) =>
+                      //           Icon(Icons.error),
+                      //     ),
+                      //   ),
                     ),
                     SizedBox(
                       height: 16,
                     ),
                     Text(
-                     "John",
+                      "John Due",
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -108,16 +105,32 @@ class _DrawerClassState extends State<DrawerClass> {
                           fontFamily: 'Gilory'),
                     ),
                     SizedBox(
-                      height: 9,
+                      height: 2,
                     ),
-                     Text(
-                     "saran",
-                      style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.grey[200],
-                          fontFamily: "Gilroy-rg"),
-                      textAlign: TextAlign.center,
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: Get.width * 0.12,
+                        ),
+                        Image.asset(
+                          "assets/images/locationW.png",
+                          height: 20,
+                        ),
+                        SizedBox(
+                          width: Get.width * 0.02,
+                        ),
+                        Flexible(
+                          child: Text(
+                            "6391 Elgin St. Celina, Delaware 10299",
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey[200],
+                                fontFamily: "Gilroy-rg"),
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -143,7 +156,6 @@ class _DrawerClassState extends State<DrawerClass> {
                       'assets/images/homeu.png',
                       scale: 1.8,
                       color: ColorConstants.appColor,
-
                     ),
                   ),
                   title: InkWell(
@@ -166,19 +178,18 @@ class _DrawerClassState extends State<DrawerClass> {
                     icon: Image.asset(
                       'assets/images/abot.png',
                       color: ColorConstants.appColor,
-
                       scale: 1.8,
                     ),
                   ),
                   title: InkWell(
                       // onTap: () => //Get.to(AboutPage()),
                       child: Text(
-                        "About Us",
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: "Gilroy-mg"),
-                      )),
+                    "About Us",
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: "Gilroy-mg"),
+                  )),
                 ),
                 ListTile(
                   horizontalTitleGap: 0,
@@ -190,7 +201,6 @@ class _DrawerClassState extends State<DrawerClass> {
                     icon: Image.asset(
                       'assets/images/arrivals.png',
                       color: ColorConstants.appColor,
-
                       scale: 1.8,
                     ),
                   ),
@@ -217,17 +227,16 @@ class _DrawerClassState extends State<DrawerClass> {
                       icon: Icon(
                         Icons.lock,
                         color: ColorConstants.appColor,
-
                       )),
                   title: InkWell(
                       // onTap: () => Get.to(ResetPassword()),
                       child: Text(
-                        "Password",
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: "Gilroy-mg"),
-                      )),
+                    "Password",
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: "Gilroy-mg"),
+                  )),
                 ),
                 ListTile(
                   horizontalTitleGap: 0,
@@ -239,19 +248,18 @@ class _DrawerClassState extends State<DrawerClass> {
                     icon: Image.asset(
                       'assets/images/myorder.png',
                       color: ColorConstants.appColor,
-
                       scale: 1.8,
                     ),
                   ),
                   title: InkWell(
                       // onTap: () => Get.to(MyOrder()),
                       child: Text(
-                        "My Order",
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: "Gilroy-mg"),
-                      )),
+                    "My Order",
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: "Gilroy-mg"),
+                  )),
                 ),
                 ListTile(
                   horizontalTitleGap: 0,
@@ -263,18 +271,17 @@ class _DrawerClassState extends State<DrawerClass> {
                     icon: Icon(
                       Icons.favorite_outlined,
                       color: ColorConstants.appColor,
-
                     ),
                   ),
                   title: InkWell(
                       // onTap: () => Get.to(Wishlist()),
                       child: Text(
-                        "My Wishlist",
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: "Gilroy-mg"),
-                      )),
+                    "My Wishlist",
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: "Gilroy-mg"),
+                  )),
                 ),
                 ListTile(
                   horizontalTitleGap: 0,
@@ -286,19 +293,18 @@ class _DrawerClassState extends State<DrawerClass> {
                     icon: Image.asset(
                       'assets/images/contactus.png',
                       color: ColorConstants.appColor,
-
                       scale: 2,
                     ),
                   ),
                   title: InkWell(
                       // onTap: () => Get.to(ContactUs()),
                       child: Text(
-                        "Contact Us",
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: "Gilroy-mg"),
-                      )),
+                    "Contact Us",
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: "Gilroy-mg"),
+                  )),
                 ),
                 ListTile(
                   horizontalTitleGap: 0,
@@ -311,7 +317,6 @@ class _DrawerClassState extends State<DrawerClass> {
                       'assets/images/ourlocations.png',
                       scale: 2,
                       color: ColorConstants.appColor,
-
                     ),
                   ),
                   title: InkWell(
@@ -334,7 +339,6 @@ class _DrawerClassState extends State<DrawerClass> {
                     icon: Image.asset(
                       'assets/images/serviceour.png',
                       color: ColorConstants.appColor,
-
                       scale: 2,
                     ),
                   ),
@@ -364,8 +368,8 @@ class _DrawerClassState extends State<DrawerClass> {
                         "Logout",
                         style: TextStyle(
                             color: Colors.white,
-
-                            fontWeight: FontWeight.bold, fontSize: 18),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18),
                       ),
                       style: ElevatedButton.styleFrom(
                           backgroundColor: ColorConstants.appColor,
