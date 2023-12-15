@@ -151,9 +151,8 @@ class _ScanPageState extends State<ScanPage>
                   ),
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
+              SizedBox()
+
             ],
           ),
         ),
