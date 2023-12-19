@@ -1,12 +1,12 @@
-class LoginModal {
-  LoginModal({
+class ResetPassModal {
+  ResetPassModal({
     required this.status,
     required this.message,
   });
   late final String status;
   late final String message;
 
-  LoginModal.fromJson(Map<String, dynamic> json) {
+  ResetPassModal.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
   }

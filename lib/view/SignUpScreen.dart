@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/gestures.dart';
@@ -6,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:newdistrobo/view/NvigationTabButton.dart';
-
+import 'package:newdistrobo/controllers/SignUpController/SignupController.dart';
 import '../Widgets/MyButton.dart';
 import '../Widgets/PasswordTextFilled.dart';
 import '../Widgets/TextFilled.dart';
@@ -27,16 +25,20 @@ class _SignupScreenState extends State<SignupScreen> {
   FocusNode focusNode = FocusNode();
   FocusNode _dropdownFocus1 = FocusNode();
   String? selectGender;
-  var genderItems = ["Other", "Convenience Store", "Laundromat","Gas Satation","Restaurant","Liquor Store","Market","Smoke Shop"];
+  var genderItems = [
+    "Other",
+    "Convenience Store",
+    "Laundromat",
+    "Gas Satation",
+    "Restaurant",
+    "Liquor Store",
+    "Market",
+    "Smoke Shop"
+  ];
   String? selectLocalGender;
   bool passwordVisible = true;
   bool passwordVisiblen = true;
-  TextEditingController namecontroller = TextEditingController();
-  TextEditingController lastnamecontroller = TextEditingController();
-  TextEditingController emailcontroller = TextEditingController();
-  TextEditingController phonecontroller = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmpasswordController = TextEditingController();
+  final SignupVM = Get.put(SignUpViewModal());
 
   @override
   void initState() {
@@ -133,7 +135,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           child: Container(
                             decoration: BoxDecoration(),
                             child: TextFilled(
-                              controller: namecontroller,
+                              controller: SignupVM.namecontroller.value,
                               borderColor: ColorConstants.appColor,
                               textColor: null,
                               hintText: "First Name",
@@ -170,7 +172,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           child: Container(
                             decoration: BoxDecoration(),
                             child: TextFilled(
-                              controller: lastnamecontroller,
+                              controller: SignupVM.lastnamecontroller.value,
                               borderColor: ColorConstants.appColor,
                               textColor: null,
                               hintText: "Last Name",
@@ -304,7 +306,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                           child: TextFilled(
-                            controller: emailcontroller,
+                            controller: SignupVM.emailcontroller.value,
                             borderColor: ColorConstants.appColor,
                             textColor: null,
                             hintText: "Enter Email",
@@ -337,7 +339,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                           child: TextFormField(
                             cursorColor: ColorConstants.appColor,
-                            controller: phonecontroller,
+                            controller: SignupVM.phonecontroller.value,
                             inputFormatters: [
                               LengthLimitingTextInputFormatter(10)
                             ],
@@ -414,7 +416,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                           child: PasswordTextFilled(
-                            controller: passwordController,
+                            controller: SignupVM.passwordController.value,
                             borderColor: ColorConstants.appColor,
                             textColor: null,
                             hintText: "Enter  Password",
@@ -449,7 +451,8 @@ class _SignupScreenState extends State<SignupScreen> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                           child: PasswordTextFilled(
-                            controller: confirmpasswordController,
+                            controller:
+                                SignupVM.confirmpasswordController.value,
                             borderColor: ColorConstants.appColor,
                             textColor: null,
                             hintText: "Enter Confirm Password",
@@ -469,18 +472,19 @@ class _SignupScreenState extends State<SignupScreen> {
                 SizedBox(
                   height: Get.height * 0.084,
                   width: Get.width,
-                  child: Center(
-                    child: MyButton(
+                  child: Center(child: Obx(() {
+                    return MyButton(
                       loading: false,
                       title: "Sign Up",
                       bgColor: ColorConstants.appColor,
                       onTap: () {
-                        Get.off(Tab_view(
-                          index: 0,
-                        ));
+                        SignupVM.loading.value;
+                        if (formkey.currentState!.validate()) {
+                          SignupVM.SignupHitApi();
+                        }
                       },
-                    ),
-                  ),
+                    );
+                  })),
                 ),
                 SizedBox(
                   height: Get.height * 0.05,

@@ -9,7 +9,6 @@ import '../Widgets/PasswordTextFilled.dart';
 import '../Widgets/TextFilled.dart';
 import '../Widgets/appColor.dart';
 import 'ForgetPassword.dart';
-import 'NvigationTabButton.dart';
 import 'SignUpScreen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -173,20 +172,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: Get.height * 0.084,
                   width: Get.width,
                   child: Center(
-                    child: MyButton(
-                      title: "Log In",
-                      loading: false,
-                      bgColor: ColorConstants.appColor,
-                      onTap: () {
-                        loginVM.loading.value;
-                        if (_formkey.currentState!.validate()) {
-                          loginVM.loginApi();
-                        }
-                        Get.off(Tab_view(
-                          index: 0,
-                        ));
-                      },
-                    ),
+                    child: Obx(() {
+                      return MyButton(
+                        title: "Log In",
+                        loading: loginVM.loading.value,
+                        bgColor: ColorConstants.appColor,
+                        onTap: () {
+                          loginVM.loading.value;
+                          if (_formkey.currentState!.validate()) {
+                            loginVM.loginHitApi();
+                          }
+                        },
+                      );
+                    }),
                   ),
                 ),
                 SizedBox(

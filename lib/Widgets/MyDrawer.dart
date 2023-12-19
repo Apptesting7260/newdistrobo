@@ -1,15 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:newdistrobo/Widgets/appColor.dart';
-
 import '../Screen/Aboutus.dart';
 import '../Screen/ContactusPage.dart';
-import '../Screen/HomePage.dart';
 import '../Screen/MyFaveroutList.dart';
 import '../Screen/MyOrder.dart';
 import '../Screen/NewArrival.dart';
-import '../view/ForgetPassword.dart';
 import '../view/NvigationTabButton.dart';
 import '../view/create_new_password.dart';
 

@@ -1,12 +1,12 @@
-class LoginModal {
-  LoginModal({
+class AutoGenerate {
+  AutoGenerate({
     required this.status,
     required this.message,
   });
   late final String status;
   late final String message;
 
-  LoginModal.fromJson(Map<String, dynamic> json) {
+  AutoGenerate.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
   }
