@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../Widgets/appBar.dart';
+import 'ProductDetails.dart';
 
 class FaverouteListPage extends StatefulWidget {
   FaverouteListPage({super.key});
@@ -78,42 +79,48 @@ class _FaverouteListPageState extends State<FaverouteListPage> {
                       children: [
                         Row(
                           children: [
-                            const Text(
-                              "Shopping List 1",
-                              style: TextStyle(
-                                  fontFamily: 'Gilroy',
-                                  color: Color(0xff181725),
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
-                                  letterSpacing: 1),
-                            ),
-                            SizedBox(
-                              width: Get.width * 0.3,
-                            ),
-                            const Text(
-                              "2 Items ",
-                              style: TextStyle(
-                                  fontFamily: 'Gilroy',
-                                  color: Color(0xf38a8686),
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w600,
-                                  letterSpacing: 1),
-                            ),
-                            SizedBox(
-                              width: Get.width * 0.01,
-                            ),
-                            GestureDetector(
-                              onTap: () {},
-                              child: const Text(
-                                "See All",
+                            Expanded(
+                              child: Text(
+                                "Shopping List 2",
                                 style: TextStyle(
-                                    fontFamily: 'Gilroy-rg',
-                                    color: Color.fromRGBO(233, 13, 65, 1),
-                                    fontSize: 16,
+                                    fontFamily: 'Gilroy',
+                                    color: Color(0xff181725),
+                                    fontSize: 15,
                                     fontWeight: FontWeight.w600,
                                     letterSpacing: 1),
                               ),
                             ),
+                            SizedBox(
+                              width: Get.width * 0.3,
+                            ),
+                            Expanded(
+                              child: Text(
+                                "2 Items ",
+                                style: TextStyle(
+                                    fontFamily: 'Gilroy',
+                                    color: Color(0xf38a8686),
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: 1),
+                              ),
+                            ),
+                            SizedBox(
+                              width: Get.width * 0.01,
+                            ),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {},
+                                child: const Text(
+                                  "See All",
+                                  style: TextStyle(
+                                      fontFamily: 'Gilroy-rg',
+                                      color: Color.fromRGBO(233, 13, 65, 1),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      letterSpacing: 1),
+                                ),
+                              ),
+                            )
                           ],
                         ),
                         SizedBox(
@@ -130,10 +137,13 @@ class _FaverouteListPageState extends State<FaverouteListPage> {
                               crossAxisSpacing: 8.0, // Spacing between columns
                               mainAxisSpacing: 8.0, // Spacing between rows
                             ),
-                            itemCount: 2, // Number of items in the grid
+                            itemCount: 2,
+                            // Number of items in the grid
                             itemBuilder: (context, index) {
                               return GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  Get.to(ProductDetailais());
+                                },
                                 child: Container(
                                     decoration: BoxDecoration(
                                         color: Colors.grey[100],
@@ -178,42 +188,48 @@ class _FaverouteListPageState extends State<FaverouteListPage> {
                       children: [
                         Row(
                           children: [
-                            const Text(
-                              "Shopping List 2",
-                              style: TextStyle(
-                                  fontFamily: 'Gilroy',
-                                  color: Color(0xff181725),
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
-                                  letterSpacing: 1),
-                            ),
-                            SizedBox(
-                              width: Get.width * 0.3,
-                            ),
-                            const Text(
-                              "2 Items ",
-                              style: TextStyle(
-                                  fontFamily: 'Gilroy',
-                                  color: Color(0xf38a8686),
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w600,
-                                  letterSpacing: 1),
-                            ),
-                            SizedBox(
-                              width: Get.width * 0.01,
-                            ),
-                            GestureDetector(
-                              onTap: () {},
-                              child: const Text(
-                                "See All",
+                            Expanded(
+                              child: Text(
+                                "Shopping List 2",
                                 style: TextStyle(
-                                    fontFamily: 'Gilroy-rg',
-                                    color: Color.fromRGBO(233, 13, 65, 1),
-                                    fontSize: 16,
+                                    fontFamily: 'Gilroy',
+                                    color: Color(0xff181725),
+                                    fontSize: 15,
                                     fontWeight: FontWeight.w600,
                                     letterSpacing: 1),
                               ),
                             ),
+                            SizedBox(
+                              width: Get.width * 0.3,
+                            ),
+                            Expanded(
+                              child: Text(
+                                "2 Items ",
+                                style: TextStyle(
+                                    fontFamily: 'Gilroy',
+                                    color: Color(0xf38a8686),
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: 1),
+                              ),
+                            ),
+                            SizedBox(
+                              width: Get.width * 0.01,
+                            ),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {},
+                                child: const Text(
+                                  "See All",
+                                  style: TextStyle(
+                                      fontFamily: 'Gilroy-rg',
+                                      color: Color.fromRGBO(233, 13, 65, 1),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      letterSpacing: 1),
+                                ),
+                              ),
+                            )
                           ],
                         ),
                         SizedBox(
@@ -229,32 +245,31 @@ class _FaverouteListPageState extends State<FaverouteListPage> {
                               crossAxisSpacing: 8.0, // Spacing between columns
                               mainAxisSpacing: 8.0, // Spacing between rows
                             ),
-                            itemCount: 2, // Number of items in the grid
+                            itemCount: 2,
+                            // Number of items in the grid
                             itemBuilder: (context, index) {
                               return GestureDetector(
-                                onTap: () {},
-                                child: GestureDetector(
-                                  onTap: () {},
-                                  child: Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.grey[100],
-                                          borderRadius:
-                                              BorderRadius.circular(23)),
-                                      height: Get.height * 0.5,
-                                      width: Get.width,
-                                      child: Center(
-                                        child: CachedNetworkImage(
-                                          imageUrl:
-                                              "https://freepngimg.com/thumb/grocery/53982-2-grocery-png-image-high-quality-thumb.png",
-                                          placeholder: (context, url) => Center(
-                                              child:
-                                                  CircularProgressIndicator()),
-                                          errorWidget: (context, url, error) =>
-                                              Icon(Icons
-                                                  .error), // Customize the error widget as needed.
-                                        ),
-                                      )),
-                                ),
+                                onTap: () {
+                                  Get.off(ProductDetailais());
+                                },
+                                child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey[100],
+                                        borderRadius:
+                                            BorderRadius.circular(23)),
+                                    height: Get.height * 0.5,
+                                    width: Get.width,
+                                    child: Center(
+                                      child: CachedNetworkImage(
+                                        imageUrl:
+                                            "https://freepngimg.com/thumb/grocery/53982-2-grocery-png-image-high-quality-thumb.png",
+                                        placeholder: (context, url) => Center(
+                                            child: CircularProgressIndicator()),
+                                        errorWidget: (context, url, error) =>
+                                            Icon(Icons
+                                                .error), // Customize the error widget as needed.
+                                      ),
+                                    )),
                               );
                             },
                           ),

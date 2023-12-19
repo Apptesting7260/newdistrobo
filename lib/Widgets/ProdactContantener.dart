@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../Screen/MyCart.dart';
 import 'MyButton.dart';
 import 'appColor.dart';
 
@@ -17,7 +18,6 @@ class _ProductViewState extends State<ProductView> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
       child: Card(
         child: Container(
           // height: Get.height * 0.2,
@@ -103,56 +103,22 @@ class _ProductViewState extends State<ProductView> {
               SizedBox(
                 height: Get.height * 0.015,
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     Container(
-              //       height: Get.height * 0.04,
-              //       width: Get.width * 0.08,
-              //       decoration: BoxDecoration(
-              //           borderRadius: BorderRadius.all(Radius.circular(10)),
-              //           color: ColorConstants.appColor),
-              //       child: Icon(
-              //         Icons.add,
-              //         color: Colors.white,
-              //       ),
-              //     ),
-              //     SizedBox(
-              //       width: Get.width * 0.03,
-              //     ),
-              //     Text(
-              //       "1",
-              //       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              //     ),
-              //     SizedBox(
-              //       width: Get.width * 0.03,
-              //     ),
-              //     Container(
-              //       height: Get.height * 0.04,
-              //       width: Get.width * 0.08,
-              //       decoration: BoxDecoration(
-              //           borderRadius: BorderRadius.all(Radius.circular(10)),
-              //           color: ColorConstants.appColor),
-              //       child: Icon(
-              //         Icons.remove,
-              //         color: Colors.white,
-              //       ),
-              //     )
-              //   ],
-              // )
               Container(
-                child: MyButton(
-                  title: 'Add to Cart',
-                  onTap: () {},
-                  bgColor: ColorConstants.appColor,
-                  width: Get.width * 0.28,
-                  height: Get.height * 0.05,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12,
-                  ),
+                  child: MyButton(
+                title: 'Add to Cart',
+                onTap: () {
+                  Get.to(MyCart());
+                },
+                bgColor: ColorConstants.appColor,
+                width: Get.width * 0.28,
+                height: Get.height * 0.05,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 10,
+                  fontFamily: 'Gilroy-SemiBold',
+                  fontWeight: FontWeight.w400,
                 ),
-              )
+              )),
             ],
           ),
         ),

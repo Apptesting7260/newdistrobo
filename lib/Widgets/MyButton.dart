@@ -34,7 +34,9 @@ class MyButton extends StatelessWidget {
         onPressed: onTap,
         child: Center(
             child: loading == false
-                ? Text(title)
+                ? Text(
+                    title,
+                  )
                 : LoadingAnimationWidget.inkDrop(
                     color: Colors.white,
                     size: 30,

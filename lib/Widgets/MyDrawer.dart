@@ -4,7 +4,14 @@ import 'package:get/get.dart';
 import 'package:newdistrobo/Widgets/appColor.dart';
 
 import '../Screen/Aboutus.dart';
+import '../Screen/ContactusPage.dart';
 import '../Screen/HomePage.dart';
+import '../Screen/MyFaveroutList.dart';
+import '../Screen/MyOrder.dart';
+import '../Screen/NewArrival.dart';
+import '../view/ForgetPassword.dart';
+import '../view/NvigationTabButton.dart';
+import '../view/create_new_password.dart';
 
 // ignore: must_be_immutable
 class DrawerClass extends StatefulWidget {
@@ -146,29 +153,35 @@ class _DrawerClassState extends State<DrawerClass> {
                   height: Get.height * 0.04,
                 ),
                 ListTile(
+                  onTap: () {
+                    Get.to(Tab_view(
+                      index: 0,
+                    ));
+                    Navigator.pop(context);
+                  },
                   horizontalTitleGap: 0,
                   dense: true,
                   leading: IconButton(
-                    onPressed: () {
-                      Get.to(HomePage());
-                    },
                     icon: Image.asset(
                       'assets/images/homeu.png',
                       scale: 1.8,
                       color: ColorConstants.appColor,
                     ),
+                    onPressed: () {},
                   ),
                   title: InkWell(
-                      onTap: () => Get.to(HomePage()),
                       child: Text(
-                        "Home",
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: "Gilroy-mg"),
-                      )),
+                    "Home",
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: "Gilroy-mg"),
+                  )),
                 ),
                 ListTile(
+                  onTap: () {
+                    Get.to(AboutPage());
+                  },
                   horizontalTitleGap: 0,
                   dense: true,
                   leading: IconButton(
@@ -192,6 +205,9 @@ class _DrawerClassState extends State<DrawerClass> {
                   )),
                 ),
                 ListTile(
+                  onTap: () {
+                    Get.to(NewArrivals());
+                  },
                   horizontalTitleGap: 0,
                   dense: true,
                   leading: IconButton(
@@ -206,7 +222,7 @@ class _DrawerClassState extends State<DrawerClass> {
                   ),
                   title: InkWell(
                     onTap: () {
-                      // Get.to(NewArrival());
+                      Get.to(NewArrivals());
                     },
                     child: Text(
                       "New Arrival",
@@ -220,6 +236,9 @@ class _DrawerClassState extends State<DrawerClass> {
                 ListTile(
                   horizontalTitleGap: 0,
                   dense: true,
+                  onTap: () {
+                    Get.to(CreatePassword());
+                  },
                   leading: IconButton(
                       onPressed: () {
                         // Get.to((ResetPassword()));
@@ -243,7 +262,7 @@ class _DrawerClassState extends State<DrawerClass> {
                   dense: true,
                   leading: IconButton(
                     onPressed: () {
-                      // Get.to((MyOrder()));
+                      Get.to((MyOrder()));
                     },
                     icon: Image.asset(
                       'assets/images/myorder.png',
@@ -252,21 +271,24 @@ class _DrawerClassState extends State<DrawerClass> {
                     ),
                   ),
                   title: InkWell(
-                      // onTap: () => Get.to(MyOrder()),
+                      onTap: () => Get.to(MyOrder()),
                       child: Text(
-                    "My Order",
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: "Gilroy-mg"),
-                  )),
+                        "My Order",
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: "Gilroy-mg"),
+                      )),
                 ),
                 ListTile(
                   horizontalTitleGap: 0,
                   dense: true,
+                  onTap: () {
+                    Get.to((FaverouteListPage()));
+                  },
                   leading: IconButton(
                     onPressed: () {
-                      // Get.to((Wishlist()));
+                      Get.to((FaverouteListPage()));
                     },
                     icon: Icon(
                       Icons.favorite_outlined,
@@ -286,6 +308,9 @@ class _DrawerClassState extends State<DrawerClass> {
                 ListTile(
                   horizontalTitleGap: 0,
                   dense: true,
+                  onTap: () {
+                    Get.to(ContactUs());
+                  },
                   leading: IconButton(
                     onPressed: () {
                       // Get.to((ContactUs()));
@@ -314,8 +339,7 @@ class _DrawerClassState extends State<DrawerClass> {
                       Get.to((()));
                     },
                     icon: Image.asset(
-                      'assets/images/ourlocations.png',
-                      scale: 2,
+                      'assets/images/livelocate.png',
                       color: ColorConstants.appColor,
                     ),
                   ),
@@ -333,13 +357,13 @@ class _DrawerClassState extends State<DrawerClass> {
                   horizontalTitleGap: 0,
                   dense: true,
                   leading: IconButton(
-                    onPressed: () {
-                      Get.to((()));
-                    },
+                    onPressed: () {},
                     icon: Image.asset(
-                      'assets/images/serviceour.png',
+                      'assets/images/setting.png',
                       color: ColorConstants.appColor,
                       scale: 2,
+                      height: Get.height * 0.06,
+                      width: Get.width * 0.06,
                     ),
                   ),
                   title: InkWell(

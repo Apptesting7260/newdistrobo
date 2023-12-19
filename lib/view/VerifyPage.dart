@@ -21,6 +21,7 @@ class _OtpVerificationState extends State<OtpVerification> {
   RxBool resendVisible = true.obs;
   TextEditingController otpController = TextEditingController();
   final validatekey = GlobalKey<FormState>();
+
   // String verificationStatus = '';
 
   @override

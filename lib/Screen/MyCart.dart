@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:newdistrobo/Widgets/MyButton.dart';
 import 'package:newdistrobo/Widgets/appColor.dart';
 
+import 'ScheduleDelivery.dart';
+
 class MyCart extends StatefulWidget {
   const MyCart({
     super.key,
@@ -65,7 +67,7 @@ class _MyCartState extends State<MyCart> {
                   IconButton(
                     onPressed: () {
                       // Show the alert dialog when the IconButton is pressed
-                      deleteShowAlert();
+                      // deleteShowAlert();
                     },
                     icon: Image.asset(
                       "assets/images/delete.png",
@@ -115,7 +117,9 @@ class _MyCartState extends State<MyCart> {
             title: "Schedule Delivery",
             bgColor: ColorConstants.appColor,
             width: Get.width * 0.9,
-            onTap: () {},
+            onTap: () {
+              Get.to(ScheduleDelivery());
+            },
           ),
           SizedBox(
             height: Get.height * 0.03,
@@ -175,11 +179,12 @@ class _MyCartState extends State<MyCart> {
                                   Row(
                                     children: [
                                       Container(
-                                        width: Get.width * 0.44,
+                                        width: Get.width * 0.39,
                                         child: Text(
-                                          "Alien Jerky Weed killer \nhot beff ",
+                                          "Alien Jerky Weed killer hot beff ",
                                           softWrap: true,
                                           overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
                                           style: const TextStyle(
                                               //overflow: TextOverflow.ellipsis,
                                               fontSize: 14,
@@ -217,8 +222,8 @@ class _MyCartState extends State<MyCart> {
                                       GestureDetector(
                                         onTap: () {},
                                         child: Container(
-                                          height: 40,
-                                          width: 40,
+                                          height: Get.height * 0.05,
+                                          width: Get.width * 0.1,
                                           decoration: BoxDecoration(
                                               color: ColorConstants.appColor,
                                               border: Border.all(
@@ -252,8 +257,8 @@ class _MyCartState extends State<MyCart> {
                                       GestureDetector(
                                         onTap: () {},
                                         child: Container(
-                                          height: 40,
-                                          width: 40,
+                                          height: Get.height * 0.05,
+                                          width: Get.width * 0.1,
                                           decoration: BoxDecoration(
                                               color: ColorConstants.appColor,
                                               border: Border.all(
@@ -289,8 +294,8 @@ class _MyCartState extends State<MyCart> {
 
   deleteShowAlert() {
     showDialog(
-      context:
-          context, // You can access the BuildContext if you're inside a widget that has access to it
+      context: context,
+      // You can access the BuildContext if you're inside a widget that has access to it
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Confirm Deletion'),

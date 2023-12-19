@@ -18,6 +18,7 @@ class _ResetPasswordState extends State<ResetPassword> {
   final TextEditingController emailcontroller = TextEditingController();
   RxBool resendVisible = true.obs;
   final _formkey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

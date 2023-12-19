@@ -1,21 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:newdistrobo/Widgets/appColor.dart';
 
-import 'appColor.dart';
-
-class TextFilled extends StatelessWidget {
+class TextFilledWithOutBorder extends StatelessWidget {
   final controller;
   final textColor;
-  final borderColor;
+
   final validator;
 
   final hintText;
 
-  const TextFilled({
+  const TextFilledWithOutBorder({
     Key? key,
     required this.controller,
     required this.textColor,
-    required this.borderColor,
     required this.hintText,
     required this.validator,
   });
@@ -27,21 +25,16 @@ class TextFilled extends StatelessWidget {
       keyboardType: TextInputType.emailAddress,
       controller: controller,
       validator: validator,
-      cursorColor: ColorConstants.appColor,
       decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0)),
-              borderSide: BorderSide(color: borderColor)),
+              borderSide: BorderSide(color: ColorConstants.appColor)),
           hintStyle: TextStyle(fontSize: 16, color: textColor),
-          contentPadding: EdgeInsets.all(18),
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0)),
-              borderSide: BorderSide(color: Color(0xffBABABA))),
+
+          // enabledBorder: OutlineInputBorder(
+          //     borderSide: BorderSide(color: Color(0xffBABABA))),
           errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0)),
               borderSide: BorderSide(color: Color(0xffBABABA))),
           focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20.0)),
             borderSide: BorderSide(color: Color(0xffBABABA)),
           ),
           hintText: hintText,

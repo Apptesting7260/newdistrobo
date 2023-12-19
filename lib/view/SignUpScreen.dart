@@ -37,6 +37,7 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController phonecontroller = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmpasswordController = TextEditingController();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -45,6 +46,7 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   bool _isDropdownOpen1 = false;
+
   void _onDropdownFocusChange1() {
     setState(() {
       _isDropdownOpen1 = _dropdownFocus1.hasFocus;
@@ -334,6 +336,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                           child: TextFormField(
+                            cursorColor: ColorConstants.appColor,
                             controller: phonecontroller,
                             inputFormatters: [
                               LengthLimitingTextInputFormatter(10)

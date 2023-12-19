@@ -18,7 +18,6 @@ class _BottomState extends State<Bottom> {
   List<BottomNavigationBarItem> buildBottomNavBarItems = [
     const BottomNavigationBarItem(
         label: "Home",
-
         icon: ImageIcon(AssetImage("assets/aapIcon/Home.png")),
         activeIcon: ImageIcon(AssetImage(
           "assets/aapIcon/colorhome.png",
@@ -60,7 +59,7 @@ class _BottomState extends State<Bottom> {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       items: buildBottomNavBarItems,
-      selectedItemColor:  ColorConstants.appColor,
+      selectedItemColor: ColorConstants.appColor,
       unselectedItemColor: Colors.grey,
       selectedIconTheme: const IconThemeData(
         color: ColorConstants.appColor,
@@ -75,8 +74,10 @@ class _BottomState extends State<Bottom> {
       selectedFontSize: 12,
       unselectedFontSize: 10,
 
-      selectedLabelStyle: const TextStyle(color: ColorConstants.appColor), // Selected label color
-      unselectedLabelStyle: const TextStyle(color: const Color(0xffADADAD)), // Unselected label color
+      selectedLabelStyle: const TextStyle(color: ColorConstants.appColor),
+      // Selected label color
+      unselectedLabelStyle: const TextStyle(
+          color: const Color(0xffADADAD)), // Unselected label color
     );
   }
 }

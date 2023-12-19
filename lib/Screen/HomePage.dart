@@ -3,11 +3,13 @@ import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:newdistrobo/Screen/MyCart.dart';
 import 'package:newdistrobo/Screen/Scaner.dart';
 import 'package:newdistrobo/Widgets/appColor.dart';
 
 import '../Widgets/MyDrawer.dart';
 import '../Widgets/ProdactContantener.dart';
+import 'ShopDetailsPage.dart';
 
 // import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
@@ -363,13 +365,14 @@ class _HomePageState extends State<HomePage> {
                             padding: const EdgeInsets.only(left: 32),
                             child: GestureDetector(
                               onTap: () {
+                                Get.to(ShopDetailsPage(title: "Candy & Snack"));
                                 setState(() {
                                   slugg;
                                 });
                               },
                               child: Container(
                                 // color: Colors.amber,
-                                width: Get.width * 0.2,
+                                width: Get.width * 0.21,
                                 child: Column(
                                   // mainAxisSize: MainAxisSize.min,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -394,15 +397,18 @@ class _HomePageState extends State<HomePage> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
-                                          Text(
-                                            imageCatName[index],
-                                            textAlign: TextAlign.center,
-                                            style: const TextStyle(
-                                              fontSize: 10,
-                                              color:
-                                                  Color.fromRGBO(16, 24, 17, 1),
+                                          Container(
+                                            child: Text(
+                                              imageCatName[index],
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: Color(0xFF0F1811),
+                                                fontSize: 9,
+                                                fontFamily: 'Gilroy-Medium',
+                                                fontWeight: FontWeight.w400,
+                                              ),
                                             ),
-                                          ),
+                                          )
                                         ],
                                       ),
                                     )
@@ -440,7 +446,9 @@ class _HomePageState extends State<HomePage> {
                         itemCount: 4,
                         itemBuilder: (context, index) {
                           return GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(ShopDetailsPage(title: "Candy & Snack"));
+                            },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 10, horizontal: 10),

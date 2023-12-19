@@ -90,9 +90,11 @@ class _ScanPageState extends State<ScanPage>
               Container(
                 height: MediaQuery.of(context).size.height * 0.42,
                 width: MediaQuery.of(context).size.width * 0.75,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(43),
-                  border: Border.all(color: Colors.white, width: 2),
+                decoration: ShapeDecoration(
+                  color: Color(0xFF070707),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
                 ),
                 child: Stack(
                   alignment: Alignment.center,
@@ -153,7 +155,6 @@ class _ScanPageState extends State<ScanPage>
                 ),
               ),
               SizedBox()
-
             ],
           ),
         ),

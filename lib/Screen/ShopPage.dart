@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../Widgets/appBar.dart';
+import 'Scaner.dart';
 import 'ShopDetailsPage.dart';
 
 class ShopPage extends StatefulWidget {
@@ -57,7 +58,9 @@ class _ShopPageState extends State<ShopPage> {
                               height: Get.height * 0.06,
                               width: Get.width * 0.15,
                               child: GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Get.to(ScanPage());
+                                  },
                                   child:
                                       Image.asset('assets/images/scano.png'))),
                           prefixIcon: Image.asset(
@@ -98,57 +101,62 @@ class _ShopPageState extends State<ShopPage> {
                               color: Color.fromRGBO(254, 246, 237, 1),
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: Row(
-                              children: [
-                                Row(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {},
-                                      child: Container(
-                                          decoration: BoxDecoration(),
-                                          height: Get.height * 0.07,
-                                          width: Get.width * .2,
-                                          child: Image.asset(
-                                              "assets/images/cat2.png")),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        SizedBox(height: 5),
-                                        Container(
-                                          width: Get.width - 225,
-                                          child: Text(
-                                            "Candy & Snack",
-                                            softWrap: true,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: const TextStyle(
-                                                //overflow: TextOverflow.ellipsis,
-                                                fontSize: 14,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                                fontFamily: 'Gilroy-sb'),
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.to(ShopDetailsPage(title: "Candy & Snack"));
+                              },
+                              child: Row(
+                                children: [
+                                  Row(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {},
+                                        child: Container(
+                                            decoration: BoxDecoration(),
+                                            height: Get.height * 0.07,
+                                            width: Get.width * .2,
+                                            child: Image.asset(
+                                                "assets/images/cat2.png")),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(height: 5),
+                                          Container(
+                                            width: Get.width - 225,
+                                            child: Text(
+                                              "Candy & Snack",
+                                              softWrap: true,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  //overflow: TextOverflow.ellipsis,
+                                                  fontSize: 14,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontFamily: 'Gilroy-sb'),
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    IconButton(
-                                        onPressed: () {
-                                          Get.to(ShopDetailsPage(
-                                              title: "Candy & Snack"));
-                                        },
-                                        icon: Icon(
-                                          Icons.arrow_forward_ios_outlined,
-                                          size: 22,
-                                        ))
-                                  ],
-                                )
-                              ],
+                                        ],
+                                      ),
+                                      IconButton(
+                                          onPressed: () {
+                                            Get.to(ShopDetailsPage(
+                                                title: "Candy & Snack"));
+                                          },
+                                          icon: Icon(
+                                            Icons.arrow_forward_ios_outlined,
+                                            size: 22,
+                                          ))
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         );

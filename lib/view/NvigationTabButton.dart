@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,10 +12,9 @@ import '../Widgets/MyDrawer.dart';
 import '../Widgets/botton_navigation.dart';
 
 class Tab_view extends StatefulWidget {
-
-
   const Tab_view({Key? key, required this.index}) : super(key: key);
   final int index;
+
   @override
   _Tab_viewState createState() => _Tab_viewState();
 }
@@ -34,20 +32,13 @@ class _Tab_viewState extends State<Tab_view> {
     // fetchApi();
     bottomSelectedIndex = widget.index;
     pageController = PageController(initialPage: widget.index, keepPage: true);
-  super.initState();
-
+    super.initState();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: DrawerClass(
-        emailText: "",
-      ),
-
-      // key: drawerKey,
+      key: drawerKey,
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
@@ -57,11 +48,10 @@ class _Tab_viewState extends State<Tab_view> {
             onPageChanged: (index) => pageChanged(index),
             children: [
               HomePage(),
-            ShopPage(),
+              ShopPage(),
               FaverouteListPage(),
               MyCart(),
               MyProfile()
-
             ],
           ),
         ),
@@ -75,7 +65,7 @@ class _Tab_viewState extends State<Tab_view> {
 
   void bottomTapped(int index) {
     setState(
-          () {
+      () {
         bottomSelectedIndex = index;
         pageController!.animateToPage(index,
             duration: const Duration(microseconds: 1), curve: Curves.ease);
@@ -92,14 +82,14 @@ class _Tab_viewState extends State<Tab_view> {
   Future<bool> _onWillPop() {
     if (bottomSelectedIndex != 1) {
       setState(
-            () {
+        () {
           pageController!.jumpTo(0);
         },
       );
       return Future.value(false);
     } else if (bottomSelectedIndex == 1) {
       setState(
-            () {
+        () {
           pageController!.jumpTo(1);
         },
       );
