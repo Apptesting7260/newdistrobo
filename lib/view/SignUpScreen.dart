@@ -27,7 +27,7 @@ class _SignupScreenState extends State<SignupScreen> {
   FocusNode focusNode = FocusNode();
   FocusNode _dropdownFocus1 = FocusNode();
   String? selectGender;
-  var genderItems = ["Male", "Female", "Other"];
+  var genderItems = ["Other", "Convenience Store", "Laundromat","Gas Satation","Restaurant","Liquor Store","Market","Smoke Shop"];
   String? selectLocalGender;
   bool passwordVisible = true;
   bool passwordVisiblen = true;
