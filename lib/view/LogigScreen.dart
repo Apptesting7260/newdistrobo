@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:newdistrobo/controllers/login_controllers/loginControllers.dart';
 
 import '../Widgets/MyButton.dart';
 import '../Widgets/PasswordTextFilled.dart';
@@ -20,8 +21,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formkey = GlobalKey<FormState>();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final loginVM = Get.put(LoginViewModal());
   bool passwordVisible = true;
 
   @override
@@ -101,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                           child: TextFilled(
-                            controller: emailController,
+                            controller: loginVM.emailController.value,
                             borderColor: ColorConstants.appColor,
                             textColor: null,
                             hintText: "Enter your email",
@@ -135,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                           child: PasswordTextFilled(
-                            controller: passwordController,
+                            controller: loginVM.passwordController.value,
                             borderColor: ColorConstants.appColor,
                             textColor: null,
                             hintText: "Enter your password",
@@ -178,6 +178,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       loading: false,
                       bgColor: ColorConstants.appColor,
                       onTap: () {
+                        loginVM.loading.value;
+                        if (_formkey.currentState!.validate()) {
+                          loginVM.loginApi();
+                        }
                         Get.off(Tab_view(
                           index: 0,
                         ));
