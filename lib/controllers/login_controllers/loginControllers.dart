@@ -25,5 +25,6 @@ class LoginViewModal extends GetxController {
       loading.value = false;
       Utils.SnackBar('Error', error.toString());
     });
+
   }
 }
