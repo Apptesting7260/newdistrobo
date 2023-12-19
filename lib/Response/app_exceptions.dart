@@ -13,6 +13,10 @@ class InternetException extends AppExceptions {
   InternetException([String? message]) : super(message, '');
 }
 
-class InvalidUrlException extends AppExceptions {
-  InvalidUrlException([String? message]) : super(message, 'Invalid url ');
+class UserNotFoudException extends AppExceptions {
+  UserNotFoudException([String? message]) : super('', 'UserNotFound ');
+}
+
+class BadRequestException extends AppExceptions {
+  BadRequestException([String? massage]) : super(massage, "");
 }

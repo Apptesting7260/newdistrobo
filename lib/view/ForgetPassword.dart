@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:newdistrobo/controllers/ResetPasswordController/ResetPassController.dart';
+import 'package:newdistrobo/controllers/SignUpController/SignupController.dart';
 import '../Widgets/MyButton.dart';
 import '../Widgets/TextFilled.dart';
 import '../Widgets/appColor.dart';
-import 'VerifyPage.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({super.key});
@@ -15,8 +15,7 @@ class ResetPassword extends StatefulWidget {
 
 class _ResetPasswordState extends State<ResetPassword> {
   bool loading = false;
-  final TextEditingController emailcontroller = TextEditingController();
-  RxBool resendVisible = true.obs;
+  final ResetPassVM = Get.put(ResetPasswordViewModal());
   final _formkey = GlobalKey<FormState>();
 
   @override
@@ -89,7 +88,7 @@ class _ResetPasswordState extends State<ResetPassword> {
               child: Form(
                 key: _formkey,
                 child: TextFilled(
-                  controller: emailcontroller,
+                  controller: ResetPassVM.emailcontroller.value,
                   borderColor: ColorConstants.appColor,
                   textColor: null,
                   hintText: "Enter Email",
@@ -113,14 +112,18 @@ class _ResetPasswordState extends State<ResetPassword> {
                   height: Get.height * 0.078,
                   width: Get.width * 0.65,
                   child: Center(
-                    child: MyButton(
-                      title: "Send",
-                      bgColor: ColorConstants.appColor,
-                      loading: !resendVisible.value,
-                      onTap: () {
-                        Get.off(OtpVerification());
-                      },
-                    ),
+                    child: Obx(() {
+                      return MyButton(
+                        title: "Send",
+                        bgColor: ColorConstants.appColor,
+                        loading: ResetPassVM.resendVisible.value,
+                        onTap: () {
+                          if (_formkey.currentState!.validate()) {
+                            ResetPassVM.ResetPassHitApi();
+                          }
+                        },
+                      );
+                    }),
                   )),
             ),
           ]),

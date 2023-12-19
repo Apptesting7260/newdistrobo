@@ -1,14 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
-
 import '../Screen/HomePage.dart';
 import '../Screen/MyCart.dart';
 import '../Screen/MyFaveroutList.dart';
 import '../Screen/MyProfile.dart';
 import '../Screen/ShopPage.dart';
-import '../Widgets/MyDrawer.dart';
 import '../Widgets/botton_navigation.dart';
 
 class Tab_view extends StatefulWidget {

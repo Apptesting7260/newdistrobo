@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
 import 'package:newdistrobo/Widgets/appColor.dart';
+import 'package:newdistrobo/controllers/VerifyPage_controller/VerifyPage_controller.dart';
 import 'package:pinput/pinput.dart';
-
 import '../Widgets/MyButton.dart';
-import 'create_new_password.dart';
 
 class OtpVerification extends StatefulWidget {
   OtpVerification({super.key});
@@ -17,9 +14,7 @@ class OtpVerification extends StatefulWidget {
 
 class _OtpVerificationState extends State<OtpVerification> {
   bool route = false;
-  bool loading = false;
-  RxBool resendVisible = true.obs;
-  TextEditingController otpController = TextEditingController();
+  final VerifyPageVm = Get.put(VerifyPageViewModal());
   final validatekey = GlobalKey<FormState>();
 
   // String verificationStatus = '';
@@ -101,7 +96,7 @@ class _OtpVerificationState extends State<OtpVerification> {
                   child: Form(
                     key: validatekey,
                     child: Pinput(
-                      controller: otpController,
+                      controller: VerifyPageVm.otpController.value,
                       keyboardType: TextInputType.phone,
                       validator: (pin) {
                         if (pin!.isEmpty) {
@@ -131,14 +126,18 @@ class _OtpVerificationState extends State<OtpVerification> {
                   height: Get.height * 0.078,
                   width: Get.width * 0.65,
                   child: Center(
-                    child: MyButton(
-                      bgColor: ColorConstants.appColor,
-                      title: "Verify",
-                      loading: !resendVisible.value,
-                      onTap: () {
-                        Get.to(() => CreatePassword());
-                      },
-                    ),
+                    child: Obx(() {
+                      return MyButton(
+                        bgColor: ColorConstants.appColor,
+                        title: "Verify",
+                        loading: VerifyPageVm.resendVisible.value,
+                        onTap: () {
+                          if (validatekey.currentState!.validate()) {
+                            VerifyPageVm.VerifyHitApi();
+                          }
+                        },
+                      );
+                    }),
                   ),
                 )),
 

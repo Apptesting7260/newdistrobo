@@ -37,7 +37,7 @@ class MyButton extends StatelessWidget {
                 ? Text(
                     title,
                   )
-                : LoadingAnimationWidget.inkDrop(
+                : LoadingAnimationWidget.waveDots(
                     color: Colors.white,
                     size: 30,
                   )),
