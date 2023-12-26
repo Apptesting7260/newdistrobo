@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'appColor.dart';
 
@@ -29,8 +30,12 @@ class _PasswordTextFilledState extends State<PasswordTextFilled> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      cursorColor: ColorConstants.appColor,
+      inputFormatters: [
+        FilteringTextInputFormatter.deny(RegExp(r'\s')), // Deny spaces
+      ],
       autovalidateMode: AutovalidateMode.onUserInteraction,
+      cursorColor: ColorConstants.appColor,
+
       keyboardType: TextInputType.emailAddress,
       controller: widget.controller,
       validator: widget.validator,

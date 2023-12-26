@@ -2,13 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:newdistrobo/HomePageModel/HomePageModel.dart';
 
 import '../Screen/MyCart.dart';
 import 'MyButton.dart';
 import 'appColor.dart';
 
 class ProductView extends StatefulWidget {
-  const ProductView({super.key});
+  const ProductView( {super.key});
 
   @override
   State<ProductView> createState() => _ProductViewState();

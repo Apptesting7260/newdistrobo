@@ -6,7 +6,10 @@ import 'package:pinput/pinput.dart';
 import '../Widgets/MyButton.dart';
 
 class OtpVerification extends StatefulWidget {
-  OtpVerification({super.key});
+  var email;
+
+
+  OtpVerification({super.key, required this.email});
 
   @override
   State<OtpVerification> createState() => _OtpVerificationState();
@@ -133,7 +136,7 @@ class _OtpVerificationState extends State<OtpVerification> {
                         loading: VerifyPageVm.resendVisible.value,
                         onTap: () {
                           if (validatekey.currentState!.validate()) {
-                            VerifyPageVm.VerifyHitApi();
+                            VerifyPageVm.VerifyHitApi(widget.email,context);
                           }
                         },
                       );

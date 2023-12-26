@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:newdistrobo/controllers/SignUpController/SignupController.dart';
+import '../GlobaleVarribale/Globalevarribale.dart';
 import '../Widgets/MyButton.dart';
 import '../Widgets/PasswordTextFilled.dart';
 import '../Widgets/TextFilled.dart';
@@ -24,7 +25,7 @@ class _SignupScreenState extends State<SignupScreen> {
   bool route = false;
   FocusNode focusNode = FocusNode();
   FocusNode _dropdownFocus1 = FocusNode();
-  String? selectGender;
+
   var genderItems = [
     "Other",
     "Convenience Store",
@@ -141,7 +142,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               hintText: "First Name",
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Enter your email';
+                                  return 'Enter your first name';
                                 }
                                 return null;
                               },
@@ -178,7 +179,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               hintText: "Last Name",
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Enter your email';
+                                  return 'Enter your last name';
                                 }
                                 return null;
                               },
@@ -314,6 +315,10 @@ class _SignupScreenState extends State<SignupScreen> {
                               if (value == null || value.isEmpty) {
                                 return 'Enter your email';
                               }
+                              else if ( !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                  .hasMatch(value)) {
+                                return "Please Enter Valid Gmail";
+                              }
                               return null;
                             },
                           ),
@@ -339,6 +344,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                           child: TextFormField(
                             cursorColor: ColorConstants.appColor,
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
                             controller: SignupVM.phonecontroller.value,
                             inputFormatters: [
                               LengthLimitingTextInputFormatter(10)
@@ -355,6 +361,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
                                 hintText: "Enter your Phone Number",
+
                                 prefixIcon: CountryCodePicker(
                                   padding: EdgeInsets.only(bottom: 1),
                                   onChanged: (element) =>
@@ -424,6 +431,18 @@ class _SignupScreenState extends State<SignupScreen> {
                               if (value == null || value.isEmpty) {
                                 return 'Enter your Password';
                               }
+                              else if (value.length < 8) {
+                                return "Password must be at least 8 characters long";
+                              }
+                              else if (!value.contains(RegExp(r'[A-Z]'))) {
+                                return "Password must contain at least one uppercase letter";
+                              } else if (!value.contains(RegExp(r'[a-z]'))) {
+                                return "Password must contain at least one lowercase letter";
+                              } else if (!value.contains(RegExp(r'[0-9]'))) {
+                                return "Password must contain at least one digit";
+                              } else if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+                                return "Password must contain at least one special character";
+                              }
                               return null;
                             },
                           ),
@@ -453,12 +472,19 @@ class _SignupScreenState extends State<SignupScreen> {
                           child: PasswordTextFilled(
                             controller:
                                 SignupVM.confirmpasswordController.value,
+
                             borderColor: ColorConstants.appColor,
                             textColor: null,
                             hintText: "Enter Confirm Password",
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Enter your Password';
+                                return 'Enter your Confirm Password';
+                              }
+                              else if ( SignupVM.passwordController.value.text !=
+                                  SignupVM.confirmpasswordController.value.text) {
+                                // Passwords do not match
+
+                                return "Passwords do not match";
                               }
                               return null;
                             },
@@ -474,13 +500,13 @@ class _SignupScreenState extends State<SignupScreen> {
                   width: Get.width,
                   child: Center(child: Obx(() {
                     return MyButton(
-                      loading: false,
+                      loading:  SignupVM.loading.value,
                       title: "Sign Up",
                       bgColor: ColorConstants.appColor,
                       onTap: () {
-                        SignupVM.loading.value;
+
                         if (formkey.currentState!.validate()) {
-                          SignupVM.SignupHitApi();
+                          SignupVM.SignupHitApi(context);
                         }
                       },
                     );

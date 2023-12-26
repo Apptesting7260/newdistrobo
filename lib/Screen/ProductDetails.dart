@@ -37,7 +37,7 @@ class _ProductDetailaisState extends State<ProductDetailais> {
         ),
         leading: IconButton(
             onPressed: () {
-              Get.back();
+              Navigator.pop(context);
             },
             icon: Icon(
               Icons.arrow_back_ios_new_sharp,

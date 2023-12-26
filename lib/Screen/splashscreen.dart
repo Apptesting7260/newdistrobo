@@ -2,8 +2,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Shareprefene.dart';
 import '../view/LogigScreen.dart';
+import '../view/NvigationTabButton.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -23,10 +26,24 @@ class _SplashScreenState extends State<SplashScreen> {
     // splashScreen.isLogin();
   }
 
-  UserCheck() {
-    Timer(Duration(seconds: 3), () {
-      Get.off(LoginScreen());
-    });
+  UserCheck() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var user=prefs.getString("token");
+    print(user);
+   if(user!=null){
+     Timer(Duration(seconds: 3), () {
+       Get.offAll(Tab_view(
+         index: 0,
+       ));
+     });
+   }
+   else{
+     Timer(Duration(seconds: 3), () {
+       Get.offAll(LoginScreen());
+     });
+   }
+
+
   }
 
   @override

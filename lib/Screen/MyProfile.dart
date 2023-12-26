@@ -3,9 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:newdistrobo/Screen/splashscreen.dart';
 import 'package:newdistrobo/Widgets/MyButton.dart';
 
+import '../Shareprefene.dart';
 import '../Widgets/appColor.dart';
+import 'EditProfile.dart';
 import 'MyOrder.dart';
 
 class MyProfile extends StatefulWidget {
@@ -21,7 +24,7 @@ class _MyProfileState extends State<MyProfile> {
     return Scaffold(
       appBar: AppBar(
           centerTitle: true, // Set this property to true
-
+            backgroundColor: Colors.white,
           title: Text(
             "Profile",
             style: TextStyle(
@@ -30,24 +33,25 @@ class _MyProfileState extends State<MyProfile> {
                 fontFamily: 'Gilroy-sb',
                 fontWeight: FontWeight.bold),
           ),
-          leading: IconButton(
-              onPressed: () {
-                Get.back();
-              },
-              icon: Icon(
-                Icons.arrow_back_ios_new_sharp,
-                size: 22,
-              ))),
+    //       leading: IconButton(
+    //       onPressed: () {
+    // Get.back();
+    // },
+    //     icon: Icon(
+    //       Icons.arrow_back_ios_new_sharp,
+    //       size: 22,
+    //     ))
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             SizedBox(
-              height: Get.height * 0.03,
+              height: Get.height * 0.025,
             ),
             Container(
               width: Get.width,
               height: Get.height * 0.16,
-              decoration: BoxDecoration(color: Color(0xFFF2F3F2)),
+              decoration: BoxDecoration(color: Color(0xFF53B175)),
               child: Row(
                 children: [
                   SizedBox(
@@ -57,40 +61,58 @@ class _MyProfileState extends State<MyProfile> {
                     width: Get.width * 0.2,
                     height: Get.width * 0.2,
                     decoration: ShapeDecoration(
-                      color: Color(0xFF53B175),
+                      color: Color(0xFFF2F3F2),
                       shape: OvalBorder(),
                     ),
                     child: Center(
-                      child: Text(
-                        'JD',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontFamily: 'Gilroy-Bold',
-                          fontWeight: FontWeight.w400,
-                          height: 0,
-                        ),
+                      child: Icon(Icons.person)
                       ),
                     ),
-                  ),
+
                   SizedBox(
                     width: Get.width * 0.05,
                   ),
-                  Text(
-                    'John Due',
-                    style: TextStyle(
-                      color: Color(0xFF101811),
-                      fontSize: 20,
-                      fontFamily: 'Gilroy-Bold',
-                      fontWeight: FontWeight.w400,
-                      height: 0,
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'John Due',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontFamily: 'Gilroy-Bold',
+                          fontWeight: FontWeight.w400,
+
+                        ),
+                      ),
+                      Row(
+                        children: [
+
+                          Image.asset("assets/images/locationW.png",height: 10,),
+                          SizedBox(
+                            width: Get.width * 0.005,
+                          ),
+                          Text(
+                            '6391 Elgin St. Celina, Delaware 10299',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontFamily: 'Gilroy-Regular',
+                              fontWeight: FontWeight.w400,
+
+                            ),
+                          ),
+                        ],
+                      ),
+
+                   ],
                   )
                 ],
               ),
             ),
             SizedBox(
-              height: Get.height * 0.03,
+              height: Get.height * 0.025,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
@@ -106,43 +128,46 @@ class _MyProfileState extends State<MyProfile> {
                         backgroundColor: Color(0xFFF2F3F2),
                       ),
                       SizedBox(
-                        width: Get.width * 0.03,
+                        width: Get.width * 0.025,
                       ),
-                      Text(
-                        'Profile',
-                        style: TextStyle(
-                          color: Color(0xFF323643),
-                          fontSize: 18,
-                          fontFamily: 'Gilroy-SemiBold',
-                          fontWeight: FontWeight.w400,
-                          height: 0.06,
-                          letterSpacing: 0.54,
-                        ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Name',
+                            style: TextStyle(
+                              color: Color(0xFF323643),
+                              fontSize: 16,
+                              fontFamily: 'Gilroy-SemiBold',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          Text(
+                            'John Due',
+                            style: TextStyle(
+                              color: Color(0xFF8C8D8C),
+                              fontSize: 14,
+                              fontFamily: 'Gilroy-Regular',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          )
+                        ],
                       ),
-                      SizedBox(
-                        width: Get.width * 0.42,
-                      ),
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.arrow_forward_ios_outlined,
-                            size: 22,
-                          ))
                     ],
                   ),
                   SizedBox(
-                    height: Get.height * 0.03,
+                    height: Get.height * 0.025,
                   ),
                   InkWell(
                     onTap: () {
-                      Get.to(MyOrder());
+                      // Get.to(MyOrder());
                     },
                     child: Row(
                       children: [
                         CircleAvatar(
                           child: Image.asset(
-                            'assets/images/myorder.png',
-                            height: Get.height * 0.03,
+                            'assets/images/contact.png',
+                            height: Get.height * 0.025,
                             color: ColorConstants.appColor,
                           ),
                           radius: 24,
@@ -151,37 +176,128 @@ class _MyProfileState extends State<MyProfile> {
                         SizedBox(
                           width: Get.width * 0.03,
                         ),
-                        Text(
-                          'My Orders',
-                          style: TextStyle(
-                            color: Color(0xFF323643),
-                            fontSize: 18,
-                            fontFamily: 'Gilroy-SemiBold',
-                            fontWeight: FontWeight.w400,
-                            height: 0.06,
-                            letterSpacing: 0.54,
-                          ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Phone Number',
+                              style: TextStyle(
+                                color: Color(0xFF323643),
+                                fontSize: 16,
+                                fontFamily: 'Gilroy-SemiBold',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            Text(
+                              '9876543210',
+                              style: TextStyle(
+                                color: Color(0xFF8C8D8C),
+                                fontSize: 14,
+                                fontFamily: 'Gilroy-Regular',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            )
+                          ],
                         ),
-                        SizedBox(
-                          width: Get.width * 0.35,
-                        ),
-                        IconButton(
-                            onPressed: () {
-                              Get.to(MyOrder());
-                            },
-                            icon: Icon(
-                              Icons.arrow_forward_ios_outlined,
-                              size: 22,
-                            ))
+
+
                       ],
                     ),
                   ),
                   SizedBox(
-                    height: Get.height * 0.03,
+                    height: Get.height * 0.025,
                   ),
                   InkWell(
                     onTap: () {
-                      ShowbuttonShett();
+                      // ShowbuttonShett();
+                    },
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                            child: Image.asset(
+                              "assets/images/mail.png",
+                            ),
+                            radius: 24,
+                            backgroundColor: Color(0xFFF2F3F2)),
+                        SizedBox(
+                          width: Get.width * 0.03,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Email ID',
+                              style: TextStyle(
+                                color: Color(0xFF323643),
+                                fontSize: 16,
+                                fontFamily: 'Gilroy-SemiBold',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            Text(
+                              'userdemo@gmail.com',
+                              style: TextStyle(
+                                color: Color(0xFF8C8D8C),
+                                fontSize: 14,
+                                fontFamily: 'Gilroy-Regular',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            )
+                          ],
+                        )
+
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.025,
+                  ),
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        child: Image.asset(
+                          "assets/images/lock.png",
+                          height: Get.height * 0.06,
+                          width: Get.width * 0.06,
+                        ),
+                        radius: 24,
+                        backgroundColor: Color(0xFFF2F3F2),
+                      ),
+                      SizedBox(
+                        width: Get.width * 0.025,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Password',
+                            style: TextStyle(
+                              color: Color(0xFF323643),
+                              fontSize: 16,
+                              fontFamily: 'Gilroy-SemiBold',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          Text(
+                            'Change Password',
+                            style: TextStyle(
+                              color: Color(0xFF8C8D8C),
+                              fontSize: 14,
+                              fontFamily: 'Gilroy-Regular',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          )
+                        ],
+                      ),
+
+                    ],
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.025,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      // ShowbuttonShett();
                     },
                     child: Row(
                       children: [
@@ -194,111 +310,77 @@ class _MyProfileState extends State<MyProfile> {
                         SizedBox(
                           width: Get.width * 0.03,
                         ),
-                        Text(
-                          'Address',
-                          style: TextStyle(
-                            color: Color(0xFF323643),
-                            fontSize: 18,
-                            fontFamily: 'Gilroy-SemiBold',
-                            fontWeight: FontWeight.w400,
-                            height: 0.06,
-                            letterSpacing: 0.54,
-                          ),
-                        ),
-                        SizedBox(
-                          width: Get.width * 0.39,
-                        ),
-                        IconButton(
-                            onPressed: () {
-                              ShowbuttonShett();
-                            },
-                            icon: Icon(
-                              Icons.arrow_forward_ios_outlined,
-                              size: 22,
-                            ))
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Address',
+                              style: TextStyle(
+                                color: Color(0xFF323643),
+                                fontSize: 16,
+                                fontFamily: 'Gilroy-SemiBold',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            Text(
+                              ' 6391 Elgin St. Celina, Delaware 10299',
+                              style: TextStyle(
+                                color: Color(0xFF8C8D8C),
+                                fontSize: 14,
+                                fontFamily: 'Gilroy-Regular',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            )
+                          ],
+                        )
+
                       ],
                     ),
                   ),
                   SizedBox(
-                    height: Get.height * 0.03,
+                    height: Get.height * 0.025,
                   ),
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        child: Image.asset(
-                          "assets/images/setting.png",
-                          height: Get.height * 0.06,
-                          width: Get.width * 0.06,
+                  InkWell(
+                    onTap: () {
+                      SharePrefence().clearAllData();
+                      Get.to(SplashScreen());
+                    },
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          child: Image.asset(
+                            "assets/images/Logout.png",
+                            height: Get.height * 0.06,
+                            width: Get.width * 0.06,
+                          ),
+                          radius: 24,
+                          backgroundColor: Color(0xFFF2F3F2),
                         ),
-                        radius: 24,
-                        backgroundColor: Color(0xFFF2F3F2),
-                      ),
-                      SizedBox(
-                        width: Get.width * 0.025,
-                      ),
-                      Text(
-                        'Settings',
-                        style: TextStyle(
-                          color: Color(0xFF323643),
-                          fontSize: 18,
-                          fontFamily: 'Gilroy-SemiBold',
-                          fontWeight: FontWeight.w400,
-                          height: 0.06,
-                          letterSpacing: 0.54,
+                        SizedBox(
+                          width: Get.width * 0.03,
                         ),
-                      ),
-                      SizedBox(
-                        width: Get.width * 0.4,
-                      ),
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.arrow_forward_ios_outlined,
-                            size: 22,
-                          ))
-                    ],
+                        Text(
+                          'Logout',
+                          style: TextStyle(
+                            color: Color(0xFF53B175),
+                            fontSize: 18,
+                            fontFamily: 'Gilroy-SemiBold',
+                            fontWeight: FontWeight.w400,
+
+                          ),
+                        )
+
+                      ],
+                    ),
                   ),
                   SizedBox(
-                    height: Get.height * 0.03,
+                    height: Get.height * 0.025,
                   ),
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        child: Image.asset(
-                          "assets/images/Logout.png",
-                          height: Get.height * 0.06,
-                          width: Get.width * 0.06,
-                        ),
-                        radius: 24,
-                        backgroundColor: Color(0xFFF2F3F2),
-                      ),
-                      SizedBox(
-                        width: Get.width * 0.03,
-                      ),
-                      Text(
-                        'Logout',
-                        style: TextStyle(
-                          color: Color(0xFF323643),
-                          fontSize: 18,
-                          fontFamily: 'Gilroy-SemiBold',
-                          fontWeight: FontWeight.w400,
-                          height: 0.06,
-                          letterSpacing: 0.54,
-                        ),
-                      ),
-                      SizedBox(
-                        width: Get.width * 0.42,
-                      ),
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.arrow_forward_ios_outlined,
-                            size: 22,
-                          ))
-                    ],
-                  ),
+                  MyButton(title:  'Edit Profile', bgColor:ColorConstants.appColor,width:Get.width*0.5,onTap: () {
+                    Get.to(EditeMyProfile());
+                  },),
                   SizedBox(
-                    height: Get.height * 0.03,
+                    height: Get.height * 0.025,
                   ),
                 ],
               ),
@@ -689,7 +771,9 @@ class _MyProfileState extends State<MyProfile> {
                       title: "Submit",
                       bgColor: ColorConstants.appColor,
                       width: Get.width * 0.5,
-                      onTap: () {},
+                      onTap: () {
+
+                      },
                     )
                   ],
                 ),

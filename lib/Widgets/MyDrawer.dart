@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:newdistrobo/Screen/splashscreen.dart';
 import 'package:newdistrobo/Widgets/appColor.dart';
 import '../Screen/Aboutus.dart';
 import '../Screen/ContactusPage.dart';
 import '../Screen/MyFaveroutList.dart';
 import '../Screen/MyOrder.dart';
 import '../Screen/NewArrival.dart';
+import '../Shareprefene.dart';
 import '../view/NvigationTabButton.dart';
 import '../view/create_new_password.dart';
 
@@ -233,7 +235,7 @@ class _DrawerClassState extends State<DrawerClass> {
                   horizontalTitleGap: 0,
                   dense: true,
                   onTap: () {
-                    Get.to(CreatePassword());
+                    Get.to(CreatePassword(email: "",));
                   },
                   leading: IconButton(
                       onPressed: () {
@@ -383,6 +385,10 @@ class _DrawerClassState extends State<DrawerClass> {
                     child: ElevatedButton(
                       onPressed: () {
                         // MySharedPreferences.logout();
+                        SharePrefence().clearAllData();
+                        print(SharePrefence().getStringData("token"));
+                        print(SharePrefence().getStringData("userId"));
+                        // Get.to(SplashScreen());
                       },
                       child: Text(
                         "Logout",

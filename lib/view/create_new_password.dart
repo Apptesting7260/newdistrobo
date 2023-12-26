@@ -6,17 +6,21 @@ import 'package:newdistrobo/Widgets/PasswordTextFilled.dart';
 import 'package:newdistrobo/Widgets/appColor.dart';
 import 'package:newdistrobo/view/NvigationTabButton.dart';
 
+import '../controllers/createPassword/CreatePassword.dart';
+
 // ignore: must_be_immutable
 class CreatePassword extends StatefulWidget {
-  CreatePassword({super.key});
+  var email;
+
+
+  CreatePassword({super.key, required this.email});
 
   @override
   State<CreatePassword> createState() => _CreatePasswordState();
 }
 
 class _CreatePasswordState extends State<CreatePassword> {
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmpasswordController = TextEditingController();
+  CreatePasswordController passwordController =Get.put(CreatePasswordController());
   final _formkey = GlobalKey<FormState>();
   bool passwordVisible = true;
   bool passwordVisiblen = true;
@@ -92,13 +96,25 @@ class _CreatePasswordState extends State<CreatePassword> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                 child: PasswordTextFilled(
-                  controller: passwordController,
+                  controller: passwordController.passWord.value,
                   borderColor: ColorConstants.appColor,
                   textColor: null,
                   hintText: "Enter Password",
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Enter your Password';
+                    }
+                    else if (value.length < 8) {
+                      return "Password must be at least 8 characters long";
+                    }
+                    else if (!value.contains(RegExp(r'[A-Z]'))) {
+                      return "Password must contain at least one uppercase letter";
+                    } else if (!value.contains(RegExp(r'[a-z]'))) {
+                      return "Password must contain at least one lowercase letter";
+                    } else if (!value.contains(RegExp(r'[0-9]'))) {
+                      return "Password must contain at least one digit";
+                    } else if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+                      return "Password must contain at least one special character";
                     }
                     return null;
                   },
@@ -128,15 +144,18 @@ class _CreatePasswordState extends State<CreatePassword> {
               Padding(
                   padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                   child: PasswordTextFilled(
-                    controller: confirmpasswordController,
+                    controller: passwordController.con_passWord.value,
                     borderColor: ColorConstants.appColor,
                     textColor: null,
-                    hintText: "Enter Password",
+                    hintText: "Enter Confirm Password",
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please Enter Confirm Password';
-                      } else if (value != passwordController.text) {
-                        return 'Not Match Password';
+                      }else if ( passwordController.passWord.value.text !=
+                          passwordController.con_passWord.value.text) {
+                        // Passwords do not match
+
+                        return "Passwords do not match";
                       }
                     },
                   )),
@@ -154,9 +173,7 @@ class _CreatePasswordState extends State<CreatePassword> {
                       loading: false,
                       onTap: () {
                         // Get.off(OtpVerification());
-                        Get.off(Tab_view(
-                          index: 0,
-                        ));
+                        passwordController.CreatePassHitApi(widget.email);
                       },
                     ),
                   ),

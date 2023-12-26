@@ -180,7 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         onTap: () {
                           loginVM.loading.value;
                           if (_formkey.currentState!.validate()) {
-                            loginVM.loginHitApi();
+                            loginVM.loginHitApi(context);
                           }
                         },
                       );
@@ -220,4 +220,5 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
 }

@@ -95,7 +95,8 @@ class _ResetPasswordState extends State<ResetPassword> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Please Enter Email";
-                    } else if (!value.endsWith("@gmail.com")) {
+                    } else if ( !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                        .hasMatch(value)) {
                       return "Please Enter Valid Gmail";
                     } else {
                       return null;
@@ -119,7 +120,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                         loading: ResetPassVM.resendVisible.value,
                         onTap: () {
                           if (_formkey.currentState!.validate()) {
-                            ResetPassVM.ResetPassHitApi();
+                            ResetPassVM.ResetPassHitApi(context);
                           }
                         },
                       );
