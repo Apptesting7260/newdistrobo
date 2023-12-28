@@ -7,7 +7,11 @@ import 'package:newdistrobo/Screen/splashscreen.dart';
 import 'package:newdistrobo/Widgets/MyButton.dart';
 
 import '../Shareprefene.dart';
+import '../Widgets/Commponent/Commponent.dart';
+import '../Widgets/Commponent/GeneralException.dart';
 import '../Widgets/appColor.dart';
+import '../controllers/profileController/ProfileDetailsController.dart';
+import '../utils/StatusClass.dart';
 import 'EditProfile.dart';
 import 'MyOrder.dart';
 
@@ -19,375 +23,403 @@ class MyProfile extends StatefulWidget {
 }
 
 class _MyProfileState extends State<MyProfile> {
+  ProfileDetailsController profileDetailsController =
+      Get.put(ProfileDetailsController());
+  @override
+  void initState() {
+    // TODO: implement initState
+    profileDetailsController.ProfilePageApi();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          centerTitle: true, // Set this property to true
-            backgroundColor: Colors.white,
-          title: Text(
-            "Profile",
-            style: TextStyle(
-                overflow: TextOverflow.ellipsis,
-                fontSize: 20,
-                fontFamily: 'Gilroy-sb',
-                fontWeight: FontWeight.bold),
-          ),
-    //       leading: IconButton(
-    //       onPressed: () {
-    // Get.back();
-    // },
-    //     icon: Icon(
-    //       Icons.arrow_back_ios_new_sharp,
-    //       size: 22,
-    //     ))
+        centerTitle: true, // Set this property to true
+        backgroundColor: Colors.white,
+        title: Text(
+          "Profile",
+          style: TextStyle(
+              overflow: TextOverflow.ellipsis,
+              fontSize: 20,
+              fontFamily: 'Gilroy-sb',
+              fontWeight: FontWeight.bold),
+        ),
+        //       leading: IconButton(
+        //       onPressed: () {
+        // Get.back();
+        // },
+        //     icon: Icon(
+        //       Icons.arrow_back_ios_new_sharp,
+        //       size: 22,
+        //     ))
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: Get.height * 0.025,
-            ),
-            Container(
-              width: Get.width,
-              height: Get.height * 0.16,
-              decoration: BoxDecoration(color: Color(0xFF53B175)),
-              child: Row(
+      body: Obx(() {
+        switch (profileDetailsController.rxRequestStatus.value) {
+          case Status.LOADING:
+            return const Center(
+                child: CircularProgressIndicator(
+              color: ColorConstants.appColor,
+            ));
+          case Status.ERROR:
+            if (profileDetailsController.error.value == 'No internet') {
+              return InterNetExceptionWidget(
+                onPress: () {
+                  profileDetailsController.refreshApi();
+                },
+              );
+            } else {
+              return GeneralExceptionWidget(
+                onPress: () {
+                  profileDetailsController.refreshApi();
+                },
+              );
+            }
+          case Status.COMPLETED:
+            return SingleChildScrollView(
+              child: Column(
                 children: [
                   SizedBox(
-                    width: Get.width * 0.05,
+                    height: Get.height * 0.025,
                   ),
                   Container(
-                    width: Get.width * 0.2,
-                    height: Get.width * 0.2,
-                    decoration: ShapeDecoration(
-                      color: Color(0xFFF2F3F2),
-                      shape: OvalBorder(),
-                    ),
-                    child: Center(
-                      child: Icon(Icons.person)
-                      ),
-                    ),
-
-                  SizedBox(
-                    width: Get.width * 0.05,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'John Due',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontFamily: 'Gilroy-Bold',
-                          fontWeight: FontWeight.w400,
-
+                    width: Get.width,
+                    height: Get.height * 0.16,
+                    decoration: BoxDecoration(color: Color(0xFF53B175)),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: Get.width * 0.05,
                         ),
-                      ),
-                      Row(
-                        children: [
-
-                          Image.asset("assets/images/locationW.png",height: 10,),
-                          SizedBox(
-                            width: Get.width * 0.005,
+                        Container(
+                          width: Get.width * 0.2,
+                          height: Get.width * 0.2,
+                          decoration: ShapeDecoration(
+                            color: Color(0xFFF2F3F2),
+                            shape: OvalBorder(),
                           ),
-                          Text(
-                            '6391 Elgin St. Celina, Delaware 10299',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontFamily: 'Gilroy-Regular',
-                              fontWeight: FontWeight.w400,
-
+                          child: Center(child: Icon(Icons.person)),
+                        ),
+                        SizedBox(
+                          width: Get.width * 0.05,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              profileDetailsController.profiledetails.value.userDetails![0].userName,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontFamily: 'Gilroy-Bold',
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
+                            Row(
+                              children: [
+                                Image.asset(
+                                  "assets/images/locationW.png",
+                                  height: 10,
+                                ),
+                                SizedBox(
+                                  width: Get.width * 0.005,
+                                ),
+                                Text(
+                                  profileDetailsController.profiledetails.value.userDetails![0].userAddress!.address_1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontFamily: 'Gilroy-Regular',
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.025,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            CircleAvatar(
+                              child: Image.asset(
+                                "assets/images/profu.png",
+                              ),
+                              radius: 24,
+                              backgroundColor: Color(0xFFF2F3F2),
+                            ),
+                            SizedBox(
+                              width: Get.width * 0.025,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Name',
+                                  style: TextStyle(
+                                    color: Color(0xFF323643),
+                                    fontSize: 16,
+                                    fontFamily: 'Gilroy-SemiBold',
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                Text(
+                                  profileDetailsController.profiledetails.value.userDetails![0].userName,
+                                  style: TextStyle(
+                                    color: Color(0xFF8C8D8C),
+                                    fontSize: 14,
+                                    fontFamily: 'Gilroy-Regular',
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: Get.height * 0.025,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            // Get.to(MyOrder());
+                          },
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                child: Image.asset(
+                                  'assets/images/contact.png',
+                                  height: Get.height * 0.025,
+                                  color: ColorConstants.appColor,
+                                ),
+                                radius: 24,
+                                backgroundColor: Color(0xFFF2F3F2),
+                              ),
+                              SizedBox(
+                                width: Get.width * 0.03,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Phone Number',
+                                    style: TextStyle(
+                                      color: Color(0xFF323643),
+                                      fontSize: 16,
+                                      fontFamily: 'Gilroy-SemiBold',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  Text(
+                                    profileDetailsController.profiledetails.value.userDetails![0].userPhonenumber,
+                                    style: TextStyle(
+                                      color: Color(0xFF8C8D8C),
+                                      fontSize: 14,
+                                      fontFamily: 'Gilroy-Regular',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-
-                   ],
+                        ),
+                        SizedBox(
+                          height: Get.height * 0.025,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            // ShowbuttonShett();
+                          },
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                  child: Image.asset(
+                                    "assets/images/mail.png",
+                                  ),
+                                  radius: 24,
+                                  backgroundColor: Color(0xFFF2F3F2)),
+                              SizedBox(
+                                width: Get.width * 0.03,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Email ID',
+                                    style: TextStyle(
+                                      color: Color(0xFF323643),
+                                      fontSize: 16,
+                                      fontFamily: 'Gilroy-SemiBold',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  Text(
+                                    profileDetailsController.profiledetails.value.userDetails![0].userEmail,
+                                    style: TextStyle(
+                                      color: Color(0xFF8C8D8C),
+                                      fontSize: 14,
+                                      fontFamily: 'Gilroy-Regular',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: Get.height * 0.025,
+                        ),
+                        Row(
+                          children: [
+                            CircleAvatar(
+                              child: Image.asset(
+                                "assets/images/lock.png",
+                                height: Get.height * 0.06,
+                                width: Get.width * 0.06,
+                              ),
+                              radius: 24,
+                              backgroundColor: Color(0xFFF2F3F2),
+                            ),
+                            SizedBox(
+                              width: Get.width * 0.025,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Password',
+                                  style: TextStyle(
+                                    color: Color(0xFF323643),
+                                    fontSize: 16,
+                                    fontFamily: 'Gilroy-SemiBold',
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                Text(
+                                  'Change Password',
+                                  style: TextStyle(
+                                    color: Color(0xFF8C8D8C),
+                                    fontSize: 14,
+                                    fontFamily: 'Gilroy-Regular',
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: Get.height * 0.025,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            // ShowbuttonShett();
+                          },
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                  child: Image.asset(
+                                    "assets/images/livelocate.png",
+                                  ),
+                                  radius: 24,
+                                  backgroundColor: Color(0xFFF2F3F2)),
+                              SizedBox(
+                                width: Get.width * 0.03,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Address',
+                                    style: TextStyle(
+                                      color: Color(0xFF323643),
+                                      fontSize: 16,
+                                      fontFamily: 'Gilroy-SemiBold',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  Text(
+                                    profileDetailsController.profiledetails.value.userDetails![0].userAddress!.address_1,
+                                    style: TextStyle(
+                                      color: Color(0xFF8C8D8C),
+                                      fontSize: 14,
+                                      fontFamily: 'Gilroy-Regular',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: Get.height * 0.025,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            SharePrefence().clearAllData();
+                            Get.to(SplashScreen());
+                          },
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                child: Image.asset(
+                                  "assets/images/Logout.png",
+                                  height: Get.height * 0.06,
+                                  width: Get.width * 0.06,
+                                ),
+                                radius: 24,
+                                backgroundColor: Color(0xFFF2F3F2),
+                              ),
+                              SizedBox(
+                                width: Get.width * 0.03,
+                              ),
+                              Text(
+                                'Logout',
+                                style: TextStyle(
+                                  color: Color(0xFF53B175),
+                                  fontSize: 18,
+                                  fontFamily: 'Gilroy-SemiBold',
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: Get.height * 0.025,
+                        ),
+                        MyButton(
+                          title: 'Edit Profile',
+                          bgColor: ColorConstants.appColor,
+                          width: Get.width * 0.5,
+                          onTap: () {
+                            Get.to(EditeMyProfile());
+                          },
+                        ),
+                        SizedBox(
+                          height: Get.height * 0.025,
+                        ),
+                      ],
+                    ),
                   )
                 ],
               ),
-            ),
-            SizedBox(
-              height: Get.height * 0.025,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        child: Image.asset(
-                          "assets/images/profu.png",
-                        ),
-                        radius: 24,
-                        backgroundColor: Color(0xFFF2F3F2),
-                      ),
-                      SizedBox(
-                        width: Get.width * 0.025,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Name',
-                            style: TextStyle(
-                              color: Color(0xFF323643),
-                              fontSize: 16,
-                              fontFamily: 'Gilroy-SemiBold',
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          Text(
-                            'John Due',
-                            style: TextStyle(
-                              color: Color(0xFF8C8D8C),
-                              fontSize: 14,
-                              fontFamily: 'Gilroy-Regular',
-                              fontWeight: FontWeight.w400,
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: Get.height * 0.025,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      // Get.to(MyOrder());
-                    },
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                          child: Image.asset(
-                            'assets/images/contact.png',
-                            height: Get.height * 0.025,
-                            color: ColorConstants.appColor,
-                          ),
-                          radius: 24,
-                          backgroundColor: Color(0xFFF2F3F2),
-                        ),
-                        SizedBox(
-                          width: Get.width * 0.03,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Phone Number',
-                              style: TextStyle(
-                                color: Color(0xFF323643),
-                                fontSize: 16,
-                                fontFamily: 'Gilroy-SemiBold',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            Text(
-                              '9876543210',
-                              style: TextStyle(
-                                color: Color(0xFF8C8D8C),
-                                fontSize: 14,
-                                fontFamily: 'Gilroy-Regular',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            )
-                          ],
-                        ),
-
-
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: Get.height * 0.025,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      // ShowbuttonShett();
-                    },
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                            child: Image.asset(
-                              "assets/images/mail.png",
-                            ),
-                            radius: 24,
-                            backgroundColor: Color(0xFFF2F3F2)),
-                        SizedBox(
-                          width: Get.width * 0.03,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Email ID',
-                              style: TextStyle(
-                                color: Color(0xFF323643),
-                                fontSize: 16,
-                                fontFamily: 'Gilroy-SemiBold',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            Text(
-                              'userdemo@gmail.com',
-                              style: TextStyle(
-                                color: Color(0xFF8C8D8C),
-                                fontSize: 14,
-                                fontFamily: 'Gilroy-Regular',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            )
-                          ],
-                        )
-
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: Get.height * 0.025,
-                  ),
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        child: Image.asset(
-                          "assets/images/lock.png",
-                          height: Get.height * 0.06,
-                          width: Get.width * 0.06,
-                        ),
-                        radius: 24,
-                        backgroundColor: Color(0xFFF2F3F2),
-                      ),
-                      SizedBox(
-                        width: Get.width * 0.025,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Password',
-                            style: TextStyle(
-                              color: Color(0xFF323643),
-                              fontSize: 16,
-                              fontFamily: 'Gilroy-SemiBold',
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          Text(
-                            'Change Password',
-                            style: TextStyle(
-                              color: Color(0xFF8C8D8C),
-                              fontSize: 14,
-                              fontFamily: 'Gilroy-Regular',
-                              fontWeight: FontWeight.w400,
-                            ),
-                          )
-                        ],
-                      ),
-
-                    ],
-                  ),
-                  SizedBox(
-                    height: Get.height * 0.025,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      // ShowbuttonShett();
-                    },
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                            child: Image.asset(
-                              "assets/images/livelocate.png",
-                            ),
-                            radius: 24,
-                            backgroundColor: Color(0xFFF2F3F2)),
-                        SizedBox(
-                          width: Get.width * 0.03,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Address',
-                              style: TextStyle(
-                                color: Color(0xFF323643),
-                                fontSize: 16,
-                                fontFamily: 'Gilroy-SemiBold',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            Text(
-                              ' 6391 Elgin St. Celina, Delaware 10299',
-                              style: TextStyle(
-                                color: Color(0xFF8C8D8C),
-                                fontSize: 14,
-                                fontFamily: 'Gilroy-Regular',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            )
-                          ],
-                        )
-
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: Get.height * 0.025,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      SharePrefence().clearAllData();
-                      Get.to(SplashScreen());
-                    },
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                          child: Image.asset(
-                            "assets/images/Logout.png",
-                            height: Get.height * 0.06,
-                            width: Get.width * 0.06,
-                          ),
-                          radius: 24,
-                          backgroundColor: Color(0xFFF2F3F2),
-                        ),
-                        SizedBox(
-                          width: Get.width * 0.03,
-                        ),
-                        Text(
-                          'Logout',
-                          style: TextStyle(
-                            color: Color(0xFF53B175),
-                            fontSize: 18,
-                            fontFamily: 'Gilroy-SemiBold',
-                            fontWeight: FontWeight.w400,
-
-                          ),
-                        )
-
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: Get.height * 0.025,
-                  ),
-                  MyButton(title:  'Edit Profile', bgColor:ColorConstants.appColor,width:Get.width*0.5,onTap: () {
-                    Get.to(EditeMyProfile());
-                  },),
-                  SizedBox(
-                    height: Get.height * 0.025,
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
+            );
+        }
+      }),
     );
   }
 
@@ -771,9 +803,7 @@ class _MyProfileState extends State<MyProfile> {
                       title: "Submit",
                       bgColor: ColorConstants.appColor,
                       width: Get.width * 0.5,
-                      onTap: () {
-
-                      },
+                      onTap: () {},
                     )
                   ],
                 ),

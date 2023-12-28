@@ -246,6 +246,9 @@ class ApiRepo{
       throw Exception('Failed to load data: $e');
     }
   }
+
+  //**************************************ProfileDetailasApi  deatils  ****************************************
+
   Future<ProfileModel> ProfileDetailasApi(var data) async {
     // print("apihit");
 
@@ -279,5 +282,13 @@ class ApiRepo{
       throw Exception('Failed to load data: $e');
     }
 
+  }
+
+//**************************************product categary deatils  ****************************************
+  Future<dynamic> AdressUpdateApi(var data) async {
+    // print("apihit");
+    dynamic response = _apiService.postApi(AppUrl.addressUpdate, data);
+    print(response);
+    return response;
   }
 }

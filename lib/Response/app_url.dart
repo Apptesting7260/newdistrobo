@@ -24,4 +24,6 @@ static const String subCategarory =
       '${baseUrl}v1/category_product';
   static const String profileDetailsApi =
       '${baseUrl}v1/user_profile';
+  static const String addressUpdate =
+      '${baseUrl}v1/address_update';
 }

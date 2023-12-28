@@ -17,7 +17,10 @@ class NetworkApiServices extends BaseApiServices {
       responseJson = returnResponse(response);
 
       print(responseJson);
-    } on SocketException {}
+    } on SocketException {
+      throw BadRequestException('No internet !!');
+
+    }
     return responseJson;
   }
   Future<dynamic> getApi(String url) async {
@@ -54,6 +57,11 @@ class NetworkApiServices extends BaseApiServices {
 
         dynamic badresponseextrac = badresponse['message'];
         throw BadRequestException(badresponseextrac.toString());
+      case 404:
+        dynamic badresponse = jsonDecode(response.body);
+
+        dynamic badresponseextrac = badresponse['message'];
+        throw BadRequestException("Network Error!");
     }
   }
 }

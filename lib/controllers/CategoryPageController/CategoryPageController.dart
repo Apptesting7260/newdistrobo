@@ -48,7 +48,7 @@ class SubCategoryPageController extends GetxController {
       'category_id':categoryId,
       'user_id':user,
       'page' : page_no.value,
-      'per_page':"2"
+      'per_page':"10"
 
     };
     if(pagination == false){

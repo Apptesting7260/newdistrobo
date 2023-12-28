@@ -31,7 +31,7 @@ class UserDetails {
   var userEmail;
   var userPassword;
   var userPhonenumber;
-  var userAddress;
+  UserAddress? userAddress;
 
   UserDetails.fromJson(Map<String, dynamic> json){
     userId = json['user_id'];
@@ -51,24 +51,24 @@ class UserDetails {
     _data['user_email'] = userEmail;
     _data['user_password'] = userPassword;
     _data['user_phonenumber'] = userPhonenumber;
-    _data['user_address'] = userAddress.toJson();
+    _data['user_address'] = userAddress!.toJson();
     return _data;
   }
 }
 
 class UserAddress {
   UserAddress({
-    required this.address_1,
-    required this.city,
-    required this.state,
-    required this.postcode,
-    required this.country,
+     this.address_1,
+     this.city,
+     this.state,
+     this.postcode,
+     this.country,
   });
-  late final String address_1;
-  late final String city;
-  late final String state;
-  late final String postcode;
-  late final String country;
+ var address_1;
+ var city;
+ var state;
+ var postcode;
+ var country;
 
   UserAddress.fromJson(Map<String, dynamic> json){
     address_1 = json['address_1'];

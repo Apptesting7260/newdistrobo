@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:newdistrobo/GlobaleVarribale/Globalevarribale.dart';
@@ -35,22 +36,22 @@ class _ShopPageState extends State<ShopPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            centerTitle: true, // Set this property to true
+          centerTitle: true, // Set this property to true
 
-            title: Text(
-              "Shop",
-              style: TextStyle(
-                  overflow: TextOverflow.ellipsis,
-                  fontSize: 20,
-                  fontFamily: 'Gilroy-sb',
-                  fontWeight: FontWeight.bold),
-            ),
-            // leading: IconButton(
-            //     onPressed: () {},
-            //     icon: Icon(
-            //       Icons.arrow_back_ios_new_sharp,
-            //       size: 22,
-            //     ))
+          title: Text(
+            "Shop",
+            style: TextStyle(
+                overflow: TextOverflow.ellipsis,
+                fontSize: 20,
+                fontFamily: 'Gilroy-sb',
+                fontWeight: FontWeight.bold),
+          ),
+          // leading: IconButton(
+          //     onPressed: () {},
+          //     icon: Icon(
+          //       Icons.arrow_back_ios_new_sharp,
+          //       size: 22,
+          //     ))
         ),
         body: Obx(() {
           switch (shopPageController.rxRequestStatus.value) {
@@ -120,7 +121,8 @@ class _ShopPageState extends State<ShopPage> {
                           Container(
                             height: Get.height,
                             child: ListView.separated(
-                              itemCount: shopPageController.shoppage.value.data!.length,
+                              itemCount: shopPageController
+                                  .shoppage.value.data!.length,
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
                               separatorBuilder:
@@ -140,29 +142,37 @@ class _ShopPageState extends State<ShopPage> {
                                     height: Get.height * 0.09,
                                     width: Get.width,
                                     decoration: BoxDecoration(
-                                      color:  Colors.green[50],
+                                      color: Colors.green[50],
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: InkWell(
                                       onTap: () {
-                                        categoryId=null;
-                                       categoryId=shopPageController.shoppage.value.data![index].id.toString();
-                                       setState(() {
-
-                                       });
-                                           if(shopPageController.shoppage.value.data![index].categoryStatus=="true"){
-                                             if(categoryId!=null){
-                                               Get.to(ShopDetailsPage(
-                                                   title: shopPageController.shoppage.value.data![index].name));
-                                             }
-                                           }
-                                           else{
-
-                                             if(categoryId!=null){
-                                               Get.to(ProductDetailsPage(
-                                                   title: shopPageController.shoppage.value.data![index].name));
-                                             }
-                                           }
+                                        categoryId = null;
+                                        categoryId = shopPageController
+                                            .shoppage.value.data![index].id
+                                            .toString();
+                                        setState(() {});
+                                        if (shopPageController.shoppage.value
+                                                .data![index].categoryStatus ==
+                                            "true") {
+                                          if (categoryId != null) {
+                                            Get.to(ShopDetailsPage(
+                                                title: shopPageController
+                                                    .shoppage
+                                                    .value
+                                                    .data![index]
+                                                    .name));
+                                          }
+                                        } else {
+                                          if (categoryId != null) {
+                                            Get.to(ProductDetailsPage(
+                                                title: shopPageController
+                                                    .shoppage
+                                                    .value
+                                                    .data![index]
+                                                    .name));
+                                          }
+                                        }
                                       },
                                       child: Row(
                                         children: [
@@ -170,40 +180,96 @@ class _ShopPageState extends State<ShopPage> {
                                             children: [
                                               GestureDetector(
                                                 onTap: () {
-                                                  categoryId=null;
-                                                  categoryId=shopPageController.shoppage.value.data![index].id.toString();
-                                                  setState(() {
-
-                                                  });
-                                                  if(shopPageController.shoppage.value.data![index].categoryStatus=="true"){
-                                                    if(categoryId!=null){
+                                                  categoryId = null;
+                                                  categoryId =
+                                                      shopPageController
+                                                          .shoppage
+                                                          .value
+                                                          .data![index]
+                                                          .id
+                                                          .toString();
+                                                  setState(() {});
+                                                  if (shopPageController
+                                                          .shoppage
+                                                          .value
+                                                          .data![index]
+                                                          .categoryStatus ==
+                                                      "true") {
+                                                    if (categoryId != null) {
                                                       Get.to(ShopDetailsPage(
-                                                          title: shopPageController.shoppage.value.data![index].name));
+                                                          title:
+                                                              shopPageController
+                                                                  .shoppage
+                                                                  .value
+                                                                  .data![index]
+                                                                  .name));
                                                     }
-                                                  }
-                                                  else{
-
-                                                    if(categoryId!=null){
+                                                  } else {
+                                                    if (categoryId != null) {
                                                       Get.to(ProductDetailsPage(
-                                                          title: shopPageController.shoppage.value.data![index].name));
+                                                          title:
+                                                              shopPageController
+                                                                  .shoppage
+                                                                  .value
+                                                                  .data![index]
+                                                                  .name));
                                                     }
                                                   }
                                                 },
                                                 child: Container(
-                                                    decoration: BoxDecoration(),
-                                                    height: Get.height * 0.07,
-                                                    width: Get.width * .2,
-                                                    child: CachedNetworkImage(
-                                                      imageUrl:
-                                                      shopPageController.shoppage.value.data![index].img,
-                                                      placeholder: (context, url) => Center(
-                                                          child:
-                                                          CircularProgressIndicator(color: ColorConstants.appColor,)),
-                                                      errorWidget: (context, url, error) =>
-                                                          Icon(Icons
-                                                              .error), // Customize the error widget as needed.
-                                                    ),
-                                              ),),
+                                                  decoration: BoxDecoration(),
+                                                  height: Get.height * 0.07,
+                                                  width: Get.width * .2,
+                                                  child: shopPageController
+                                                          .shoppage
+                                                          .value
+                                                          .data![index]
+                                                          .img
+                                                          .toString()
+                                                          .endsWith(".svg")
+                                                      ? SvgPicture.network(
+                                                    shopPageController
+                                                        .shoppage
+                                                        .value
+                                                        .data![index]
+                                                        .img,
+                                                          semanticsLabel:
+                                                              'A shark?!',
+                                                          placeholderBuilder: (BuildContext
+                                                                  context) =>
+                                                              Container(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .all(
+                                                                          30.0),
+                                                                  child:
+                                                                      const CircularProgressIndicator(  color:
+                                                                      ColorConstants
+                                                                          .appColor,)),
+                                                        )
+                                                      : CachedNetworkImage(
+                                                          imageUrl:
+                                                              shopPageController
+                                                                  .shoppage
+                                                                  .value
+                                                                  .data![index]
+                                                                  .img,
+                                                          placeholder: (context,
+                                                                  url) =>
+                                                              Center(
+                                                                  child:
+                                                                      CircularProgressIndicator(
+                                                            color:
+                                                                ColorConstants
+                                                                    .appColor,
+                                                          )),
+                                                          errorWidget: (context,
+                                                                  url, error) =>
+                                                              Icon(Icons
+                                                                  .error), // Customize the error widget as needed.
+                                                        ),
+                                                ),
+                                              ),
                                               SizedBox(
                                                 width: 10,
                                               ),
@@ -217,7 +283,11 @@ class _ShopPageState extends State<ShopPage> {
                                                   Container(
                                                     width: Get.width - 225,
                                                     child: Text(
-                                                      shopPageController.shoppage.value.data![index].name,
+                                                      shopPageController
+                                                          .shoppage
+                                                          .value
+                                                          .data![index]
+                                                          .name,
                                                       softWrap: true,
                                                       overflow:
                                                           TextOverflow.ellipsis,
@@ -235,25 +305,43 @@ class _ShopPageState extends State<ShopPage> {
                                               ),
                                               IconButton(
                                                   onPressed: () {
-                                                    categoryId=null;
-                                                    categoryId=shopPageController.shoppage.value.data![index].id.toString();
-                                                    setState(() {
-
-                                                    });
-                                                    if(shopPageController.shoppage.value.data![index].categoryStatus=="true"){
-                                                      if(categoryId!=null){
+                                                    categoryId = null;
+                                                    categoryId =
+                                                        shopPageController
+                                                            .shoppage
+                                                            .value
+                                                            .data![index]
+                                                            .id
+                                                            .toString();
+                                                    setState(() {});
+                                                    if (shopPageController
+                                                            .shoppage
+                                                            .value
+                                                            .data![index]
+                                                            .categoryStatus ==
+                                                        "true") {
+                                                      if (categoryId != null) {
                                                         Get.to(ShopDetailsPage(
-                                                            title: shopPageController.shoppage.value.data![index].name));
+                                                            title:
+                                                                shopPageController
+                                                                    .shoppage
+                                                                    .value
+                                                                    .data![
+                                                                        index]
+                                                                    .name));
                                                       }
-                                                    }
-                                                    else{
-
-                                                      if(categoryId!=null){
+                                                    } else {
+                                                      if (categoryId != null) {
                                                         Get.to(ProductDetailsPage(
-                                                            title: shopPageController.shoppage.value.data![index].name));
+                                                            title:
+                                                                shopPageController
+                                                                    .shoppage
+                                                                    .value
+                                                                    .data![
+                                                                        index]
+                                                                    .name));
                                                       }
                                                     }
-
                                                   },
                                                   icon: Icon(
                                                     Icons

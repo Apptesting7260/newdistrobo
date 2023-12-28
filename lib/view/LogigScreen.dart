@@ -188,7 +188,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: Get.height * 0.1,
+                  height: Get.height * 0.05,
                 ),
                 RichText(
                     text: TextSpan(children: [

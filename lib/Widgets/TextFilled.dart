@@ -39,10 +39,10 @@ class TextFilled extends StatelessWidget {
               borderSide: BorderSide(color: Color(0xffBABABA))),
           errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(20.0)),
-              borderSide: BorderSide(color: Color(0xffBABABA))),
+              borderSide: BorderSide(color: Colors.red)),
           focusedErrorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            borderSide: BorderSide(color: Color(0xffBABABA)),
+            borderSide: BorderSide(color:  Colors.red),
           ),
           hintText: hintText,
           filled: true,

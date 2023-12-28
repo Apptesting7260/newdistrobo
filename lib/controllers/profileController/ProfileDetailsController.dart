@@ -5,6 +5,7 @@
 import 'package:get/get.dart';
 import 'package:newdistrobo/HomePageModel/HomePageModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../data/modals/profilrModel/ProfileModel.dart';
 import '../../repository/ApiRepo.dart';
 import '../../repository/Signup_repository/Signup_repository.dart';
 import '../../utils/StatusClass.dart';
@@ -16,11 +17,11 @@ class ProfileDetailsController extends GetxController {
   //int? seekerRequestlenght;
 
   final rxRequestStatus = Status.LOADING.obs;
-  final homepage = HomePageModel().obs;
+  final profiledetails  = ProfileModel().obs;
   RxString error = ''.obs;
 
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
-  void setUserList(HomePageModel value) => homepage.value = value;
+  void setUserList(ProfileModel value) => profiledetails.value = value;
   void setError(String value) => error.value = value;
 
 
@@ -35,7 +36,7 @@ class ProfileDetailsController extends GetxController {
     print(data);
     setRxRequestStatus(Status.LOADING);
 
-    _api.homePageApi(data).then((value) {
+    _api.ProfileDetailasApi(data).then((value) {
       setRxRequestStatus(Status.COMPLETED);
       setUserList(value);
       print(value);
@@ -59,7 +60,7 @@ class ProfileDetailsController extends GetxController {
 
     setRxRequestStatus(Status.LOADING);
 
-    _api.homePageApi(data).then((value){
+    _api.ProfileDetailasApi(data).then((value){
       setRxRequestStatus(Status.COMPLETED);
       setUserList(value);
     }).onError((error, stackTrace){

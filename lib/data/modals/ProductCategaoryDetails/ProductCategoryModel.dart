@@ -26,13 +26,13 @@ var categoryTitle;
     }
     if(productCategory != null && productCategory!.isNotEmpty){
       print('yES NOT EMPTY');
-      if(productCategory!.length < 2){
+      if(productCategory!.length < 10){
         noDataHome.value = true;
         callHomePagination.value = false;
         print('yES  EMPTY==================');
       }
 
-      if(productCategory!.length == 2){
+      if(productCategory!.length == 10){
         page++;
         callHomePagination.value = true;
         print('yES not EMPTY==================');

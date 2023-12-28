@@ -136,6 +136,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           child: Container(
                             decoration: BoxDecoration(),
                             child: TextFilled(
+
                               controller: SignupVM.namecontroller.value,
                               borderColor: ColorConstants.appColor,
                               textColor: null,
@@ -367,12 +368,16 @@ class _SignupScreenState extends State<SignupScreen> {
                                   onChanged: (element) =>
                                       debugPrint(element.toLongString()),
                                   initialSelection: 'IN',
+
                                   showCountryOnly: false,
+
                                   showOnlyCountryWhenClosed: false,
                                   favorite: const [
                                     '+91',
                                     'IN',
                                   ],
+
+
                                   showDropDownButton: true,
                                   showFlag: false,
                                 ),
