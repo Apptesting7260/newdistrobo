@@ -67,6 +67,9 @@ class ProductSubCategory {
      this.productSlug,
      this.productPrice,
      this.productWishlist,
+    this.productQuantity,
+     this.productType,
+
   });
   var productId;
   var productImg;
@@ -76,6 +79,8 @@ class ProductSubCategory {
   var productWishlist;
   RxBool productWishlistbool=false.obs;
   RxBool isLoding=false.obs;
+  var productQuantity;
+  var productType;
 
   ProductSubCategory.fromJson(Map<String, dynamic> json){
     productId = json['product_id'];
@@ -84,6 +89,8 @@ class ProductSubCategory {
     productSlug = json['product_slug'];
     productPrice = json['product_price'];
     productWishlist = json['product_wishlist'];
+    productQuantity = json['product_quantity'];
+    productType = json['product_type'];
   }
 
   Map<String, dynamic> toJson() {
@@ -94,6 +101,8 @@ class ProductSubCategory {
     _data['product_slug'] = productSlug;
     _data['product_price'] = productPrice;
     _data['product_wishlist'] = productWishlist;
+    _data['product_quantity'] = productQuantity;
+    _data['product_type'] = productType;
     return _data;
   }
 }

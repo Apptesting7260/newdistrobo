@@ -11,6 +11,7 @@ import '../../repository/Signup_repository/Signup_repository.dart';
 import '../../utils/StatusClass.dart';
 import '../CatagarryDetailsController/CategoryDetailsController.dart';
 import '../CategoryPageController/CategoryPageController.dart';
+import '../SubCategortController/SubCategoryControoler.dart';
 import '../homePageController/HomePageController.dart';
 
 
@@ -26,7 +27,7 @@ class WhishlistAddController extends GetxController {
   CatagoryDetailsController catagoryDetailsController = Get.put(
       CatagoryDetailsController());
   SubCategoryPageController subCategoryPageController=Get.put(SubCategoryPageController());
-
+  SubCategoryCotroller ProsubCategoryCotroller = Get.put(SubCategoryCotroller());
 
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
   void setUserList(HomePageModel value) => homepage.value = value;
@@ -107,6 +108,60 @@ class WhishlistAddController extends GetxController {
 
       ProductCategoryLists![categoryDetails].productWishlist=ProductCategoryLists![categoryDetails].productWishlist==false?true:false;
       ProductCategoryLists![categoryDetails].isLoding.value=false;
+
+      print(value);
+
+
+    }).onError((error, stackTrace) {
+      setError(error.toString());
+      setRxRequestStatus(Status.ERROR);
+      print(error.toString());
+    });
+  }
+  Future<void> ProSubCategoryWhishLisAddPageApi(product, index,) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var user=prefs.getString("userId");
+    Map data = {
+      'product_id':productId,
+      'user_id':user
+    };
+    print(data);
+    setRxRequestStatus(Status.LOADING);
+
+    _api.addWishlist(data).then((value) {
+
+      setRxRequestStatus(Status.COMPLETED);
+      print(ProsubCategoryCotroller.subCategoryPage.value.data![index].products![product].productInWishlist);
+      ProsubCategoryCotroller.subCategoryPage.value.data![index].products![product].productInWishlist=ProsubCategoryCotroller.subCategoryPage.value.data![index].products![product].productInWishlist=="false"?"true":"false";
+      ProsubCategoryCotroller.subCategoryPage.value.data![index].products![product].isLoding.value=false;
+   print(ProsubCategoryCotroller.subCategoryPage.value.data![index].products![product].productInWishlist);
+      print(value);
+
+
+    }).onError((error, stackTrace) {
+      setError(error.toString());
+      setRxRequestStatus(Status.ERROR);
+      print(error.toString());
+    });
+  }
+  Future<void> latestProductWhishLisAddPageApi( categoryDetails,) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var user=prefs.getString("userId");
+    Map data = {
+      'product_id':productId,
+      'user_id':user
+    };
+    print(data);
+    setRxRequestStatus(Status.LOADING);
+
+    _api.addWishlist(data).then((value) {
+
+      setRxRequestStatus(Status.COMPLETED);
+
+      latestProduct![categoryDetails].productWishlist=latestProduct![categoryDetails].productWishlist==false?true:false;
+      latestProduct![categoryDetails].isLoding.value=false;
 
       print(value);
 

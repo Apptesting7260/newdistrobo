@@ -26,11 +26,11 @@ class ShopPage extends StatefulWidget {
 class _ShopPageState extends State<ShopPage> {
   ShopPageController shopPageController = Get.put(ShopPageController());
 
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    shopPageController.shopPage();
   }
 
   Widget build(BuildContext context) {
@@ -77,7 +77,7 @@ class _ShopPageState extends State<ShopPage> {
                 );
               }
             case Status.COMPLETED:
-              return SingleChildScrollView(
+              return RefreshIndicator(child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -94,7 +94,7 @@ class _ShopPageState extends State<ShopPage> {
                                 borderRadius: BorderRadius.circular(12)),
                             child: TextField(
                               decoration: InputDecoration(
-                                  //zzz************************ for scanning working sotp *************************
+                                //zzz************************ for scanning working sotp *************************
                                   suffixIcon: Container(
                                       height: Get.height * 0.06,
                                       width: Get.width * 0.15,
@@ -153,7 +153,7 @@ class _ShopPageState extends State<ShopPage> {
                                             .toString();
                                         setState(() {});
                                         if (shopPageController.shoppage.value
-                                                .data![index].categoryStatus ==
+                                            .data![index].categoryStatus ==
                                             "true") {
                                           if (categoryId != null) {
                                             Get.to(ShopDetailsPage(
@@ -190,29 +190,29 @@ class _ShopPageState extends State<ShopPage> {
                                                           .toString();
                                                   setState(() {});
                                                   if (shopPageController
-                                                          .shoppage
-                                                          .value
-                                                          .data![index]
-                                                          .categoryStatus ==
+                                                      .shoppage
+                                                      .value
+                                                      .data![index]
+                                                      .categoryStatus ==
                                                       "true") {
                                                     if (categoryId != null) {
                                                       Get.to(ShopDetailsPage(
                                                           title:
-                                                              shopPageController
-                                                                  .shoppage
-                                                                  .value
-                                                                  .data![index]
-                                                                  .name));
+                                                          shopPageController
+                                                              .shoppage
+                                                              .value
+                                                              .data![index]
+                                                              .name));
                                                     }
                                                   } else {
                                                     if (categoryId != null) {
                                                       Get.to(ProductDetailsPage(
                                                           title:
-                                                              shopPageController
-                                                                  .shoppage
-                                                                  .value
-                                                                  .data![index]
-                                                                  .name));
+                                                          shopPageController
+                                                              .shoppage
+                                                              .value
+                                                              .data![index]
+                                                              .name));
                                                     }
                                                   }
                                                 },
@@ -221,53 +221,53 @@ class _ShopPageState extends State<ShopPage> {
                                                   height: Get.height * 0.07,
                                                   width: Get.width * .2,
                                                   child: shopPageController
-                                                          .shoppage
-                                                          .value
-                                                          .data![index]
-                                                          .img
-                                                          .toString()
-                                                          .endsWith(".svg")
+                                                      .shoppage
+                                                      .value
+                                                      .data![index]
+                                                      .img
+                                                      .toString()
+                                                      .endsWith(".svg")
                                                       ? SvgPicture.network(
                                                     shopPageController
                                                         .shoppage
                                                         .value
                                                         .data![index]
                                                         .img,
-                                                          semanticsLabel:
-                                                              'A shark?!',
-                                                          placeholderBuilder: (BuildContext
-                                                                  context) =>
-                                                              Container(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                          .all(
-                                                                          30.0),
-                                                                  child:
-                                                                      const CircularProgressIndicator(  color:
-                                                                      ColorConstants
-                                                                          .appColor,)),
-                                                        )
+                                                    semanticsLabel:
+                                                    'A shark?!',
+                                                    placeholderBuilder: (BuildContext
+                                                    context) =>
+                                                        Container(
+                                                            padding:
+                                                            const EdgeInsets
+                                                                .all(
+                                                                30.0),
+                                                            child:
+                                                            const CircularProgressIndicator(  color:
+                                                            ColorConstants
+                                                                .appColor,)),
+                                                  )
                                                       : CachedNetworkImage(
-                                                          imageUrl:
-                                                              shopPageController
-                                                                  .shoppage
-                                                                  .value
-                                                                  .data![index]
-                                                                  .img,
-                                                          placeholder: (context,
-                                                                  url) =>
-                                                              Center(
-                                                                  child:
-                                                                      CircularProgressIndicator(
-                                                            color:
-                                                                ColorConstants
-                                                                    .appColor,
-                                                          )),
-                                                          errorWidget: (context,
-                                                                  url, error) =>
-                                                              Icon(Icons
-                                                                  .error), // Customize the error widget as needed.
-                                                        ),
+                                                    imageUrl:
+                                                    shopPageController
+                                                        .shoppage
+                                                        .value
+                                                        .data![index]
+                                                        .img,
+                                                    placeholder: (context,
+                                                        url) =>
+                                                        Center(
+                                                            child:
+                                                            CircularProgressIndicator(
+                                                              color:
+                                                              ColorConstants
+                                                                  .appColor,
+                                                            )),
+                                                    errorWidget: (context,
+                                                        url, error) =>
+                                                        Icon(Icons
+                                                            .error), // Customize the error widget as needed.
+                                                  ),
                                                 ),
                                               ),
                                               SizedBox(
@@ -275,9 +275,9 @@ class _ShopPageState extends State<ShopPage> {
                                               ),
                                               Column(
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                CrossAxisAlignment.start,
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                                MainAxisAlignment.center,
                                                 children: [
                                                   SizedBox(height: 5),
                                                   Container(
@@ -290,15 +290,15 @@ class _ShopPageState extends State<ShopPage> {
                                                           .name,
                                                       softWrap: true,
                                                       overflow:
-                                                          TextOverflow.ellipsis,
+                                                      TextOverflow.ellipsis,
                                                       style: const TextStyle(
-                                                          //overflow: TextOverflow.ellipsis,
+                                                        //overflow: TextOverflow.ellipsis,
                                                           fontSize: 14,
                                                           color: Colors.black,
                                                           fontWeight:
-                                                              FontWeight.bold,
+                                                          FontWeight.bold,
                                                           fontFamily:
-                                                              'Gilroy-sb'),
+                                                          'Gilroy-sb'),
                                                     ),
                                                   ),
                                                 ],
@@ -315,31 +315,31 @@ class _ShopPageState extends State<ShopPage> {
                                                             .toString();
                                                     setState(() {});
                                                     if (shopPageController
-                                                            .shoppage
-                                                            .value
-                                                            .data![index]
-                                                            .categoryStatus ==
+                                                        .shoppage
+                                                        .value
+                                                        .data![index]
+                                                        .categoryStatus ==
                                                         "true") {
                                                       if (categoryId != null) {
                                                         Get.to(ShopDetailsPage(
                                                             title:
-                                                                shopPageController
-                                                                    .shoppage
-                                                                    .value
-                                                                    .data![
-                                                                        index]
-                                                                    .name));
+                                                            shopPageController
+                                                                .shoppage
+                                                                .value
+                                                                .data![
+                                                            index]
+                                                                .name));
                                                       }
                                                     } else {
                                                       if (categoryId != null) {
                                                         Get.to(ProductDetailsPage(
                                                             title:
-                                                                shopPageController
-                                                                    .shoppage
-                                                                    .value
-                                                                    .data![
-                                                                        index]
-                                                                    .name));
+                                                            shopPageController
+                                                                .shoppage
+                                                                .value
+                                                                .data![
+                                                            index]
+                                                                .name));
                                                       }
                                                     }
                                                   },
@@ -363,7 +363,9 @@ class _ShopPageState extends State<ShopPage> {
                     )
                   ],
                 ),
-              );
+              ), onRefresh: ()async {
+                shopPageController.refreshApi();
+              },color: ColorConstants.appColor,);
           }
         }));
   }

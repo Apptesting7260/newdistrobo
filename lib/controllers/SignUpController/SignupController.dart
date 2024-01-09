@@ -41,6 +41,15 @@ class SignUpViewModal extends GetxController {
       var userId=value['user_data'];
       print("userid  ${userId['ID']}");
       SharePrefence().setStringData("userId",value['user_id'].toString());
+      SharePrefence().setStringData("email",emailcontroller.value.text);
+      SharePrefence().setStringData("pass",passwordController.value.text);
+
+      emailcontroller.value.clear();
+      namecontroller.value.clear();
+      lastnamecontroller.value.clear();
+      confirmpasswordController.value.clear();
+      passwordController.value.clear();
+      phonecontroller.value.clear();
       Get.offAll(Tab_view(
         index: 0,
       ));

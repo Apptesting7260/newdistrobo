@@ -24,6 +24,7 @@ class UserDetails {
      this.userPassword,
      this.userPhonenumber,
      this.userAddress,
+     this.lastName
   });
   var userId;
   var profilePicture;
@@ -31,25 +32,28 @@ class UserDetails {
   var userEmail;
   var userPassword;
   var userPhonenumber;
+  var lastName;
   UserAddress? userAddress;
 
   UserDetails.fromJson(Map<String, dynamic> json){
     userId = json['user_id'];
-    profilePicture = null;
-    userName = json['user_name'];
+    profilePicture = json['profile_picture'];
+    userName = json['first_name'];
     userEmail = json['user_email'];
     userPassword = json['user_password'];
     userPhonenumber = json['user_phonenumber'];
     userAddress = UserAddress.fromJson(json['user_address']);
+    lastName = json['last_name'];
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['user_id'] = userId;
     _data['profile_picture'] = profilePicture;
-    _data['user_name'] = userName;
+    _data['first_name'] = userName;
     _data['user_email'] = userEmail;
     _data['user_password'] = userPassword;
+    _data['last_name'] = lastName;
     _data['user_phonenumber'] = userPhonenumber;
     _data['user_address'] = userAddress!.toJson();
     return _data;

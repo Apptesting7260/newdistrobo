@@ -4,62 +4,79 @@ import 'package:newdistrobo/repository/VerifyPass_Repository/VerifyPage_Reposito
 import 'package:newdistrobo/utils/utils.dart';
 import 'package:newdistrobo/view/create_new_password.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:http/http.dart' as http;
+import '../../GlobaleVarribale/Globalevarribale.dart';
 import '../../Widgets/MyButton.dart';
 import '../../Widgets/appColor.dart';
 import '../../repository/ApiRepo.dart';
 import '../ResetPasswordController/ResetPassController.dart';
 import '../profileController/ProfileDetailsController.dart';
 
-class NameUpdateController extends GetxController {
+class ImageUpdateController extends GetxController {
+
+
 
   ProfileDetailsController profileDetailsController =
   Get.put(ProfileDetailsController());
-
   final _api = ApiRepo();
   RxBool resendVisible = false.obs;
 
 
-  final nameController=TextEditingController().obs ;
-  final lastnameController=TextEditingController().obs ;
-
   // final countryController=TextEditingController().obs ;
-  void setControllerData(){
-    // HouseNumberController.value.text=profileDetailsController.profiledetails.value.userDetails![0].userAddress!.address_1;
-    nameController.value.text=profileDetailsController.profiledetails.value.userDetails![0].userName;
-    lastnameController.value.text=profileDetailsController.profiledetails.value.userDetails![0].lastName;
-    // streetController.value.text=profileDetailsController.profiledetails.value.userDetails![0].userAddress!.address_1;
-    // areaController.value.text=profileDetailsController.profiledetails.value.userDetails![0].userAddress!.address_1;
 
 
-  }
-
-  Future<void> NameUpdate (BuildContext context) async {
+  Future<void>ImageUpdate (BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var user=prefs.getString("userId");
-    Map data = {
+    Map <dynamic, dynamic> data= {
       'user_id':user,
-      'first_name':nameController.value.text,
-      'last_name':lastnameController.value.text,
-
 
     } ;
 
-    print("otp page");
+    print("otp page  $data");
 
     resendVisible.value = true;
 
-    _api.NameUpdateApi(data).then((value) {
-      resendVisible.value = false;
+
+    try {
+      // Create a multipart request
+      var request = http.MultipartRequest(
+          'POST', Uri.parse('https://distrobo.com/wp-json/custom/v1/profile_upload-api',));
+      var fileStream = http.ByteStream(ImagetoUpload!.openRead());
+      var length = await ImagetoUpload!.length();
+      // Attach the file to the request
+      var multipartFile = http.MultipartFile('profile_img', fileStream, length,
+          filename: ImagetoUpload!.path.split('/').last);
+      request.files.add(multipartFile);
+      request.fields['user_id']=user!;
+
+
+      // Send the request
+      var response = await request.send();
+
+      // Check the response status
+      if (response.statusCode == 200) {
+        // The image was successfully uploaded
+        print('Profile picture uploaded successfully');
+        print(await response.stream.bytesToString());
+
+        profileDetailsController.ProfilePageApi();
+
+
+      } else {
+        // Handle the error
+        print('Failed to upload profile picture. Status code: ${response.statusCode}');
+        print(await response.stream.bytesToString());
+      }
+    } catch (error) {
+      print('Error uploading profile picture: $error');
       profileDetailsController.ProfilePageApi();
-      // Utils.SnackBar('Otp ', value['message']);
-      // Get.to(() => CreatePassword(email:email));
-      Get.back();
-    }).onError((error, stackTrace) {
+
+
       resendVisible.value = false;
       // Utils.SnackBar('Error', error.toString());
-      showOptionsDialog(context,error.toString());
-    });
+      showOptionsDialog(context, error.toString());
+    }
   }
   Future<void> showOptionsDialog(BuildContext context, String? error) {
     return showDialog(

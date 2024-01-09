@@ -181,8 +181,9 @@ class _SubCategoryPageState extends State<SubCategoryPage> {
   Widget Gride() {
     return Container(
       child: GridView.builder(
-        shrinkWrap: true,
+
         itemCount: ProductCategoryLists!.length,
+        shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
@@ -302,7 +303,7 @@ class _SubCategoryPageState extends State<SubCategoryPage> {
                       child: Row(
                         children: [
                           Text(
-                            '\$${ProductCategoryLists![index].productPrice}',
+                            '\$ ${ProductCategoryLists![index].productPrice}',
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
@@ -316,7 +317,9 @@ class _SubCategoryPageState extends State<SubCategoryPage> {
                       height: Get.height * 0.015,
                     ),
                     Container(
-                        child: MyButton(
+                        child:
+                        ProductCategoryLists![index].productQuantity!="Out of Stock"&& ProductCategoryLists![index].productQuantity!=null  ?
+                        MyButton(
                       title: 'Add to Cart',
                       onTap: () {
                         // Get.to(MyCart());
@@ -330,7 +333,29 @@ class _SubCategoryPageState extends State<SubCategoryPage> {
                         fontFamily: 'Gilroy-SemiBold',
                         fontWeight: FontWeight.w400,
                       ),
-                    )),
+                    ): Container(
+                          width: Get.width * 0.28,
+                          height: Get.height * 0.05,
+                          decoration: ShapeDecoration(
+                            color: Color(0xFF53B175),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Out of Stock',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 10,
+                                fontFamily: 'Gilroy-SemiBold',
+                                fontWeight: FontWeight.w400,
+
+                              ),
+                            ),
+                          ),
+                        )
+
+                    ),
                   ],
                 ),
               ),

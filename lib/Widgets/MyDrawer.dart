@@ -1,13 +1,18 @@
+import 'dart:ffi';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:newdistrobo/Screen/splashscreen.dart';
 import 'package:newdistrobo/Widgets/appColor.dart';
+import '../GlobaleVarribale/Globalevarribale.dart';
 import '../Screen/Aboutus.dart';
 import '../Screen/ContactusPage.dart';
 import '../Screen/MyFaveroutList.dart';
 import '../Screen/MyOrder.dart';
 import '../Screen/NewArrival.dart';
 import '../Shareprefene.dart';
+import '../controllers/profileController/ProfileDetailsController.dart';
 import '../view/NvigationTabButton.dart';
 import '../view/create_new_password.dart';
 
@@ -22,6 +27,8 @@ class DrawerClass extends StatefulWidget {
 }
 
 class _DrawerClassState extends State<DrawerClass> {
+  ProfileDetailsController profileDetailsController =
+  Get.put(ProfileDetailsController());
   @override
   Widget build(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
@@ -56,13 +63,37 @@ class _DrawerClassState extends State<DrawerClass> {
                         height: 70,
                         width: 70,
                         decoration: BoxDecoration(
-                            color: Colors.green,
+                            color: Colors.white,
                             borderRadius: BorderRadius.circular(70)),
                         child: ClipRRect(
+
                           borderRadius: BorderRadius.circular(70),
-                          child: Image.asset(
+                          child: profileDetailsController
+                              .profiledetails.value.userDetails![0].profilePicture!=""?
+                          CachedNetworkImage(
+
+                            imageUrl:profileDetailsController
+                                .profiledetails.value.userDetails![0].profilePicture,
+
+                            fit: BoxFit.cover,
+
+                            placeholder: (context,
+                                url) =>
+                            const Center(
+                                child:
+                                CircularProgressIndicator(
+                                  color: ColorConstants
+                                      .appColor,
+                                )),
+                            // Optional: Show a loading indicator
+                            errorWidget: (context,
+                                url, error) =>
+                            const Icon(Icons
+                                .error), // Optional: Show an error icon
+                          ): Image.asset(
                             "assets/images/demoPic.jpg",
                             fit: BoxFit.cover,
+
                           ),
                         ),
                       ),
@@ -102,7 +133,13 @@ class _DrawerClassState extends State<DrawerClass> {
                       height: 16,
                     ),
                     Text(
-                      "John Due",
+                     " ${
+                        profileDetailsController
+                            .profiledetails.value.userDetails![0].userName.toString()
+                      } ${
+                         profileDetailsController
+                             .profiledetails.value.userDetails![0].lastName.toString()
+                     }",
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -126,7 +163,7 @@ class _DrawerClassState extends State<DrawerClass> {
                         ),
                         Flexible(
                           child: Text(
-                            "6391 Elgin St. Celina, Delaware 10299",
+                            profileDetailsController.profiledetails.value.userDetails![0].userAddress!.address_1,
                             style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
@@ -204,6 +241,13 @@ class _DrawerClassState extends State<DrawerClass> {
                 ),
                 ListTile(
                   onTap: () {
+
+                  latestProduct.clear();
+                 new_arri_page = 1.obs;
+                    noDataArival = false.obs;
+                    new_currentPage=0.obs;
+                   callArrivalPagination = true.obs;
+                   newcurrentPage=0.obs;
                     Get.to(NewArrivals());
                   },
                   horizontalTitleGap: 0,
@@ -388,6 +432,7 @@ class _DrawerClassState extends State<DrawerClass> {
                         SharePrefence().clearAllData();
                         print(SharePrefence().getStringData("token"));
                         print(SharePrefence().getStringData("userId"));
+                        Get.to(SplashScreen());
                         // Get.to(SplashScreen());
                       },
                       child: Text(

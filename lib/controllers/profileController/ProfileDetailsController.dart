@@ -54,7 +54,7 @@ class ProfileDetailsController extends GetxController {
     var user=prefs.getString("userId");
     Map data = {
       'method':'user_profile',
-      'email':user
+      'user_id':user
     };
     print(data);
 

@@ -1,48 +1,51 @@
 
+
+
+
 import 'package:get/get.dart';
 import 'package:newdistrobo/HomePageModel/HomePageModel.dart';
-import 'package:newdistrobo/data/modals/CategeroryPageModel/CategoryPageModel.dart';
-import 'package:newdistrobo/data/modals/ShopModel/ShopModel.dart';
+import 'package:newdistrobo/data/modals/Aboutusmodel/AboutUsModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../GlobaleVarribale/Globalevarribale.dart';
-import '../../data/modals/CategoryDetailsModel.dart';
 import '../../repository/ApiRepo.dart';
 import '../../repository/Signup_repository/Signup_repository.dart';
 import '../../utils/StatusClass.dart';
 
-class CatagoryDetailsController extends GetxController {
+
+
+class AboutUsController extends GetxController {
   final _api = ApiRepo();
   //int? seekerRequestlenght;
 
   final rxRequestStatus = Status.LOADING.obs;
-  final categeaoryData = CategoryDetailasModel().obs;
+  final abouUds = AboutUsModel().obs;
   RxString error = ''.obs;
 
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
-  void setUserList(CategoryDetailasModel value) => categeaoryData.value = value ;
+  void setUserList(AboutUsModel value) => abouUds.value = value;
   void setError(String value) => error.value = value;
 
 
 
-  Future<void> CategoryPagedeatails() async {
+  Future<void> AboutUsApiHit() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var user=prefs.getString("userId");
     Map data = {
-      'category_id':categoryId,
-      'user_id':user,
-
-
+      'method':'home_api',
+      'user_id':user
     };
     print(data);
-
     setRxRequestStatus(Status.LOADING);
 
-    _api.CategoryDetailasApi(data).then((value) {
+    _api.AboutUsApi().then((value) {
       setRxRequestStatus(Status.COMPLETED);
       setUserList(value);
       print(value);
 
-
+      // if (value.data!.length > 2) {
+      //   seekerRequestlenght = 2;
+      // } else {
+      //   seekerRequestlenght = 1;
+      // }
     }).onError((error, stackTrace) {
       setError(error.toString());
       setRxRequestStatus(Status.ERROR);
@@ -51,20 +54,17 @@ class CatagoryDetailsController extends GetxController {
   }
 //
   Future<void> refreshApi() async {
-
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var user=prefs.getString("userId");
     Map data = {
-      'category_id':categoryId,
-      'user_id':user,
-
-
+      'method':'home_api',
+      'user_id':user
     };
+    print(data);
 
     setRxRequestStatus(Status.LOADING);
 
-
-    _api.CategoryDetailasApi(data).then((value){
+    _api.AboutUsApi().then((value){
       setRxRequestStatus(Status.COMPLETED);
       setUserList(value);
     }).onError((error, stackTrace){

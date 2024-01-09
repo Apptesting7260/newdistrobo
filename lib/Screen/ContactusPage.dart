@@ -1,3 +1,4 @@
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,7 +7,9 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:newdistrobo/Widgets/MyButton.dart';
 import 'package:newdistrobo/Widgets/appColor.dart';
 
+import '../Widgets/TextFilled.dart';
 import '../Widgets/appBar.dart';
+import '../controllers/ContactContorall/ContactCpntroller.dart';
 
 class ContactUs extends StatefulWidget {
   const ContactUs({super.key});
@@ -16,16 +19,13 @@ class ContactUs extends StatefulWidget {
 }
 
 class _ContactUsState extends State<ContactUs> {
-  TextEditingController namecontrollerr = TextEditingController();
-  TextEditingController emailcontrollerr = TextEditingController();
-  TextEditingController phonecontrollerr = TextEditingController();
-  TextEditingController massegeControllerr = TextEditingController();
+
   final formkey = GlobalKey<FormState>();
 
   bool _isValidPhoneNumber(String value) {
     return RegExp(r'^\d{10}$').hasMatch(value);
   }
-
+  ContactsController contactsController=Get.put(ContactsController());
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -64,33 +64,16 @@ class _ContactUsState extends State<ContactUs> {
                     padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                     child: Container(
                       decoration: BoxDecoration(),
-                      child: TextFormField(
-                        cursorColor: ColorConstants.appColor,
-                        controller: namecontrollerr,
+                      child: TextFilled(
+                        controller: contactsController.nameController.value,
+                        textColor: null,
+                        borderColor: ColorConstants.appColor,
+                        hintText: 'Enter name',
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please Enter Name';
+                            return 'Please Enter name';
                           }
                         },
-                        decoration: InputDecoration(
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: ColorConstants.appColor)),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xffBABABA)),
-                            ),
-                            errorBorder: UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Color(0xffBABABA))),
-                            focusedErrorBorder: UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Color(0xffBABABA))),
-                            hintText: "Enter your name",
-                            hintStyle: TextStyle(
-                              fontFamily: 'Gilroy-Regular',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                            )),
                       ),
                     ),
                   ),
@@ -112,33 +95,21 @@ class _ContactUsState extends State<ContactUs> {
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                    child: TextFormField(
-                      cursorColor: ColorConstants.appColor,
-                      controller: emailcontrollerr,
+                    child: TextFilled(
+                      controller: contactsController.emailController.value,
+                      textColor: null,
+                      borderColor: ColorConstants.appColor,
+                      hintText: 'Enter Email',
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please Enter Email';
-                        } else if (!value.endsWith('@gmail.com')) {
-                          return 'Please Enter Valid Email';
+                          return 'Enter your email';
                         }
+                        else if ( !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                            .hasMatch(value)) {
+                          return "Please Enter Valid Gmail";
+                        }
+                        return null;
                       },
-                      decoration: InputDecoration(
-                          focusedBorder: UnderlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: ColorConstants.appColor)),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xffBABABA)),
-                          ),
-                          errorBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xffBABABA))),
-                          focusedErrorBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xffBABABA))),
-                          hintText: "Enter your Email",
-                          hintStyle: TextStyle(
-                            fontFamily: 'Gilroy-Regular',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                          )),
                     ),
                   ),
                   SizedBox(
@@ -161,8 +132,11 @@ class _ContactUsState extends State<ContactUs> {
                     padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                     child: TextFormField(
                       cursorColor: ColorConstants.appColor,
-                      controller: phonecontrollerr,
-                      inputFormatters: [LengthLimitingTextInputFormatter(10)],
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      controller: contactsController.numberController.value,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(10)
+                      ],
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Please Enter Phone Number";
@@ -174,22 +148,51 @@ class _ContactUsState extends State<ContactUs> {
                       },
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                          focusedBorder: UnderlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: ColorConstants.appColor)),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xffBABABA)),
-                          ),
-                          errorBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xffBABABA))),
-                          focusedErrorBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xffBABABA))),
                           hintText: "Enter your Phone Number",
-                          hintStyle: TextStyle(
-                            fontFamily: 'Gilroy-Regular',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                          )),
+
+                          prefixIcon: CountryCodePicker(
+                            padding: EdgeInsets.only(bottom: 1),
+                            onChanged: (element) =>
+                                debugPrint(element.toLongString()),
+                            initialSelection: 'IN',
+
+                            showCountryOnly: false,
+
+                            showOnlyCountryWhenClosed: false,
+                            favorite: const [
+                              '+91',
+                              'IN',
+                            ],
+
+
+                            showDropDownButton: true,
+                            showFlag: false,
+                          ),
+                          hintStyle: TextStyle(fontFamily: 'Gilroy-rg'),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(20.0)),
+                              borderSide: BorderSide(
+                                  color: ColorConstants.appColor)),
+                          contentPadding: EdgeInsets.all(18),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(20.0)),
+                              borderSide:
+                              BorderSide(color: Color(0xffBABABA))),
+                          errorBorder: OutlineInputBorder(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(20.0)),
+                              borderSide:
+                              BorderSide(color: Colors.red)),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(20.0)),
+                            borderSide:
+                            BorderSide(color: Colors.red),
+                          ),
+                          filled: true,
+                          fillColor: Colors.white),
                     ),
                   ),
                   SizedBox(
@@ -211,33 +214,47 @@ class _ContactUsState extends State<ContactUs> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                     child: TextFormField(
+                      autovalidateMode:
+                      AutovalidateMode.onUserInteraction,
+                      keyboardType: TextInputType.emailAddress,
+                      controller:contactsController.mesengeController.value,
                       cursorColor: ColorConstants.appColor,
-                      controller: massegeControllerr,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Please Enter Your Message";
-                        } else {
-                          return null;
-                        }
-                      },
-                      keyboardType: TextInputType.text,
+                      maxLines: 3,
                       decoration: InputDecoration(
-                          focusedBorder: UnderlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: ColorConstants.appColor)),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xffBABABA)),
-                          ),
-                          errorBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xffBABABA))),
-                          focusedErrorBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xffBABABA))),
-                          hintText: "Type message",
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(20.0)),
+                              borderSide: BorderSide(
+                                  color: ColorConstants.appColor)),
                           hintStyle: TextStyle(
-                            fontFamily: 'Gilroy-Regular',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                          )),
+                              fontSize: 16, color: Color(0xFF7C7C7C)),
+                          contentPadding: EdgeInsets.all(18),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(20.0)),
+                              borderSide:
+                              BorderSide(color: Color(0xffBABABA))),
+                          errorBorder: OutlineInputBorder(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(20.0)),
+                              borderSide:
+                              BorderSide(color: Colors.red)),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(20.0)),
+                            borderSide:
+                            BorderSide(color: Colors.red),
+                          ),
+                          hintText: 'Enter Message',
+                          filled: true,
+                          fillColor: Colors.white),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please Message";
+                          }
+                            return null;
+
+                        }
                     ),
                   ),
                   SizedBox(
@@ -246,12 +263,15 @@ class _ContactUsState extends State<ContactUs> {
                   SizedBox(
                     height: Get.height * 0.078,
                     width: Get.width * 0.65,
-                    child: MyButton(
+                    child:Obx(() =>  MyButton(
                       title: "send",
                       width: Get.width * 0.05,
                       bgColor: ColorConstants.appColor,
-                      onTap: () {},
-                    ),
+                      loading: contactsController.resendVisible.value,
+                      onTap: () {
+                        validate();
+                      },
+                    ),)
                   ),
                 ],
               ),
@@ -263,9 +283,10 @@ class _ContactUsState extends State<ContactUs> {
   }
 
   validate() {
-    print("send");
-    if (!formkey.currentState!.validate()) {
-      return;
+
+    if (formkey.currentState!.validate()) {
+      contactsController.SendMessage(context);
+      print("send");
     }
   }
 

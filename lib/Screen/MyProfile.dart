@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,10 +26,11 @@ class MyProfile extends StatefulWidget {
 class _MyProfileState extends State<MyProfile> {
   ProfileDetailsController profileDetailsController =
       Get.put(ProfileDetailsController());
+
   @override
   void initState() {
     // TODO: implement initState
-    profileDetailsController.ProfilePageApi();
+    // profileDetailsController.ProfilePageApi();
     super.initState();
   }
 
@@ -77,7 +79,7 @@ class _MyProfileState extends State<MyProfile> {
               );
             }
           case Status.COMPLETED:
-            return SingleChildScrollView(
+            return RefreshIndicator(child:SingleChildScrollView(
               child: Column(
                 children: [
                   SizedBox(
@@ -99,7 +101,34 @@ class _MyProfileState extends State<MyProfile> {
                             color: Color(0xFFF2F3F2),
                             shape: OvalBorder(),
                           ),
-                          child: Center(child: Icon(Icons.person)),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(70),
+                            child: profileDetailsController.profiledetails.value
+                                .userDetails![0].profilePicture !=
+                                ""
+                                ? CachedNetworkImage(
+                              imageUrl: profileDetailsController
+                                  .profiledetails
+                                  .value
+                                  .userDetails![0]
+                                  .profilePicture,
+
+                              fit: BoxFit.cover,
+
+                              placeholder: (context, url) => const Center(
+                                  child: CircularProgressIndicator(
+                                    color: ColorConstants.appColor,
+                                  )),
+                              // Optional: Show a loading indicator
+                              errorWidget: (context, url, error) =>
+                              const Icon(Icons
+                                  .error), // Optional: Show an error icon
+                            )
+                                : Image.asset(
+                              "assets/images/demoPic.jpg",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                         SizedBox(
                           width: Get.width * 0.05,
@@ -109,7 +138,7 @@ class _MyProfileState extends State<MyProfile> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              profileDetailsController.profiledetails.value.userDetails![0].userName,
+                              " ${profileDetailsController.profiledetails.value.userDetails![0].userName.toString()} ${profileDetailsController.profiledetails.value.userDetails![0].lastName.toString()}",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
@@ -127,7 +156,8 @@ class _MyProfileState extends State<MyProfile> {
                                   width: Get.width * 0.005,
                                 ),
                                 Text(
-                                  profileDetailsController.profiledetails.value.userDetails![0].userAddress!.address_1,
+                                  profileDetailsController.profiledetails.value
+                                      .userDetails![0].userAddress!.address_1,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                     color: Colors.white,
@@ -175,7 +205,7 @@ class _MyProfileState extends State<MyProfile> {
                                   ),
                                 ),
                                 Text(
-                                  profileDetailsController.profiledetails.value.userDetails![0].userName,
+                                  " ${profileDetailsController.profiledetails.value.userDetails![0].userName.toString()} ${profileDetailsController.profiledetails.value.userDetails![0].lastName.toString()}",
                                   style: TextStyle(
                                     color: Color(0xFF8C8D8C),
                                     fontSize: 14,
@@ -221,7 +251,8 @@ class _MyProfileState extends State<MyProfile> {
                                     ),
                                   ),
                                   Text(
-                                    profileDetailsController.profiledetails.value.userDetails![0].userPhonenumber,
+                                    profileDetailsController.profiledetails
+                                        .value.userDetails![0].userPhonenumber,
                                     style: TextStyle(
                                       color: Color(0xFF8C8D8C),
                                       fontSize: 14,
@@ -265,7 +296,8 @@ class _MyProfileState extends State<MyProfile> {
                                     ),
                                   ),
                                   Text(
-                                    profileDetailsController.profiledetails.value.userDetails![0].userEmail,
+                                    profileDetailsController.profiledetails
+                                        .value.userDetails![0].userEmail,
                                     style: TextStyle(
                                       color: Color(0xFF8C8D8C),
                                       fontSize: 14,
@@ -351,7 +383,12 @@ class _MyProfileState extends State<MyProfile> {
                                     ),
                                   ),
                                   Text(
-                                    profileDetailsController.profiledetails.value.userDetails![0].userAddress!.address_1,
+                                    profileDetailsController
+                                        .profiledetails
+                                        .value
+                                        .userDetails![0]
+                                        .userAddress!
+                                        .address_1,
                                     style: TextStyle(
                                       color: Color(0xFF8C8D8C),
                                       fontSize: 14,
@@ -405,6 +442,7 @@ class _MyProfileState extends State<MyProfile> {
                           title: 'Edit Profile',
                           bgColor: ColorConstants.appColor,
                           width: Get.width * 0.5,
+                          loading: false,
                           onTap: () {
                             Get.to(EditeMyProfile());
                           },
@@ -417,7 +455,9 @@ class _MyProfileState extends State<MyProfile> {
                   )
                 ],
               ),
-            );
+            ), onRefresh: ()async {
+              profileDetailsController.refreshApi();
+            },color: ColorConstants.appColor,);;
         }
       }),
     );

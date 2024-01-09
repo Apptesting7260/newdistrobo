@@ -1,50 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:newdistrobo/Widgets/appColor.dart';
-import 'package:newdistrobo/repository/Login_Repository/login_repository.dart';
+import 'package:newdistrobo/repository/ResetPass_Repository/resetPass_Repository.dart';
 import 'package:newdistrobo/utils/utils.dart';
-import 'package:newdistrobo/view/NvigationTabButton.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:newdistrobo/view/LogigScreen.dart';
+import 'package:newdistrobo/view/VerifyPage.dart';
+import 'package:newdistrobo/view/create_new_password.dart';
 
-import '../../Shareprefene.dart';
 import '../../Widgets/MyButton.dart';
+import '../../Widgets/appColor.dart';
+import '../../repository/ApiRepo.dart';
+import '../ResetPasswordController/ResetPassController.dart';
 
-class LoginViewModal extends GetxController {
+class ContactsController extends GetxController {
+  final nameController = TextEditingController().obs;
   final emailController = TextEditingController().obs;
-  final passwordController = TextEditingController().obs;
-  final _api = LoginRepository();
-  RxBool loading = false.obs;
+  final numberController = TextEditingController().obs;
+  final mesengeController = TextEditingController().obs;
+  RxBool resendVisible = false.obs;
+  final _api = ApiRepo();
 
-
-  void loginHitApi(BuildContext context) {
+  void SendMessage(BuildContext context) {
     Map data = {
-      'email': emailController.value.text,
-      'password': passwordController.value.text
-    };
+      'name':nameController.value.text,
+      'email':emailController.value.text,
+      'phone_number':numberController.value.text,
+      'message':mesengeController.value.text,
+    };    print(data);
 
-    loading.value = true;
+    resendVisible.value = true;
 
-    _api.loginApi(data).then((value) {
-      print("done");
-      loading.value = false;
-      // Utils.SnackBar('LogIn', value['message']);
-      SharePrefence().setStringData("token", value['Token_id']);
-      var userId=value['user_data'];
-      print("userid  ${userId['ID']}");
-      SharePrefence().setStringData("userId", userId['ID'].toString());
-      SharePrefence().setStringData("email",emailController.value.text);
-      SharePrefence().setStringData("pass",passwordController.value.text);
+    _api.SendMesangeApi(data).then((value) {
+      resendVisible.value = false;
+      // Utils.SnackBar('Create Password ', value['message']);
+      showOptionsDialog(context,"Thank you,  your message has been sent");
+      print("object");
+      nameController.value.clear();
+      emailController.value.clear();
+      numberController.value.clear();
+      mesengeController.value.clear();
 
-      Get.offAll(Tab_view(
-        index: 0,
-      ));
     }).onError((error, stackTrace) {
-      loading.value = false;
-      // Utils.SnackBar('Error', error.toString());
+      resendVisible.value = false;
       showOptionsDialog(context,error.toString());
+      print(error.toString());
+      // Utils.SnackBar('Error', error.toString());
     });
-
   }
+
   Future<void> showOptionsDialog(BuildContext context, String? error) {
     return showDialog(
       context: context,

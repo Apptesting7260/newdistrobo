@@ -1,48 +1,53 @@
 
+
+
+
 import 'package:get/get.dart';
 import 'package:newdistrobo/HomePageModel/HomePageModel.dart';
-import 'package:newdistrobo/data/modals/CategeroryPageModel/CategoryPageModel.dart';
-import 'package:newdistrobo/data/modals/ShopModel/ShopModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../GlobaleVarribale/Globalevarribale.dart';
-import '../../data/modals/CategoryDetailsModel.dart';
+import '../../data/modals/GetCartDetailsModel/GetDetailsModel.dart';
 import '../../repository/ApiRepo.dart';
 import '../../repository/Signup_repository/Signup_repository.dart';
 import '../../utils/StatusClass.dart';
 
-class CatagoryDetailsController extends GetxController {
+
+
+class GetCartDetailsController extends GetxController {
   final _api = ApiRepo();
   //int? seekerRequestlenght;
-
+  final getCartDetails = GerCartDetailsModel().obs;
   final rxRequestStatus = Status.LOADING.obs;
-  final categeaoryData = CategoryDetailasModel().obs;
+  var checkindex = 0.obs;
   RxString error = ''.obs;
 
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
-  void setUserList(CategoryDetailasModel value) => categeaoryData.value = value ;
+  void setUserList(GerCartDetailsModel value) => getCartDetails.value = value;
   void setError(String value) => error.value = value;
 
 
 
-  Future<void> CategoryPagedeatails() async {
+  Future<void> GetCartDatailsApiHit() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var user=prefs.getString("userId");
     Map data = {
-      'category_id':categoryId,
-      'user_id':user,
-
-
+      'quantity':'1',
+      'id':CartproductId
     };
     print(data);
-
     setRxRequestStatus(Status.LOADING);
 
-    _api.CategoryDetailasApi(data).then((value) {
+    _api.GetCartDatailsApi().then((value) {
       setRxRequestStatus(Status.COMPLETED);
       setUserList(value);
       print(value);
+      print("Succes");
 
-
+      // if (value.data!.length > 2) {
+      //   seekerRequestlenght = 2;
+      // } else {
+      //   seekerRequestlenght = 1;
+      // }
     }).onError((error, stackTrace) {
       setError(error.toString());
       setRxRequestStatus(Status.ERROR);
@@ -50,28 +55,17 @@ class CatagoryDetailsController extends GetxController {
     });
   }
 //
-  Future<void> refreshApi() async {
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var user=prefs.getString("userId");
-    Map data = {
-      'category_id':categoryId,
-      'user_id':user,
-
-
-    };
+void refreshApi(){
 
     setRxRequestStatus(Status.LOADING);
 
+  _api.GetCartDatailsApi().then((value){
+    setRxRequestStatus(Status.COMPLETED);
+    setUserList(value);
+  }).onError((error, stackTrace){
+    setError(error.toString());
+    setRxRequestStatus(Status.ERROR);
 
-    _api.CategoryDetailasApi(data).then((value){
-      setRxRequestStatus(Status.COMPLETED);
-      setUserList(value);
-    }).onError((error, stackTrace){
-      setError(error.toString());
-      setRxRequestStatus(Status.ERROR);
-      print(error.toString());
-
-    });
-  }
+  });
+}
 }
