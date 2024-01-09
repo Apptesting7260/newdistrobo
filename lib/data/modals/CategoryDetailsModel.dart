@@ -52,6 +52,9 @@ class ProductData {
      this.productWishlist,
     this.productQuantity,
      this.productType,
+    this.productKey,
+    this.productCartKey,
+    this.productCartQuantity
   });
  var productId;
   var productImg;
@@ -63,6 +66,12 @@ class ProductData {
   RxBool isLoding=false.obs;
   var productQuantity;
  var productType;
+ var  productCartQuantity;
+  var productKey;
+  var productCartKey;
+  RxBool cartLoding= false.obs;
+  var productlocalCartQuantity=0.obs;
+
 
   ProductData.fromJson(Map<String, dynamic> json){
     productId = json['product_id'];
@@ -73,6 +82,9 @@ class ProductData {
     productWishlist = json['product_wishlist'];
     productQuantity = json['product_quantity'];
     productType = json['product_type'];
+    productKey = json['product_key'];
+    productCartQuantity = json['product_cart_quantity'];
+    productCartKey = json['product_cart_key'];
   }
 
   Map<String, dynamic> toJson() {
@@ -85,6 +97,9 @@ class ProductData {
     _data['product_wishlist'] = productWishlist;
     _data['product_quantity'] = productQuantity;
     _data['product_type'] = productType;
+    _data['product_key'] = productKey;
+    _data['product_cart_quantity'] = productCartQuantity;
+    _data['product_cart_key'] = productCartKey;
     return _data;
   }
 }

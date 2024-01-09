@@ -11,6 +11,8 @@ import '../Widgets/Commponent/GeneralException.dart';
 import '../Widgets/MyButton.dart';
 import '../Widgets/ProdactContantener.dart';
 import '../Widgets/appColor.dart';
+import '../controllers/AddToCartController/AddToCartController.dart';
+import '../controllers/CartQuantityUpdateController/CartQuantityUpdateController.dart';
 import '../controllers/NewArrivalsController/NewArrivalController.dart';
 import '../controllers/whishlitcontroller/wishlistController.dart';
 import '../utils/StatusClass.dart';
@@ -28,6 +30,9 @@ class _NewArrivalsState extends State<NewArrivals> {
   ScrollController scrollController = ScrollController();
   WhishlistAddController whishlistAddController =
       Get.put(WhishlistAddController());
+  CartQuantityUpdateController cartQuantityUpdateController =
+  Get.put(CartQuantityUpdateController());
+  AddToCartController addToCartController = Get.put(AddToCartController());
   RxBool gridEnd = false.obs;
 
   void initState() {
@@ -436,7 +441,7 @@ class _NewArrivalsState extends State<NewArrivals> {
                         child: GestureDetector(
                           onTap: () {},
                           child: Text(
-                            latestProduct[index].productName,
+                            latestProduct[index].productName.toString(),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -456,7 +461,7 @@ class _NewArrivalsState extends State<NewArrivals> {
                       child: Row(
                         children: [
                           Text(
-                            '\$ ${latestProduct[index].productPrice}',
+                            '\$ ${latestProduct[index].productPrice.toString()}',
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
@@ -470,46 +475,183 @@ class _NewArrivalsState extends State<NewArrivals> {
                       height: Get.height * 0.015,
                     ),
                     Container(
-                      child:
-                      latestProduct[index].productQuantity!="Out of Stock"&&
-                          latestProduct[index].productQuantity!=null?
-                      MyButton(
-                        title: 'Add to Cart',
-                        onTap: () {
-                          // Get.to(MyCart());
-                        },
-                        bgColor: ColorConstants.appColor,
-                        width: Get.width * 0.28,
-                        height: Get.height * 0.05,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontFamily: 'Gilroy-SemiBold',
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ):  Container(
-                        width: Get.width * 0.28,
-                        height: Get.height * 0.05,
-                        decoration: ShapeDecoration(
-                          color: Color(0xFF53B175),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Out of Stock',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 10,
-                              fontFamily: 'Gilroy-SemiBold',
-                              fontWeight: FontWeight.w400,
+                        child: latestProduct[index]
+                            .productQuantity !=
+                            "false"
+                            ?
+                        Obx(() =>  latestProduct[index] ==
+                            "true"
+                            ?  Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment
+                              .spaceEvenly,
+                          children: [
+                            GestureDetector(
+                              child:
+                              Container(
+                                height:
+                                Get.height * 0.05,
+                                width:
+                                Get.width * 0.1,
+                                decoration: BoxDecoration(
+                                    color: ColorConstants.appColor,
+                                    border: Border.all(color: ColorConstants.appColor, width: 0.2, style: BorderStyle.solid),
+                                    borderRadius: BorderRadius.circular(8)),
+                                child: Center(
+                                    child: Icon(
+                                      Icons.remove,
+                                      color:
+                                      Colors.white,
+                                    )),
+                              ),
+                              onTap:
+                                  () {
+                                if(latestProduct[index]
+                                    .productlocalCartQuantity
+                                    .value>0){
+                                  latestProduct[index]
+                                      .productlocalCartQuantity
+                                      .value -= 1;
 
+                                  Future
+                                      .delayed(
+                                    Duration(seconds: 1),
+                                        () {
+                                      cartQuantityUpdateController.cartQuantityUpdateApi(
+                                          latestProduct[index].productKey.toString(),
+                                          (int.parse(
+                                            latestProduct[index].productlocalCartQuantity.value.toString(),
+                                          )).toString());
+                                    },
+                                  );
+                                }
+                              },
+                            ),
+                            Center(
+                                child:
+                                Text(
+                                  "${latestProduct[index].productlocalCartQuantity.value.toString()}",
+                                  style: const TextStyle(
+                                      fontSize:
+                                      14,
+                                      fontWeight:
+                                      FontWeight.bold,
+                                      fontFamily: 'Gilroy'),
+                                )),
+                            GestureDetector(
+                              onTap:
+                                  () {
+                                    latestProduct[index]
+                                    .productlocalCartQuantity.value += 1;
+
+                                Future
+                                    .delayed(
+                                  Duration(seconds: 1),
+                                      () {
+                                        cartQuantityUpdateController.cartQuantityUpdateApi(
+                                            latestProduct[index].productKey,
+                                        int.parse(
+                                          latestProduct[index].productlocalCartQuantity.value.toString(),
+                                        ).toString());
+                                  },
+                                );
+                              },
+                              child:
+                              Container(
+                                height:
+                                Get.height * 0.05,
+                                width:
+                                Get.width * 0.1,
+                                decoration: BoxDecoration(
+                                    color: ColorConstants.appColor,
+                                    border: Border.all(color: ColorConstants.appColor, width: 0.2, style: BorderStyle.solid),
+                                    borderRadius: BorderRadius.circular(8)),
+                                child: Center(
+                                    child: Icon(
+                                      Icons.add,
+                                      color:
+                                      Colors.white,
+                                    )),
+                              ),
+                            )
+                          ],
+                        )
+                            : MyButton(
+                          loading:   latestProduct[index]
+                              .cartLoding.value ,
+                          title:
+                          'Add to Cart',
+                          onTap: () {
+                            // Get.to(MyCart());
+                            CartproductId = latestProduct[index]
+                                .productId
+                                .toString();
+                            if (CartproductId !=
+                                null) {
+                              latestProduct[index]
+                                  .cartLoding.value=true;
+                              addToCartController
+                                  .LastestAddToCartApiHit(index);
+                            }
+                          },
+                          bgColor:
+                          ColorConstants
+                              .appColor,
+                          width:
+                          Get.width *
+                              0.28,
+                          height:
+                          Get.height *
+                              0.05,
+                          style:
+                          TextStyle(
+                            color: Colors
+                                .white,
+                            fontSize:
+                            10,
+                            fontFamily:
+                            'Gilroy-SemiBold',
+                            fontWeight:
+                            FontWeight
+                                .w400,
+                          ),
+                        ))
+                            : Container(
+                          width: Get.width *
+                              0.28,
+                          height:
+                          Get.height *
+                              0.05,
+                          decoration:
+                          ShapeDecoration(
+                            color: Color(
+                                0xFF53B175),
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                BorderRadius.circular(
+                                    15)),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Out of Stock',
+                              textAlign:
+                              TextAlign
+                                  .center,
+                              style:
+                              TextStyle(
+                                color: Colors
+                                    .white,
+                                fontSize:
+                                10,
+                                fontFamily:
+                                'Gilroy-SemiBold',
+                                fontWeight:
+                                FontWeight
+                                    .w400,
+                              ),
                             ),
                           ),
-                        ),
-                      )
-
-                    ),
+                        )),
                   ],
                 ),
               ),

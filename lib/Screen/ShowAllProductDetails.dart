@@ -11,6 +11,8 @@ import '../Widgets/Commponent/GeneralException.dart';
 import '../Widgets/MyButton.dart';
 import '../Widgets/ProdactContantener.dart';
 import '../Widgets/appColor.dart';
+import '../controllers/AddToCartController/AddToCartController.dart';
+import '../controllers/CartQuantityUpdateController/CartQuantityUpdateController.dart';
 import '../controllers/CatagarryDetailsController/CategoryDetailsController.dart';
 import '../controllers/whishlitcontroller/wishlistController.dart';
 import '../utils/StatusClass.dart';
@@ -28,6 +30,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   CatagoryDetailsController catagoryDetailsController = Get.put(
       CatagoryDetailsController());
   WhishlistAddController whishlistAddController = Get.put(WhishlistAddController());
+  AddToCartController addToCartController = Get.put(AddToCartController());
+  CartQuantityUpdateController cartQuantityUpdateController =
+  Get.put(CartQuantityUpdateController());
 
 
   @override
@@ -88,7 +93,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     );
                   }
                 case Status.COMPLETED:
-                  return SingleChildScrollView(
+                  return RefreshIndicator(child: SingleChildScrollView(
                     child: Column(
                       children: [
                         Padding(
@@ -146,6 +151,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                     physics: NeverScrollableScrollPhysics(),
                                     itemBuilder: (BuildContext context,
                                         int p_index) {
+                                      productData[p_index]
+                                          .productlocalCartQuantity
+                                          .value= productData[p_index]
+                                          .productCartQuantity==""?0: int.parse(productData[p_index]
+                                          .productCartQuantity.toString());
                                       return Padding(
                                         padding: EdgeInsets.only(left: 18.0),
                                         child: Card(
@@ -283,9 +293,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                                       .only(left: 15.0),
                                                   child: Row(
                                                     children: [
-                                                      Text(
-                                                        '\$${ productData[p_index]
-                                                            .productPrice}',
+                                                      Obx(() =>   Text(
+                                                        productData[p_index].productlocalCartQuantity.value==0?
+                                                        '\$ ${ productData[p_index]
+                                                            .productPrice}':'\$ ${ int.parse(productData[p_index].productPrice.toString())*int.parse(productData[p_index].productlocalCartQuantity.value.toString())}',
                                                         style: TextStyle(
                                                             fontSize: 16,
                                                             fontWeight: FontWeight
@@ -295,7 +306,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                                                 .fromRGBO(
                                                                 214, 51, 72,
                                                                 1)),
-                                                      ),
+                                                      ),)
                                                     ],
                                                   ),
                                                 ),
@@ -303,49 +314,184 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                                   height: Get.height * 0.015,
                                                 ),
                                                 Container(
-                                                    child:productData[p_index].productQuantity!="Out of Stock"&&
-                                                  productData[p_index].productQuantity!=null?
-                                                    MyButton(
-                                                      title: 'Add to Cart',
+                                                    child: productData[p_index]
+                                                        .productQuantity !=
+                                                        "false"
+                                                        ?
+                                                    Obx(() =>   productData[p_index]
+                                                        .productCartKey ==
+                                                        "true"
+                                                        ?  Row(
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                      children: [
+                                                        GestureDetector(
+                                                          child:
+                                                          Container(
+                                                            height:
+                                                            Get.height * 0.05,
+                                                            width:
+                                                            Get.width * 0.1,
+                                                            decoration: BoxDecoration(
+                                                                color: ColorConstants.appColor,
+                                                                border: Border.all(color: ColorConstants.appColor, width: 0.2, style: BorderStyle.solid),
+                                                                borderRadius: BorderRadius.circular(8)),
+                                                            child: Center(
+                                                                child: Icon(
+                                                                  Icons.remove,
+                                                                  color:
+                                                                  Colors.white,
+                                                                )),
+                                                          ),
+                                                          onTap:
+                                                              () {
+                                                            if(  productData[p_index]
+                                                                .productlocalCartQuantity
+                                                                .value>0){
+                                                              productData[p_index]
+                                                                  .productlocalCartQuantity
+                                                                  .value -= 1;
+
+                                                              Future
+                                                                  .delayed(
+                                                                Duration(seconds: 1),
+                                                                    () {
+                                                                  cartQuantityUpdateController.cartQuantityUpdateApi(
+                                                                      productData[p_index].productKey.toString(),
+                                                                      (int.parse(
+                                                                        productData[p_index].productlocalCartQuantity.value.toString(),
+                                                                      )).toString());
+                                                                },
+                                                              );
+                                                            }
+                                                          },
+                                                        ),
+                                                        Center(
+                                                            child:
+                                                            Text(
+                                                              "${productData[p_index].productlocalCartQuantity.value.toString()}",
+                                                              style: const TextStyle(
+                                                                  fontSize:
+                                                                  14,
+                                                                  fontWeight:
+                                                                  FontWeight.bold,
+                                                                  fontFamily: 'Gilroy'),
+                                                            )),
+                                                        GestureDetector(
+                                                          onTap:
+                                                              () {
+                                                            productData[p_index]
+                                                                .productlocalCartQuantity.value += 1;
+
+                                                            Future
+                                                                .delayed(
+                                                              Duration(seconds: 1),
+                                                                  () {
+                                                                cartQuantityUpdateController.cartQuantityUpdateApi(
+                                                                    productData[p_index].productKey,
+                                                                    int.parse(
+                                                                      productData[p_index].productlocalCartQuantity.value.toString(),
+                                                                    ).toString());
+                                                              },
+                                                            );
+                                                          },
+                                                          child:
+                                                          Container(
+                                                            height:
+                                                            Get.height * 0.05,
+                                                            width:
+                                                            Get.width * 0.1,
+                                                            decoration: BoxDecoration(
+                                                                color: ColorConstants.appColor,
+                                                                border: Border.all(color: ColorConstants.appColor, width: 0.2, style: BorderStyle.solid),
+                                                                borderRadius: BorderRadius.circular(8)),
+                                                            child: Center(
+                                                                child: Icon(
+                                                                  Icons.add,
+                                                                  color:
+                                                                  Colors.white,
+                                                                )),
+                                                          ),
+                                                        )
+                                                      ],
+                                                    )
+                                                        : MyButton(
+                                                      loading:   productData[p_index]
+                                                          .cartLoding.value ,
+                                                      title:
+                                                      'Add to Cart',
                                                       onTap: () {
                                                         // Get.to(MyCart());
+                                                        CartproductId = productData[p_index]
+                                                            .productId
+                                                            .toString();
+                                                        if (CartproductId !=
+                                                            null) {
+                                                          productData[p_index]
+                                                              .cartLoding.value=true;
+                                                          addToCartController
+                                                              .SubCategoryAddToCartApiHit(index,p_index);
+                                                        }
                                                       },
-                                                      bgColor: ColorConstants
+                                                      bgColor:
+                                                      ColorConstants
                                                           .appColor,
-                                                      width: Get.width * 0.28,
-                                                      height: Get.height * 0.05,
-                                                      style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 10,
-                                                        fontFamily: 'Gilroy-SemiBold',
-                                                        fontWeight: FontWeight
+                                                      width:
+                                                      Get.width *
+                                                          0.28,
+                                                      height:
+                                                      Get.height *
+                                                          0.05,
+                                                      style:
+                                                      TextStyle(
+                                                        color: Colors
+                                                            .white,
+                                                        fontSize:
+                                                        10,
+                                                        fontFamily:
+                                                        'Gilroy-SemiBold',
+                                                        fontWeight:
+                                                        FontWeight
                                                             .w400,
                                                       ),
-                                                    ):
-                                                    Container(
-                                                      width: Get.width * 0.28,
-                                                      height: Get.height * 0.05,
-                                                      decoration: ShapeDecoration(
-                                                        color: Color(0xFF53B175),
-                                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                                    ))
+                                                        : Container(
+                                                      width: Get.width *
+                                                          0.28,
+                                                      height:
+                                                      Get.height *
+                                                          0.05,
+                                                      decoration:
+                                                      ShapeDecoration(
+                                                        color: Color(
+                                                            0xFF53B175),
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                            BorderRadius.circular(
+                                                                15)),
                                                       ),
                                                       child: Center(
                                                         child: Text(
                                                           'Out of Stock',
-                                                          textAlign: TextAlign.center,
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 10,
-                                                            fontFamily: 'Gilroy-SemiBold',
-                                                            fontWeight: FontWeight.w400,
-
+                                                          textAlign:
+                                                          TextAlign
+                                                              .center,
+                                                          style:
+                                                          TextStyle(
+                                                            color: Colors
+                                                                .white,
+                                                            fontSize:
+                                                            10,
+                                                            fontFamily:
+                                                            'Gilroy-SemiBold',
+                                                            fontWeight:
+                                                            FontWeight
+                                                                .w400,
                                                           ),
                                                         ),
                                                       ),
-                                                    )
-
-
-                                                ),
+                                                    )),
                                               ],
                                             ),
                                           ),
@@ -361,7 +507,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         ),
                       ],
                     ),
-                  );
+                  ),
+                    color: ColorConstants.appColor,
+                    onRefresh: ()async {
+                    catagoryDetailsController.refreshApi();
+                  },);
               }
             })));
   }

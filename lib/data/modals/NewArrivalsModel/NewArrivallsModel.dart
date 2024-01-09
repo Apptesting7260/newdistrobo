@@ -61,6 +61,9 @@ class LatestProducts {
      this.productCategory,
      this.productWishlist,
      this.productType,
+     this.productKey,
+     this.productCartQuantity,
+    this.productCartKey
   });
   var productId;
  var productName;
@@ -70,30 +73,42 @@ class LatestProducts {
  var productCategory;
   var productWishlist;
  var productType;
+ var productKey;
+var productCartQuantity;
+var productCartKey;
+  RxBool cartLoding= false.obs;
+  var productlocalCartQuantity=0.obs;
+
   RxBool productWishlistbool=false.obs;
   RxBool isLoding=false.obs;
 
   LatestProducts.fromJson(Map<String, dynamic> json){
     productId = json['product_id'];
-    productName = json['product_name'];
+    productName = json['product_title'];
     productQuantity = json['product_quantity'];
     productImage = json['product_image'];
     productPrice = json['product_price'];
     productCategory = json['product_category'];
     productWishlist = json['product_wishlist'];
     productType = json['product_type'];
+    productKey = json['product_key'];
+    productCartQuantity = json['product_cart_quantity'];
+    productCartKey = json['product_cart_key'];
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['product_id'] = productId;
-    _data['product_name'] = productName;
+    _data['product_title'] = productName;
     _data['product_quantity'] = productQuantity;
     _data['product_image'] = productImage;
     _data['product_price'] = productPrice;
     _data['product_category'] = productCategory;
     _data['product_wishlist'] = productWishlist;
     _data['product_type'] = productType;
+    _data['product_key'] = productKey;
+    _data['product_cart_quantity'] = productCartQuantity;
+    _data['product_cart_key'] = productCartKey;
     return _data;
   }
 }

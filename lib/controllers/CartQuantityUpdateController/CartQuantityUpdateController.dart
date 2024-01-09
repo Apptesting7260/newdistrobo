@@ -23,9 +23,11 @@ class CartQuantityUpdateController extends GetxController {
 
   cartQuantityUpdateApi(String id, quantity) {
     setRxRequestStatus(Status.LOADING);
-    Map data = {"quantity": quantity};
+    Map data = {"quantity": quantity,};
     setRxRequestStatus(Status.LOADING);
     print(data);
+
+    print(id);
 
     _api.cartQuantityUpdateApi(data,  id).then((value) {
       // Future.delayed(Duration(seconds: 2), () {

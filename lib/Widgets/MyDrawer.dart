@@ -163,7 +163,7 @@ class _DrawerClassState extends State<DrawerClass> {
                         ),
                         Flexible(
                           child: Text(
-                            profileDetailsController.profiledetails.value.userDetails![0].userAddress!.address_1,
+                            currentAddress.toString()=="null"?"Update Adress":currentAddress.toString(),
                             style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,

@@ -26,7 +26,7 @@ RxInt newcurrentPage=0.obs;
 
 File? ImagetoUpload;
 File ?imgFile;
-
+String? currentAddress;
 
 
 

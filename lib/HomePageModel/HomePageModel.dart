@@ -1,11 +1,13 @@
 import 'package:get/get.dart';
+
 class HomePageModel {
   HomePageModel({
-     this.data,
+    this.data,
   });
- Data? data;
 
-  HomePageModel.fromJson(Map<String, dynamic> json){
+  Data? data;
+
+  HomePageModel.fromJson(Map<String, dynamic> json) {
     data = Data.fromJson(json['data']);
   }
 
@@ -18,40 +20,52 @@ class HomePageModel {
 
 class Data {
   Data({
-     this.bannerSection,
-     this.homeCategory,
-     this.categoryBannerSection,
-     this.categoryDetails,
+    this.bannerSection,
+    this.homeCategory,
+    this.categoryBannerSection,
+    this.categoryDetails,
   });
- List<BannerSection>? bannerSection;
- List<HomeCategory>? homeCategory;
-  List<CategoryBannerSection>? categoryBannerSection;
- List<CategoryDetails>? categoryDetails;
 
-  Data.fromJson(Map<String, dynamic> json){
-    bannerSection = List.from(json['banner_section']).map((e)=>BannerSection.fromJson(e)).toList();
-    homeCategory = List.from(json['home_category']).map((e)=>HomeCategory.fromJson(e)).toList();
-    categoryBannerSection = List.from(json['category_banner_section']).map((e)=>CategoryBannerSection.fromJson(e)).toList();
-    categoryDetails = List.from(json['category_details']).map((e)=>CategoryDetails.fromJson(e)).toList();
+  List<BannerSection>? bannerSection;
+  List<HomeCategory>? homeCategory;
+  List<CategoryBannerSection>? categoryBannerSection;
+  List<CategoryDetails>? categoryDetails;
+
+  Data.fromJson(Map<String, dynamic> json) {
+    bannerSection = List.from(json['banner_section'])
+        .map((e) => BannerSection.fromJson(e))
+        .toList();
+    homeCategory = List.from(json['home_category'])
+        .map((e) => HomeCategory.fromJson(e))
+        .toList();
+    categoryBannerSection = List.from(json['category_banner_section'])
+        .map((e) => CategoryBannerSection.fromJson(e))
+        .toList();
+    categoryDetails = List.from(json['category_details'])
+        .map((e) => CategoryDetails.fromJson(e))
+        .toList();
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['banner_section'] = bannerSection!.map((e)=>e.toJson()).toList();
-    _data['home_category'] = homeCategory!.map((e)=>e.toJson()).toList();
-    _data['category_banner_section'] = categoryBannerSection!.map((e)=>e.toJson()).toList();
-    _data['category_details'] = categoryDetails!.map((e)=>e.toJson()).toList();
+    _data['banner_section'] = bannerSection!.map((e) => e.toJson()).toList();
+    _data['home_category'] = homeCategory!.map((e) => e.toJson()).toList();
+    _data['category_banner_section'] =
+        categoryBannerSection!.map((e) => e.toJson()).toList();
+    _data['category_details'] =
+        categoryDetails!.map((e) => e.toJson()).toList();
     return _data;
   }
 }
 
 class BannerSection {
   BannerSection({
-     this.bannerImage,
+    this.bannerImage,
   });
-var bannerImage;
 
-  BannerSection.fromJson(Map<String, dynamic> json){
+  var bannerImage;
+
+  BannerSection.fromJson(Map<String, dynamic> json) {
     bannerImage = json['banner_image'];
   }
 
@@ -64,17 +78,18 @@ var bannerImage;
 
 class HomeCategory {
   HomeCategory({
-     this.categoryId,
-     this.categoryIcon,
-     this.categoryName,
-     this.subcategoriesExist,
+    this.categoryId,
+    this.categoryIcon,
+    this.categoryName,
+    this.subcategoriesExist,
   });
-  var categoryId;
-var categoryIcon;
-var categoryName;
-var subcategoriesExist;
 
-  HomeCategory.fromJson(Map<String, dynamic> json){
+  var categoryId;
+  var categoryIcon;
+  var categoryName;
+  var subcategoriesExist;
+
+  HomeCategory.fromJson(Map<String, dynamic> json) {
     categoryId = json['category_id'];
     categoryIcon = json['category_icon'];
     categoryName = json['category_name'];
@@ -93,17 +108,18 @@ var subcategoriesExist;
 
 class CategoryBannerSection {
   CategoryBannerSection({
-     this.categoryBannerId,
-     this.categoryBannerName,
-     this.categoryBannerImage,
-     this.subcategoriesExist,
+    this.categoryBannerId,
+    this.categoryBannerName,
+    this.categoryBannerImage,
+    this.subcategoriesExist,
   });
-var categoryBannerId;
-var categoryBannerName;
-var categoryBannerImage;
-var subcategoriesExist;
 
-  CategoryBannerSection.fromJson(Map<String, dynamic> json){
+  var categoryBannerId;
+  var categoryBannerName;
+  var categoryBannerImage;
+  var subcategoriesExist;
+
+  CategoryBannerSection.fromJson(Map<String, dynamic> json) {
     categoryBannerId = json['category_banner_id'];
     categoryBannerName = json['category_banner_name'];
     categoryBannerImage = json['category_banner_image'];
@@ -122,21 +138,23 @@ var subcategoriesExist;
 
 class CategoryDetails {
   CategoryDetails({
-     this.id,
-     this.name,
-     this.subcategoriesExist,
-     this.catPosts,
+    this.id,
+    this.name,
+    this.subcategoriesExist,
+    this.catPosts,
   });
-var id;
-var name;
-var subcategoriesExist;
- List<CatPosts> ? catPosts;
 
-  CategoryDetails.fromJson(Map<String, dynamic> json){
+  var id;
+  var name;
+  var subcategoriesExist;
+  List<CatPosts>? catPosts;
+
+  CategoryDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     subcategoriesExist = json['subcategories_exist'];
-    catPosts = List.from(json['cat_posts']).map((e)=>CatPosts.fromJson(e)).toList();
+    catPosts =
+        List.from(json['cat_posts']).map((e) => CatPosts.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -144,40 +162,54 @@ var subcategoriesExist;
     _data['id'] = id;
     _data['name'] = name;
     _data['subcategories_exist'] = subcategoriesExist;
-    _data['cat_posts'] = catPosts!.map((e)=>e.toJson()).toList();
+    _data['cat_posts'] = catPosts!.map((e) => e.toJson()).toList();
     return _data;
   }
 }
 
 class CatPosts {
   CatPosts({
-     this.productId,
-     this.productImg,
-     this.productTitle,
-     this.productSlug,
-     this.productPrice,
-     this.productWishlist,
+    this.productId,
+    this.productImg,
+    this.productTitle,
+    this.productSlug,
+    this.productPrice,
+    this.productWishlist,
+    this.productCartKey,
+    this.productQuantity,
+    this.productKey,
+    this.productCartQuantity,
+    this.productType,
   });
+
   var productId;
-var productImg;
-var productTitle;
-var productSlug;
-var productPrice;
+  var productImg;
+  var productTitle;
+  var productSlug;
+  var productPrice;
   var productWishlist;
-  RxBool productWishlistbool=false.obs;
-  RxBool isLoding=false.obs;
-var productQuantity;
- var productType;
+  var productCartKey;
+  var productQuantity;
+  RxBool productWishlistbool = false.obs;
+  RxBool isLoding = false.obs;
+  RxBool cartLoding= false.obs;
+  var productlocalCartQuantity=0.obs;
+  var productKey;
+  var productCartQuantity;
 
+  var productType;
 
-  CatPosts.fromJson(Map<String, dynamic> json){
+  CatPosts.fromJson(Map<String, dynamic> json) {
     productId = json['product_id'];
     productImg = json['product_img'];
     productTitle = json['product_title'];
     productSlug = json['product_slug'];
     productPrice = json['product_price'];
     productWishlist = json['product_wishlist'];
+    productCartKey = json['product_cart_key'];
     productQuantity = json['product_quantity'];
+    productKey = json['product_key'];
+    productCartQuantity = json['product_cart_quantity'];
     productType = json['product_type'];
   }
 
@@ -189,17 +221,14 @@ var productQuantity;
     _data['product_slug'] = productSlug;
     _data['product_price'] = productPrice;
     _data['product_wishlist'] = productWishlist;
+    _data['product_cart_key'] = productCartKey;
     _data['product_quantity'] = productQuantity;
+    _data['product_key'] = productKey;
+    _data['product_cart_quantity'] = productCartQuantity;
     _data['product_type'] = productType;
     return _data;
   }
 }
-
-
-
-
-
-
 
 //
 //
@@ -376,12 +405,6 @@ var productQuantity;
 //   }
 // }
 //
-
-
-
-
-
-
 
 //
 // class HomePageModel {
