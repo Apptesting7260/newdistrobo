@@ -105,7 +105,7 @@ class _MyProfileState extends State<MyProfile> {
                             borderRadius: BorderRadius.circular(70),
                             child: profileDetailsController.profiledetails.value
                                 .userDetails![0].profilePicture !=
-                                ""
+                                "null"
                                 ? CachedNetworkImage(
                               imageUrl: profileDetailsController
                                   .profiledetails
@@ -138,7 +138,7 @@ class _MyProfileState extends State<MyProfile> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              " ${profileDetailsController.profiledetails.value.userDetails![0].userName.toString()} ${profileDetailsController.profiledetails.value.userDetails![0].lastName.toString()}",
+                              "${profileDetailsController.profiledetails.value.userDetails![0].userName.toString()} ${profileDetailsController.profiledetails.value.userDetails![0].lastName.toString()}",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
@@ -156,6 +156,9 @@ class _MyProfileState extends State<MyProfile> {
                                   width: Get.width * 0.005,
                                 ),
                                 Text(
+                                  profileDetailsController.profiledetails.value
+                                      .userDetails![0].userAddress!.address_1==""?
+                                      "Update Address":
                                   profileDetailsController.profiledetails.value
                                       .userDetails![0].userAddress!.address_1,
                                   overflow: TextOverflow.ellipsis,
@@ -205,7 +208,7 @@ class _MyProfileState extends State<MyProfile> {
                                   ),
                                 ),
                                 Text(
-                                  " ${profileDetailsController.profiledetails.value.userDetails![0].userName.toString()} ${profileDetailsController.profiledetails.value.userDetails![0].lastName.toString()}",
+                                  "${profileDetailsController.profiledetails.value.userDetails![0].userName.toString()} ${profileDetailsController.profiledetails.value.userDetails![0].lastName.toString()}",
                                   style: TextStyle(
                                     color: Color(0xFF8C8D8C),
                                     fontSize: 14,

@@ -45,7 +45,7 @@ class SubCategoryPageController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var user=prefs.getString("userId");
     Map data = {
-      'category_id':categoryId,
+      'category_id':categoryId.toString(),
       'user_id':user,
       'page' : page_no.value,
       'per_page':"10"

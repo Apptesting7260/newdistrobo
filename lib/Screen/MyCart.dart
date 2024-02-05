@@ -9,10 +9,13 @@ import 'package:newdistrobo/Widgets/appColor.dart';
 
 import '../Widgets/Commponent/Commponent.dart';
 import '../Widgets/Commponent/GeneralException.dart';
+import '../controllers/CartDetailsDeleteApi/CartDetailsDeletecontroller.dart';
 import '../controllers/CartQuantityUpdateController/CartQuantityUpdateController.dart';
 import '../controllers/GetCartDetailsController/GetCartDetailsController.dart';
 import '../utils/StatusClass.dart';
+import '../view/NvigationTabButton.dart';
 import 'ScheduleDelivery.dart';
+import 'ShopPage.dart';
 
 class MyCart extends StatefulWidget {
   const MyCart({
@@ -27,6 +30,7 @@ class _MyCartState extends State<MyCart> {
   GetCartDetailsController getCartDetailsController =
       Get.put(GetCartDetailsController());
   CartQuantityUpdateController cartQuantityUpdateController=Get.put(CartQuantityUpdateController());
+  CartDeleteController cartDeleteController=Get.put(CartDeleteController());
 
   @override
   void initState() {
@@ -52,7 +56,7 @@ class _MyCartState extends State<MyCart> {
             IconButton(
               onPressed: () {
                 // Show the alert dialog when the IconButton is pressed
-                // deleteShowAlert();
+                deleteShowAlert();
               },
               icon: Image.asset(
                 "assets/images/delete.png",
@@ -60,6 +64,7 @@ class _MyCartState extends State<MyCart> {
                 width: Get.width * 0.06,
               ),
             ),
+            SizedBox(width: Get.width*.003,)
           ],
         ),
         body: Obx(() {
@@ -600,7 +605,9 @@ class _MyCartState extends State<MyCart> {
           title: "Add Items",
           width: Get.width * 0.7,
           bgColor: ColorConstants.appColor,
-          onTap: () {},
+          onTap: () {
+            Get.to(ShopPage());
+          },
         )
       ],
     );
@@ -615,18 +622,20 @@ class _MyCartState extends State<MyCart> {
           title: Text('Confirm Deletion'),
           content: Text('Are you sure you want to delete this item?'),
           actions: <Widget>[
-            ElevatedButton(
-              child: Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-            ),
-            ElevatedButton(
-              child: Text('Delete'),
-              onPressed: () async {
-                // myCartController.rxRequestStatus.value = Status.LOADING;
-              },
-            ),
+         Row(children: [  MyButton(title: "Cancel",
+           bgColor: ColorConstants.appColor,
+           width: Get.width*.3,
+           height: Get.height*.05,
+           onTap: () {
+             Get.back();
+         },),
+           SizedBox( width: Get.width*.03,),
+           MyButton(title: "Delete",bgColor: ColorConstants.appColor,
+             width: Get.width*.3,
+             height: Get.height*.05,
+             onTap: () {
+               cartDeleteController.cartDeleteApi();
+           },)],)
           ],
         );
       },

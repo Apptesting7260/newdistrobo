@@ -39,7 +39,7 @@ class EmailUpdateController extends GetxController {
   // final countryController=TextEditingController().obs ;
   void setControllerData(){
     // HouseNumberController.value.text=profileDetailsController.profiledetails.value.userDetails![0].userAddress!.address_1;
-    emailComtroller.value.text=profileDetailsController.profiledetails.value.userDetails![0].userEmail;
+    // emailComtroller.value.text=profileDetailsController.profiledetails.value.userDetails![0].userEmail;
     // streetController.value.text=profileDetailsController.profiledetails.value.userDetails![0].userAddress!.address_1;
     // areaController.value.text=profileDetailsController.profiledetails.value.userDetails![0].userAddress!.address_1;
 
@@ -108,8 +108,8 @@ class EmailUpdateController extends GetxController {
     var user=prefs.getString("userId");
 
     Map data = {
-      'email':emailComtroller.value.text,
-      'user_id':user,
+      'useremail':emailComtroller.value.text,
+      'userid':user,
 
     };
     print(data);
@@ -125,8 +125,11 @@ class EmailUpdateController extends GetxController {
 
       SharePrefence().setStringData("email",emailComtroller.value.text);
 
-      Get.back();
+      print("enmail change");
+      emailComtroller.value.clear();
 
+      Get.back();
+      otpController.value.clear();
     }).onError((error, stackTrace) {
       setError(error.toString());
       setRxRequestStatus(Status.ERROR);
@@ -136,7 +139,33 @@ class EmailUpdateController extends GetxController {
     });
   }
 
+  Future<void> ResendEmailSendOtp(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var user=prefs.getString("userId");
+    Map data = {
+      'email':emailComtroller.value.text,
+      'user_id':user
+    };
 
+    print(data);
+    setRxRequestStatus(Status.LOADING);
+
+
+    _api.EmailSendOtp(data).then((value) {
+      setRxRequestStatus(Status.COMPLETED);
+      // setUserList(value);
+      print(value);
+
+
+    }).onError((error, stackTrace) {
+      setError(error.toString());
+      setRxRequestStatus(Status.ERROR);
+      print(error.toString());
+      showOptionsDialog(context,error.toString());
+
+
+    });
+  }
 
   Future<void> showOptionsDialog(BuildContext context, String? error) {
     return showDialog(

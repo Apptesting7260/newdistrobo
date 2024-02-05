@@ -15,6 +15,7 @@ import '../utils/StatusClass.dart';
 import 'Scaner.dart';
 import 'ShopDetailsPage.dart';
 import 'ShowAllProductDetails.dart';
+import 'SubCategeoryPage.dart';
 
 class ShopPage extends StatefulWidget {
   const ShopPage({super.key});
@@ -163,16 +164,37 @@ class _ShopPageState extends State<ShopPage> {
                                                     .data![index]
                                                     .name));
                                           }
-                                        } else {
-                                          if (categoryId != null) {
-                                            Get.to(ProductDetailsPage(
-                                                title: shopPageController
-                                                    .shoppage
-                                                    .value
-                                                    .data![index]
-                                                    .name));
-                                          }
                                         }
+                                        else {
+                                        callHomePagination.value = true;
+                                        page.value = 1;
+
+                                        ProductCategoryLists.clear();
+
+                                        currentPage.value = 0;
+                                        categoryId =   shopPageController
+                                            .shoppage
+                                            .value
+                                            .data![index]
+                                            .id
+                                            .toString();
+                                        categoryName =  shopPageController
+                                            .shoppage
+                                            .value
+                                            .data![index]
+                                            .name;
+                                        print(categoryId);
+
+                                        if (categoryId != null &&
+                                        categoryName != null) {
+                                        Get.to(SubCategoryPage(
+                                        title: categoryName
+                                            .toString()));
+                                        print(categoryName);
+                                        print(categoryId);
+                                        }
+                                        }
+
                                       },
                                       child: Row(
                                         children: [
@@ -204,22 +226,14 @@ class _ShopPageState extends State<ShopPage> {
                                                               .data![index]
                                                               .name));
                                                     }
-                                                  } else {
-                                                    if (categoryId != null) {
-                                                      Get.to(ProductDetailsPage(
-                                                          title:
-                                                          shopPageController
-                                                              .shoppage
-                                                              .value
-                                                              .data![index]
-                                                              .name));
-                                                    }
                                                   }
+
                                                 },
                                                 child: Container(
                                                   decoration: BoxDecoration(),
                                                   height: Get.height * 0.07,
                                                   width: Get.width * .2,
+
                                                   child: shopPageController
                                                       .shoppage
                                                       .value
@@ -246,6 +260,7 @@ class _ShopPageState extends State<ShopPage> {
                                                             const CircularProgressIndicator(  color:
                                                             ColorConstants
                                                                 .appColor,)),
+
                                                   )
                                                       : CachedNetworkImage(
                                                     imageUrl:

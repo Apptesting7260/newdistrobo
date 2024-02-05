@@ -39,7 +39,7 @@ class SignUpViewModal extends GetxController {
       // Utils.SnackBar('SignUP', value['message']);
       SharePrefence().setStringData("token", value['token']);
       var userId=value['user_data'];
-      print("userid  ${userId['ID']}");
+      print("userid  ${value['user_id']}");
       SharePrefence().setStringData("userId",value['user_id'].toString());
       SharePrefence().setStringData("email",emailcontroller.value.text);
       SharePrefence().setStringData("pass",passwordController.value.text);

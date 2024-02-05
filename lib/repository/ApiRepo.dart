@@ -15,7 +15,9 @@ import '../data/modals/GetCartDetailsModel/GetDetailsModel.dart';
 import '../data/modals/NewArrivalsModel/NewArrivallsModel.dart';
 import '../data/modals/ProductCategaoryDetails/ProductCategoryModel.dart';
 import '../data/modals/ShopModel/ShopModel.dart';
+import '../data/modals/SinglePageModel/SinglePageModel.dart';
 import '../data/modals/SubCategoryModel/SubcategoryModel.dart';
+import '../data/modals/WhishListModel/WhishListModel.dart';
 import '../data/modals/profilrModel/ProfileModel.dart';
 
 
@@ -67,7 +69,7 @@ class ApiRepo{
     // print("apihit");
 
     try {
-      final response = await http.post(Uri.parse(AppUrl.homeApi), body: data);
+      final response = await http.post(Uri.parse(AppUrl.homeApi), body: data).timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         // Parse the JSON response
@@ -115,7 +117,7 @@ class ApiRepo{
     // print("apihit");
 
     try {
-      final response = await http.get(Uri.parse(AppUrl.shopApi));
+      final response = await http.get(Uri.parse(AppUrl.shopApi)).timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         // Parse the JSON response
@@ -151,7 +153,7 @@ class ApiRepo{
     // print("apihit");
 
     try {
-      final response = await http.post(Uri.parse(AppUrl.subproCategarory), body: data);
+      final response = await http.post(Uri.parse(AppUrl.subCategarory), body: data).timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         // Parse the JSON response
@@ -186,7 +188,7 @@ class ApiRepo{
     // print("apihit");
 
     try {
-      final response = await http.post(Uri.parse(AppUrl.subCategarory), body: data);
+      final response = await http.post(Uri.parse(AppUrl.subproCategarory), body: data).timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         // Parse the JSON response
@@ -224,7 +226,7 @@ class ApiRepo{
 
 
     try {
-      final response = await http.post(Uri.parse(AppUrl.pagenationApi),body: data);
+      final response = await http.post(Uri.parse(AppUrl.pagenationApi),body: data).timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         // Parse the JSON response
@@ -260,7 +262,7 @@ class ApiRepo{
     // print("apihit");
 
     try {
-      final response = await http.post(Uri.parse(AppUrl.profileDetailsApi), body: data);
+      final response = await http.post(Uri.parse(AppUrl.profileDetailsApi), body: data).timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         // Parse the JSON response
@@ -351,7 +353,7 @@ class ApiRepo{
 
 
     try {
-      final response = await http.post(Uri.parse(AppUrl.newArrival),body: data);
+      final response = await http.post(Uri.parse(AppUrl.newArrival),body: data).timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         // Parse the JSON response
@@ -405,7 +407,8 @@ class ApiRepo{
     // print("apihit");
 
     try {
-      final response = await http.get(Uri.parse("https://distrobo.com/wp-json/cocart/v2/cart"), headers: headers);
+      final response = await http.get(Uri.parse("https://distrobo.com/wp-json/cocart/v2/cart"),
+          headers: headers).timeout(Duration(seconds: 10));
       if (response.statusCode == 301) {
         // If there's a redirect, extract the new location from headers
         var newLocation = response.headers['location'];
@@ -461,7 +464,7 @@ class ApiRepo{
     // print("apihit");
 
     try {
-      final response = await http.get(Uri.parse(AppUrl.aboutUsApi));
+      final response = await http.get(Uri.parse(AppUrl.aboutUsApi)).timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         // Parse the JSON response
@@ -512,6 +515,31 @@ class ApiRepo{
     return response;
 
   }
-//**************************************product categary deatils  ****************************************
+//**************************************product categary deatils  ****************************************  Future<dynamic>ImageUpdateApi(var data) async {
+    // print("apihit");
+   Future<ViewWhishListModel>ViewWhishListApi(var data)async{
 
+     dynamic response = await _apiService.postApi(AppUrl.ViewApiWHilistApi, data);
+     print(response);
+     return ViewWhishListModel.fromJson(response);
+   }
+
+
+//**************************************product categary deatils  ****************************************
+  Future<dynamic> CartDetailsDelete() async {
+    dynamic response = await _apiService.postApi3( AppUrl.cartDeleteApi);
+    return response;
+  }
+
+  //**************************************product categary deatils  ****************************************  Future<dynamic>ImageUpdateApi(var data) async {
+  // print("apihit");
+  Future<SingleProductPageModel>SingleProductApi(var data)async{
+
+    dynamic response = await _apiService.postApi(AppUrl.SingleProductModel, data);
+    print(response);
+    return SingleProductPageModel.fromJson(response);
+  }
+
+
+//**************************************product categary deatils  ****************************************
 }

@@ -120,7 +120,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                         loading: ResetPassVM.resendVisible.value,
                         onTap: () {
                           if (_formkey.currentState!.validate()) {
-                            ResetPassVM.ResetPassHitApi(context);
+                            ResetPassVM.ResetPassHitApi(context,"");
                           }
                         },
                       );

@@ -51,68 +51,71 @@ class NewArivallProductModel {
   }
 }
 
+
+
 class LatestProducts {
   LatestProducts({
-     this.productId,
-     this.productName,
-     this.productQuantity,
-     this.productImage,
-     this.productPrice,
-     this.productCategory,
-     this.productWishlist,
-     this.productType,
-     this.productKey,
-     this.productCartQuantity,
-    this.productCartKey
+    this.productId,
+    this.productImg,
+    this.productTitle,
+    this.productSlug,
+    this.productPrice,
+    this.productWishlist,
+    this.productCartKey,
+    this.productQuantity,
+    this.productKey,
+    this.productCartQuantity,
+    this.productType,
   });
-  var productId;
- var productName;
- var productQuantity;
- var productImage;
- var productPrice;
- var productCategory;
-  var productWishlist;
- var productType;
- var productKey;
-var productCartQuantity;
-var productCartKey;
-  RxBool cartLoding= false.obs;
-  var productlocalCartQuantity=0.obs;
 
-  RxBool productWishlistbool=false.obs;
-  RxBool isLoding=false.obs;
+  var productId;
+  var productImg;
+  var productTitle;
+  var productSlug;
+  var productPrice;
+  var productWishlist;
+  var productCartKey;
+  var productQuantity;
+  var productKey;
+  var productCartQuantity;
+  var productType;
+  RxBool cartLoding = false.obs;
+  var productlocalCartQuantity = 0.obs;
+
+  RxBool productWishlistbool = false.obs;
+  RxBool isLoding = false.obs;
+
 
   LatestProducts.fromJson(Map<String, dynamic> json){
     productId = json['product_id'];
-    productName = json['product_title'];
-    productQuantity = json['product_quantity'];
-    productImage = json['product_image'];
+    productImg = json['product_img'];
+    productTitle = json['product_title'];
+    productSlug = json['product_slug'];
     productPrice = json['product_price'];
-    productCategory = json['product_category'];
     productWishlist = json['product_wishlist'];
-    productType = json['product_type'];
+    productCartKey = json['product_cart_key'];
+    productQuantity = json['product_quantity'];
     productKey = json['product_key'];
     productCartQuantity = json['product_cart_quantity'];
-    productCartKey = json['product_cart_key'];
+    productType = json['product_type'];
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['product_id'] = productId;
-    _data['product_title'] = productName;
-    _data['product_quantity'] = productQuantity;
-    _data['product_image'] = productImage;
+    _data['product_img'] = productImg;
+    _data['product_title'] = productTitle;
+    _data['product_slug'] = productSlug;
     _data['product_price'] = productPrice;
-    _data['product_category'] = productCategory;
     _data['product_wishlist'] = productWishlist;
-    _data['product_type'] = productType;
+    _data['product_cart_key'] = productCartKey;
+    _data['product_quantity'] = productQuantity;
     _data['product_key'] = productKey;
     _data['product_cart_quantity'] = productCartQuantity;
-    _data['product_cart_key'] = productCartKey;
+    _data['product_type'] = productType;
     return _data;
   }
 }
-
 
 
 // import 'package:get/get.dart';

@@ -14,7 +14,7 @@ class NetworkApiServices extends BaseApiServices {
 
     dynamic responseJson;
     try {
-      final response = await http.post(Uri.parse(url), body: data);
+      final response = await http.post(Uri.parse(url), body: data).timeout(Duration(seconds: 10));
 
       responseJson = returnResponse(response);
 
@@ -23,7 +23,7 @@ class NetworkApiServices extends BaseApiServices {
 
 
     on SocketException {
-      throw BadRequestException('No internet !!');
+      throw BadRequestException('No internet');
 
     }
 
@@ -67,14 +67,15 @@ class NetworkApiServices extends BaseApiServices {
 
     dynamic responseJson;
     try {
-      final response = await http.post(Uri.parse(url), headers: headers, body: jsonEncode(data));
+      final response = await http.post(Uri.parse(url), headers: headers, body: jsonEncode(data))
+          .timeout(Duration(seconds: 10));
       // final response = await http.post(Uri.parse(url),headers:headers, body: jsonEncode(data) );
 
       responseJson = returnResponse(response);
 
       print(responseJson);
     } on SocketException {
-      throw BadRequestException('No internet !!');
+      throw BadRequestException('No internet');
 
     }
     return responseJson;
@@ -94,14 +95,14 @@ class NetworkApiServices extends BaseApiServices {
 
     dynamic responseJson;
     try {
-      final response = await http.post(Uri.parse(url), headers: headers);
+      final response = await http.post(Uri.parse(url), headers: headers).timeout(Duration(seconds: 10));
       // final response = await http.post(Uri.parse(url),headers:headers, body: jsonEncode(data) );
 
       responseJson = returnResponse(response);
 
       print(responseJson);
     } on SocketException {
-      throw BadRequestException('No internet !!');
+      throw BadRequestException('No internet');
 
     }
     return responseJson;

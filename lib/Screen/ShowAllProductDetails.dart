@@ -49,7 +49,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             appBar: AppBar(
               backgroundColor: Colors.white,
               centerTitle: true,
-              toolbarHeight: Get.height * .1,
+
               title: Text(
                 widget.title,
                 textAlign: TextAlign.center,
@@ -66,7 +66,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   },
                   icon: Icon(
                     Icons.arrow_back_ios_new_sharp,
-                    size: 24,
+                    size: 20,
                   )),
             ),
             body: Obx(() {
@@ -157,7 +157,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                           .productCartQuantity==""?0: int.parse(productData[p_index]
                                           .productCartQuantity.toString());
                                       return Padding(
-                                        padding: EdgeInsets.only(left: 18.0),
+                                        padding: EdgeInsets.only(left: 0.0),
                                         child: Card(
                                           child: Container(
                                             // height: Get.height * 0.2,
@@ -348,7 +348,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                                               () {
                                                             if(  productData[p_index]
                                                                 .productlocalCartQuantity
-                                                                .value>0){
+                                                                .value>1){
                                                               productData[p_index]
                                                                   .productlocalCartQuantity
                                                                   .value -= 1;

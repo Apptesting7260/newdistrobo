@@ -13,16 +13,16 @@ class ResetPasswordViewModal extends GetxController {
   RxBool resendVisible = false.obs;
   final _api = ResetPassRepository();
 
-  void ResetPassHitApi(BuildContext context) {
+  void ResetPassHitApi(BuildContext context, email) {
     Map data = {
-      'email': emailcontroller.value.text,
+      'email': emailcontroller.value.text==""?email:emailcontroller.value.text,
     };
 
     resendVisible.value = true;
 
-    _api.ResetApi(data).then((value) {
+    _api.SendOtp(data).then((value) {
       resendVisible.value = false;
-      // Utils.SnackBar('Otp ', value['message']);
+      Utils.SnackBar('Otp ', "Otp Sent");
       print( emailcontroller.value.text);
       Get.off(OtpVerification(email:emailcontroller.value.text));
     }).onError((error, stackTrace) {

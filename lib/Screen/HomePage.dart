@@ -24,6 +24,7 @@ import '../controllers/homePageController/HomePageController.dart';
 import '../controllers/profileController/ProfileDetailsController.dart';
 import '../controllers/whishlitcontroller/wishlistController.dart';
 import '../utils/StatusClass.dart';
+import 'ProductDetails.dart';
 import 'ShopDetailsPage.dart';
 import 'ShopPage.dart';
 import 'ShowAllProductDetails.dart';
@@ -88,15 +89,14 @@ class _HomePageState extends State<HomePage> {
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
     LocationPermission permission;
-    print("location handeler ");
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text(
-              'Location services are disabled. Please enable the services')));
+          content: Text('Location services are disabled. Please enable the services')));
       return false;
     }
+
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
@@ -106,14 +106,26 @@ class _HomePageState extends State<HomePage> {
         return false;
       }
     }
+
+    // Request background location permission
+    if (permission == LocationPermission.whileInUse) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Background location permission is required')));
+        return false;
+      }
+    }
+
     if (permission == LocationPermission.deniedForever) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text(
-              'Location permissions are permanently denied, we cannot request permissions.')));
+          content: Text('Location permissions are permanently denied, we cannot request permissions.')));
       return false;
     }
+
     return true;
   }
+
 
   Future<void> _getCurrentPosition() async {
     final hasPermission = await _handleLocationPermission();
@@ -156,6 +168,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     _handleLocationPermission();
     _getCurrentPosition();
+    homeComtroller.homePageApi();
     super.initState();
   }
 
@@ -179,11 +192,16 @@ class _HomePageState extends State<HomePage> {
                     Status.ERROR) {
               if (homeComtroller.error.value == 'No internet' &&
                   profileDetailsController.error.value == 'No internet') {
-                return InterNetExceptionWidget(
-                  onPress: () {
-                    homeComtroller.refreshApi();
-                    profileDetailsController.refreshApi();
-                  },
+                return Column(
+                  children: [
+                    SizedBox(height: Get.height * 0.001),
+                    InterNetExceptionWidget(
+                      onPress: () {
+                        homeComtroller.refreshApi();
+                        profileDetailsController.refreshApi();
+                      },
+                    ),
+                  ],
                 );
               } else {
                 return GeneralExceptionWidget(
@@ -480,7 +498,7 @@ class _HomePageState extends State<HomePage> {
                                     const EdgeInsets.only(right: 25, top: 11),
                                 child: GestureDetector(
                                   onTap: () {
-                                    Get.put(ShopPage());
+                                    Get.to(ShopPage());
                                   },
                                   child: const Text(
                                     "See All",
@@ -539,14 +557,34 @@ class _HomePageState extends State<HomePage> {
                                                     .categoryName));
                                           }
                                         } else {
-                                          if (categoryId != null) {
-                                            Get.to(ProductDetailsPage(
-                                                title: homeComtroller
-                                                    .homepage
-                                                    .value
-                                                    .data!
-                                                    .homeCategory![index]
-                                                    .categoryName));
+                                          callHomePagination.value = true;
+                                          page.value = 1;
+
+                                          ProductCategoryLists.clear();
+
+                                          currentPage.value = 0;
+                                          categoryId = homeComtroller
+                                              .homepage
+                                              .value
+                                              .data!
+                                              .homeCategory![index]
+                                              .categoryId
+                                              .toString();
+                                          categoryName = homeComtroller
+                                              .homepage
+                                              .value
+                                              .data!
+                                              .homeCategory![index]
+                                              .categoryName;
+                                          print(categoryId);
+
+                                          if (categoryId != null &&
+                                              categoryName != null) {
+                                            Get.to(SubCategoryPage(
+                                                title:
+                                                    categoryName.toString()));
+                                            print(categoryName);
+                                            print(categoryId);
                                           }
                                         }
                                       },
@@ -677,14 +715,33 @@ class _HomePageState extends State<HomePage> {
                                                   .categoryBannerName));
                                         }
                                       } else {
-                                        if (categoryId != null) {
-                                          Get.to(ProductDetailsPage(
-                                              title: homeComtroller
-                                                  .homepage
-                                                  .value
-                                                  .data!
-                                                  .categoryBannerSection![index]
-                                                  .categoryBannerName));
+                                        callHomePagination.value = true;
+                                        page.value = 1;
+
+                                        ProductCategoryLists.clear();
+
+                                        currentPage.value = 0;
+                                        categoryId = homeComtroller
+                                            .homepage
+                                            .value
+                                            .data!
+                                            .categoryBannerSection![index]
+                                            .categoryBannerId
+                                            .toString();
+                                        categoryName = homeComtroller
+                                            .homepage
+                                            .value
+                                            .data!
+                                            .categoryBannerSection![index]
+                                            .categoryBannerName;
+                                        print(categoryId);
+
+                                        if (categoryId != null &&
+                                            categoryName != null) {
+                                          Get.to(SubCategoryPage(
+                                              title: categoryName.toString()));
+                                          print(categoryName);
+                                          print(categoryId);
                                         }
                                       }
                                     },
@@ -796,19 +853,11 @@ class _HomePageState extends State<HomePage> {
                                                         .name));
                                               }
                                             } else {
-                                              if (categoryId !=
-                                                  homeComtroller
-                                                      .homepage
-                                                      .value
-                                                      .data!
-                                                      .categoryDetails![
-                                                          category_index]
-                                                      .id) {
-                                                callHomePagination.value = true;
-                                                page.value = 1;
+                                              callHomePagination.value = true;
+                                              page.value = 1;
 
-                                                ProductCategoryLists.clear();
-                                              }
+                                              ProductCategoryLists.clear();
+
                                               currentPage.value = 0;
                                               categoryId = homeComtroller
                                                   .homepage
@@ -865,7 +914,6 @@ class _HomePageState extends State<HomePage> {
                                           .catPosts!
                                           .length,
                                       itemBuilder: (context, c_index) {
-
                                         homeComtroller
                                             .homepage
                                             .value
@@ -873,104 +921,99 @@ class _HomePageState extends State<HomePage> {
                                             .categoryDetails![category_index]
                                             .catPosts![c_index]
                                             .productlocalCartQuantity
-                                            .value =
-                                            homeComtroller
+                                            .value = homeComtroller
+                                                    .homepage
+                                                    .value
+                                                    .data!
+                                                    .categoryDetails![
+                                                        category_index]
+                                                    .catPosts![c_index]
+                                                    .productCartQuantity ==
+                                                ""
+                                            ? 0
+                                            : int.parse(homeComtroller
                                                 .homepage
                                                 .value
                                                 .data!
                                                 .categoryDetails![
-                                            category_index]
-                                                .catPosts![c_index]
-                                                .productCartQuantity==""?0:  int.parse(homeComtroller
-                                                .homepage
-                                                .value
-                                                .data!
-                                                .categoryDetails![
-                                            category_index]
+                                                    category_index]
                                                 .catPosts![c_index]
                                                 .productCartQuantity
                                                 .toString());
 
-                                        return Padding(
-                                          padding: EdgeInsets.only(left: 18.0),
-                                          child: Card(
-                                            child: Container(
-                                              // height: Get.height * 0.2,
-                                              width: Get.width * 0.38,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                    Radius.circular(20),
-                                                  )),
-                                              child: Column(
-                                                children: [
-                                                  SizedBox(
-                                                    height: Get.height * 0.018,
-                                                  ),
-                                                  Stack(
-                                                    children: [
-                                                      GestureDetector(
-                                                        onTap: () {},
-                                                        child: Container(
-                                                          height:
-                                                              Get.height * 0.18,
-                                                          width:
-                                                              Get.width * 0.32,
-                                                          decoration: BoxDecoration(
-                                                              color: Color
-                                                                  .fromRGBO(
-                                                                      242,
-                                                                      243,
-                                                                      242,
-                                                                      1),
+                                        return GestureDetector(
+                                          onTap: () {
+                                            productId= homeComtroller
+                                                .homepage
+                                                .value
+                                                .data!
+                                                .categoryDetails![
+                                            category_index]
+                                                .catPosts![
+                                            c_index].productId.toString();
+                                            print(productId);
+                                            if(productId!=null){
+                                              Get.to(ProductDetailais());
+                                            }
+                                          },
+                                          child: Padding(
+                                            padding: EdgeInsets.only(left: 18.0),
+                                            child: Card(
+                                              child: Container(
+                                                // height: Get.height * 0.2,
+                                                width: Get.width * 0.38,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                      Radius.circular(20),
+                                                    )),
+                                                child: Column(
+                                                  children: [
+                                                    SizedBox(
+                                                      height: Get.height * 0.018,
+                                                    ),
+                                                    Stack(
+                                                      children: [
+                                                        GestureDetector(
+                                                          onTap: () {
+                                                            productId= homeComtroller
+                                                                .homepage
+                                                                .value
+                                                                .data!
+                                                                .categoryDetails![
+                                                            category_index]
+                                                                .catPosts![
+                                                            c_index].productId.toString();
+                                                            print(productId);
+                                                            if(productId!=null){
+                                                              Get.to(ProductDetailais());
+                                                            }
+                                                          },
+                                                          child: Container(
+                                                            height:
+                                                                Get.height * 0.18,
+                                                            width:
+                                                                Get.width * 0.32,
+                                                            decoration: BoxDecoration(
+                                                                color: Color
+                                                                    .fromRGBO(
+                                                                        242,
+                                                                        243,
+                                                                        242,
+                                                                        1),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            20)),
+                                                            child: ClipRRect(
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .circular(
-                                                                          20)),
-                                                          child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        20),
-                                                            child:
-                                                                CachedNetworkImage(
-                                                              imageUrl: homeComtroller
-                                                                  .homepage
-                                                                  .value
-                                                                  .data!
-                                                                  .categoryDetails![
-                                                                      category_index]
-                                                                  .catPosts![
-                                                                      c_index]
-                                                                  .productImg,
-                                                              placeholder: (context,
-                                                                      url) =>
-                                                                  Center(
-                                                                      child:
-                                                                          CircularProgressIndicator(
-                                                                color:
-                                                                    ColorConstants
-                                                                        .appColor,
-                                                              )),
-                                                              errorWidget: (context,
-                                                                      url,
-                                                                      error) =>
-                                                                  Icon(Icons
-                                                                      .error), // Customize the error widget as needed.
-                                                            ),
-                                                            // child: Image.network(
-                                                            //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd_anlQxAS6NrNRrUj1Bkz2BMSUX99xsDyCZvCORB1EzBHZxgxDcKCkLzzMEpYIIg46nQ&usqp=CAU",
-                                                            //   fit: BoxFit.cover,
-                                                            // ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Obx(
-                                                        () => Positioned(
-                                                            right: 8,
-                                                            top: 8,
-                                                            child: homeComtroller
+                                                                          20),
+                                                              child:
+                                                                  CachedNetworkImage(
+                                                                imageUrl: homeComtroller
                                                                     .homepage
                                                                     .value
                                                                     .data!
@@ -978,15 +1021,341 @@ class _HomePageState extends State<HomePage> {
                                                                         category_index]
                                                                     .catPosts![
                                                                         c_index]
-                                                                    .isLoding
+                                                                    .productImg,
+                                                                placeholder: (context,
+                                                                        url) =>
+                                                                    Center(
+                                                                        child:
+                                                                            CircularProgressIndicator(
+                                                                  color:
+                                                                      ColorConstants
+                                                                          .appColor,
+                                                                )),
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    Icon(Icons
+                                                                        .error), // Customize the error widget as needed.
+                                                              ),
+                                                              // child: Image.network(
+                                                              //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd_anlQxAS6NrNRrUj1Bkz2BMSUX99xsDyCZvCORB1EzBHZxgxDcKCkLzzMEpYIIg46nQ&usqp=CAU",
+                                                              //   fit: BoxFit.cover,
+                                                              // ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Obx(
+                                                          () => Positioned(
+                                                              right: 8,
+                                                              top: 8,
+                                                              child: homeComtroller
+                                                                      .homepage
+                                                                      .value
+                                                                      .data!
+                                                                      .categoryDetails![
+                                                                          category_index]
+                                                                      .catPosts![
+                                                                          c_index]
+                                                                      .isLoding
+                                                                      .value
+                                                                  ? CupertinoActivityIndicator(
+                                                                      color: ColorConstants
+                                                                          .appColor,
+                                                                    )
+                                                                  : GestureDetector(
+                                                                      onTap: () {
+                                                                        productId = homeComtroller
+                                                                            .homepage
+                                                                            .value
+                                                                            .data!
+                                                                            .categoryDetails![
+                                                                                category_index]
+                                                                            .catPosts![
+                                                                                c_index]
+                                                                            .productId
+                                                                            .toString();
+                                                                        if (productId !=
+                                                                            null) {
+                                                                          whishlistAddController.WhishLisAddPageApi(
+                                                                              homeComtroller.homepage.value.data!.categoryDetails![category_index].name,
+                                                                              c_index,
+                                                                              category_index);
+                                                                          homeComtroller
+                                                                              .homepage
+                                                                              .value
+                                                                              .data!
+                                                                              .categoryDetails![category_index]
+                                                                              .catPosts![c_index]
+                                                                              .isLoding
+                                                                              .value = true;
+                                                                          print(homeComtroller
+                                                                              .homepage
+                                                                              .value
+                                                                              .data!
+                                                                              .categoryDetails![category_index]
+                                                                              .catPosts![c_index]
+                                                                              .isLoding
+                                                                              .value);
+                                                                        }
+                                                                      },
+                                                                      child:
+                                                                          Container(
+                                                                        child: homeComtroller.homepage.value.data!.categoryDetails![category_index].catPosts![c_index].productWishlist ==
+                                                                                true
+                                                                            ? Icon(
+                                                                                Icons.favorite,
+                                                                                size: 18,
+                                                                                color: Colors.red,
+                                                                              )
+                                                                            : Icon(
+                                                                                Icons.favorite_border,
+                                                                                size: 18,
+                                                                              ),
+                                                                      ),
+                                                                    )),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: Get.height * 0.02,
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 15.0),
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          productId= homeComtroller
+                                                              .homepage
+                                                              .value
+                                                              .data!
+                                                              .categoryDetails![
+                                                          category_index]
+                                                              .catPosts![
+                                                          c_index].productId.toString();
+                                                          print(productId);
+                                                          if(productId!=null){
+                                                            Get.to(ProductDetailais());
+                                                          }
+                                                        },
+                                                        child: Container(
+                                                          height:
+                                                              Get.height * 0.04,
+                                                          child: Text(
+                                                            homeComtroller
+                                                                .homepage
+                                                                .value
+                                                                .data!
+                                                                .categoryDetails![
+                                                                    category_index]
+                                                                .catPosts![
+                                                                    c_index]
+                                                                .productTitle,
+                                                            maxLines: 2,
+                                                            overflow: TextOverflow
+                                                                .ellipsis,
+                                                            style: TextStyle(
+                                                                fontSize: 10,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                fontFamily:
+                                                                    'Gilroy',
+                                                                color: Color
+                                                                    .fromRGBO(
+                                                                        9,
+                                                                        64,
+                                                                        94,
+                                                                        1)),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: Get.height * 0.01,
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 15.0),
+                                                      child: Row(
+                                                        children: [
+                                                          Text(
+                                                            "\$ ${homeComtroller.homepage.value.data!.categoryDetails![category_index].catPosts![c_index].productPrice.toString()}",
+                                                            style: TextStyle(
+                                                                fontSize: 16,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontFamily:
+                                                                    'Gilroy',
+                                                                color: Color
+                                                                    .fromRGBO(
+                                                                        214,
+                                                                        51,
+                                                                        72,
+                                                                        1)),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: Get.height * 0.015,
+                                                    ),
+                                                    Obx(() => Container(
+                                                        child: homeComtroller
+                                                                    .homepage
                                                                     .value
-                                                                ? CupertinoActivityIndicator(
-                                                                    color: ColorConstants
-                                                                        .appColor,
+                                                                    .data!
+                                                                    .categoryDetails![
+                                                                        category_index]
+                                                                    .catPosts![
+                                                                        c_index]
+                                                                    .productQuantity !=
+                                                                "false"
+                                                            ? homeComtroller
+                                                                        .homepage
+                                                                        .value
+                                                                        .data!
+                                                                        .categoryDetails![
+                                                                            category_index]
+                                                                        .catPosts![
+                                                                            c_index]
+                                                                        .productCartKey ==
+                                                                    "true"
+                                                                ? Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceEvenly,
+                                                                    children: [
+                                                                      GestureDetector(
+                                                                        child:
+                                                                            Container(
+                                                                          height: Get.height *
+                                                                              0.05,
+                                                                          width: Get.width *
+                                                                              0.1,
+                                                                          decoration: BoxDecoration(
+                                                                              color: ColorConstants
+                                                                                  .appColor,
+                                                                              border: Border.all(
+                                                                                  color: ColorConstants.appColor,
+                                                                                  width: 0.2,
+                                                                                  style: BorderStyle.solid),
+                                                                              borderRadius: BorderRadius.circular(8)),
+                                                                          child: Center(
+                                                                              child: Icon(
+                                                                            Icons
+                                                                                .remove,
+                                                                            color:
+                                                                                Colors.white,
+                                                                          )),
+                                                                        ),
+                                                                        onTap:
+                                                                            () {
+                                                                          if (homeComtroller.homepage.value.data!.categoryDetails![category_index].catPosts![c_index].productlocalCartQuantity.value >
+                                                                              1) {
+                                                                            homeComtroller
+                                                                                .homepage
+                                                                                .value
+                                                                                .data!
+                                                                                .categoryDetails![category_index]
+                                                                                .catPosts![c_index]
+                                                                                .productlocalCartQuantity
+                                                                                .value -= 1;
+
+                                                                            Future
+                                                                                .delayed(
+                                                                              Duration(seconds: 1),
+                                                                              () {
+                                                                                cartQuantityUpdateController.cartQuantityUpdateApi(
+                                                                                    homeComtroller.homepage.value.data!.categoryDetails![category_index].catPosts![c_index].productKey.toString(),
+                                                                                    (int.parse(
+                                                                                      homeComtroller.homepage.value.data!.categoryDetails![category_index].catPosts![c_index].productlocalCartQuantity.value.toString(),
+                                                                                    )).toString());
+                                                                              },
+                                                                            );
+                                                                          }
+                                                                        },
+                                                                      ),
+                                                                      Center(
+                                                                          child:
+                                                                              Text(
+                                                                        "${homeComtroller.homepage.value.data!.categoryDetails![category_index].catPosts![c_index].productlocalCartQuantity.value.toString()}",
+                                                                        style: const TextStyle(
+                                                                            fontSize:
+                                                                                14,
+                                                                            fontWeight: FontWeight
+                                                                                .bold,
+                                                                            fontFamily:
+                                                                                'Gilroy'),
+                                                                      )),
+                                                                      GestureDetector(
+                                                                        onTap:
+                                                                            () {
+                                                                          homeComtroller
+                                                                              .homepage
+                                                                              .value
+                                                                              .data!
+                                                                              .categoryDetails![category_index]
+                                                                              .catPosts![c_index]
+                                                                              .productlocalCartQuantity
+                                                                              .value += 1;
+
+                                                                          Future
+                                                                              .delayed(
+                                                                            Duration(
+                                                                                seconds: 1),
+                                                                            () {
+                                                                              cartQuantityUpdateController.cartQuantityUpdateApi(
+                                                                                  homeComtroller.homepage.value.data!.categoryDetails![category_index].catPosts![c_index].productKey,
+                                                                                  int.parse(
+                                                                                    homeComtroller.homepage.value.data!.categoryDetails![category_index].catPosts![c_index].productlocalCartQuantity.value.toString(),
+                                                                                  ).toString());
+                                                                            },
+                                                                          );
+                                                                        },
+                                                                        child:
+                                                                            Container(
+                                                                          height: Get.height *
+                                                                              0.05,
+                                                                          width: Get.width *
+                                                                              0.1,
+                                                                          decoration: BoxDecoration(
+                                                                              color: ColorConstants
+                                                                                  .appColor,
+                                                                              border: Border.all(
+                                                                                  color: ColorConstants.appColor,
+                                                                                  width: 0.2,
+                                                                                  style: BorderStyle.solid),
+                                                                              borderRadius: BorderRadius.circular(8)),
+                                                                          child: Center(
+                                                                              child: Icon(
+                                                                            Icons
+                                                                                .add,
+                                                                            color:
+                                                                                Colors.white,
+                                                                          )),
+                                                                        ),
+                                                                      )
+                                                                    ],
                                                                   )
-                                                                : GestureDetector(
+                                                                : MyButton(
+                                                                    loading: homeComtroller
+                                                                        .homepage
+                                                                        .value
+                                                                        .data!
+                                                                        .categoryDetails![
+                                                                            category_index]
+                                                                        .catPosts![
+                                                                            c_index]
+                                                                        .cartLoding
+                                                                        .value,
+                                                                    title:
+                                                                        'Add to Cart',
                                                                     onTap: () {
-                                                                      productId = homeComtroller
+                                                                      // Get.to(MyCart());
+                                                                      CartproductId = homeComtroller
                                                                           .homepage
                                                                           .value
                                                                           .data!
@@ -996,362 +1365,83 @@ class _HomePageState extends State<HomePage> {
                                                                               c_index]
                                                                           .productId
                                                                           .toString();
-                                                                      if (productId !=
+                                                                      if (CartproductId !=
                                                                           null) {
-                                                                        whishlistAddController.WhishLisAddPageApi(
-                                                                            homeComtroller.homepage.value.data!.categoryDetails![category_index].name,
-                                                                            c_index,
-                                                                            category_index);
                                                                         homeComtroller
                                                                             .homepage
                                                                             .value
                                                                             .data!
-                                                                            .categoryDetails![category_index]
-                                                                            .catPosts![c_index]
-                                                                            .isLoding
+                                                                            .categoryDetails![
+                                                                                category_index]
+                                                                            .catPosts![
+                                                                                c_index]
+                                                                            .cartLoding
                                                                             .value = true;
-                                                                        print(homeComtroller
-                                                                            .homepage
-                                                                            .value
-                                                                            .data!
-                                                                            .categoryDetails![category_index]
-                                                                            .catPosts![c_index]
-                                                                            .isLoding
-                                                                            .value);
+                                                                        addToCartController.HomeAddToCartApiHit(
+                                                                            category_index,
+                                                                            c_index);
                                                                       }
                                                                     },
-                                                                    child:
-                                                                        Container(
-                                                                      child: homeComtroller.homepage.value.data!.categoryDetails![category_index].catPosts![c_index].productWishlist ==
-                                                                              true
-                                                                          ? Icon(
-                                                                              Icons.favorite,
-                                                                              size: 18,
-                                                                              color: Colors.red,
-                                                                            )
-                                                                          : Icon(
-                                                                              Icons.favorite_border,
-                                                                              size: 18,
-                                                                            ),
+                                                                    bgColor:
+                                                                        ColorConstants
+                                                                            .appColor,
+                                                                    width:
+                                                                        Get.width *
+                                                                            0.28,
+                                                                    height:
+                                                                        Get.height *
+                                                                            0.05,
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          10,
+                                                                      fontFamily:
+                                                                          'Gilroy-SemiBold',
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
                                                                     ),
-                                                                  )),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: Get.height * 0.02,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 15.0),
-                                                    child: GestureDetector(
-                                                      onTap: () {},
-                                                      child: Container(
-                                                        height:
-                                                            Get.height * 0.04,
-                                                        child: Text(
-                                                          homeComtroller
-                                                              .homepage
-                                                              .value
-                                                              .data!
-                                                              .categoryDetails![
-                                                                  category_index]
-                                                              .catPosts![
-                                                                  c_index]
-                                                              .productTitle,
-                                                          maxLines: 2,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style: TextStyle(
-                                                              fontSize: 10,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              fontFamily:
-                                                                  'Gilroy',
-                                                              color: Color
-                                                                  .fromRGBO(
-                                                                      9,
-                                                                      64,
-                                                                      94,
-                                                                      1)),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: Get.height * 0.01,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 15.0),
-                                                    child: Row(
-                                                      children: [
-                                                      Obx(() =>   Text(
-                                                        homeComtroller
-                                                            .homepage
-                                                            .value
-                                                            .data!
-                                                            .categoryDetails![
-                                                        category_index]
-                                                            .catPosts![
-                                                        c_index]
-                                                            .productlocalCartQuantity
-                                                            .value == 0
-                                                            ? "\$ ${homeComtroller.homepage.value.data!.categoryDetails![category_index].catPosts![c_index].productPrice.toString()}"
-                                                            : '\$ ${int.parse(homeComtroller.homepage.value.data!.categoryDetails![category_index].catPosts![c_index].productPrice.toString()) * int.parse(homeComtroller.homepage.value.data!.categoryDetails![category_index].catPosts![c_index].productlocalCartQuantity.value.toString())}',
-                                                        style: TextStyle(
-                                                            fontSize: 16,
-                                                            fontWeight:
-                                                            FontWeight
-                                                                .w600,
-                                                            fontFamily:
-                                                            'Gilroy',
-                                                            color: Color
-                                                                .fromRGBO(
-                                                                214,
-                                                                51,
-                                                                72,
-                                                                1)),
-                                                      )),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: Get.height * 0.015,
-                                                  ),
-                                                 Obx(() =>  Container(
-                                                     child: homeComtroller
-                                                         .homepage
-                                                         .value
-                                                         .data!
-                                                         .categoryDetails![
-                                                     category_index]
-                                                         .catPosts![
-                                                     c_index]
-                                                         .productQuantity !=
-                                                         "false"
-                                                        ?
-                                                         homeComtroller
-                                                             .homepage
-                                                             .value
-                                                             .data!
-                                                             .categoryDetails![
-                                                         category_index]
-                                                             .catPosts![
-                                                         c_index]
-                                                             .productCartKey ==
-                                                             "true"
-                                                         ?  Row(
-                                                       mainAxisAlignment:
-                                                       MainAxisAlignment
-                                                           .spaceEvenly,
-                                                       children: [
-                                                         GestureDetector(
-                                                           child:
-                                                           Container(
-                                                             height:
-                                                             Get.height * 0.05,
-                                                             width:
-                                                             Get.width * 0.1,
-                                                             decoration: BoxDecoration(
-                                                                 color: ColorConstants.appColor,
-                                                                 border: Border.all(color: ColorConstants.appColor, width: 0.2, style: BorderStyle.solid),
-                                                                 borderRadius: BorderRadius.circular(8)),
-                                                             child: Center(
-                                                                 child: Icon(
-                                                                   Icons.remove,
-                                                                   color:
-                                                                   Colors.white,
-                                                                 )),
-                                                           ),
-                                                           onTap:
-                                                               () {
-                                                             if(   homeComtroller
-                                                                 .homepage
-                                                                 .value
-                                                                 .data!
-                                                                 .categoryDetails![category_index]
-                                                                 .catPosts![c_index]
-                                                                 .productlocalCartQuantity
-                                                                 .value>0){
-                                                               homeComtroller
-                                                                   .homepage
-                                                                   .value
-                                                                   .data!
-                                                                   .categoryDetails![category_index]
-                                                                   .catPosts![c_index]
-                                                                   .productlocalCartQuantity
-                                                                   .value -= 1;
-
-                                                               Future
-                                                                   .delayed(
-                                                                 Duration(seconds: 1),
-                                                                     () {
-                                                                   cartQuantityUpdateController.cartQuantityUpdateApi(
-                                                                       homeComtroller.homepage.value.data!.categoryDetails![category_index].catPosts![c_index].productKey.toString(),
-                                                                       (int.parse(
-                                                                         homeComtroller.homepage.value.data!.categoryDetails![category_index].catPosts![c_index].productlocalCartQuantity.value.toString(),
-                                                                       )).toString());
-                                                                 },
-                                                               );
-                                                             }
-                                                           },
-                                                         ),
-                                                         Center(
-                                                             child:
-                                                             Text(
-                                                               "${homeComtroller.homepage.value.data!.categoryDetails![category_index].catPosts![c_index].productlocalCartQuantity.value.toString()}",
-                                                               style: const TextStyle(
-                                                                   fontSize:
-                                                                   14,
-                                                                   fontWeight:
-                                                                   FontWeight.bold,
-                                                                   fontFamily: 'Gilroy'),
-                                                             )),
-                                                         GestureDetector(
-                                                           onTap:
-                                                               () {
-                                                             homeComtroller
-                                                                 .homepage
-                                                                 .value
-                                                                 .data!
-                                                                 .categoryDetails![category_index]
-                                                                 .catPosts![c_index]
-                                                                 .productlocalCartQuantity.value += 1;
-
-                                                             Future
-                                                                 .delayed(
-                                                               Duration(seconds: 1),
-                                                                   () {
-                                                                 cartQuantityUpdateController.cartQuantityUpdateApi(
-                                                                     homeComtroller.homepage.value.data!.categoryDetails![category_index].catPosts![c_index].productKey,
-                                                                     int.parse(
-                                                                       homeComtroller.homepage.value.data!.categoryDetails![category_index].catPosts![c_index].productlocalCartQuantity.value.toString(),
-                                                                     ).toString());
-                                                               },
-                                                             );
-                                                           },
-                                                           child:
-                                                           Container(
-                                                             height:
-                                                             Get.height * 0.05,
-                                                             width:
-                                                             Get.width * 0.1,
-                                                             decoration: BoxDecoration(
-                                                                 color: ColorConstants.appColor,
-                                                                 border: Border.all(color: ColorConstants.appColor, width: 0.2, style: BorderStyle.solid),
-                                                                 borderRadius: BorderRadius.circular(8)),
-                                                             child: Center(
-                                                                 child: Icon(
-                                                                   Icons.add,
-                                                                   color:
-                                                                   Colors.white,
-                                                                 )),
-                                                           ),
-                                                         )
-                                                       ],
-                                                     )
-                                                         : MyButton(
-                                                       loading:   homeComtroller
-                                                           .homepage
-                                                           .value
-                                                           .data!
-                                                           .categoryDetails![
-                                                       category_index]
-                                                           .catPosts![
-                                                       c_index]
-                                                           .cartLoding.value ,
-                                                       title:
-                                                       'Add to Cart',
-                                                       onTap: () {
-                                                         // Get.to(MyCart());
-                                                         CartproductId = homeComtroller
-                                                             .homepage
-                                                             .value
-                                                             .data!
-                                                             .categoryDetails![
-                                                         category_index]
-                                                             .catPosts![
-                                                         c_index]
-                                                             .productId
-                                                             .toString();
-                                                         if (CartproductId !=
-                                                             null) {
-                                                           homeComtroller
-                                                               .homepage
-                                                               .value
-                                                               .data!
-                                                               .categoryDetails![
-                                                           category_index]
-                                                               .catPosts![
-                                                           c_index]
-                                                               .cartLoding.value=true;
-                                                           addToCartController
-                                                               .HomeAddToCartApiHit(category_index,c_index);
-                                                         }
-                                                       },
-                                                       bgColor:
-                                                       ColorConstants
-                                                           .appColor,
-                                                       width:
-                                                       Get.width *
-                                                           0.28,
-                                                       height:
-                                                       Get.height *
-                                                           0.05,
-                                                       style:
-                                                       TextStyle(
-                                                         color: Colors
-                                                             .white,
-                                                         fontSize:
-                                                         10,
-                                                         fontFamily:
-                                                         'Gilroy-SemiBold',
-                                                         fontWeight:
-                                                         FontWeight
-                                                             .w400,
-                                                       ),
-                                                     )
-                                                         : Container(
-                                                       width: Get.width *
-                                                           0.28,
-                                                       height:
-                                                       Get.height *
-                                                           0.05,
-                                                       decoration:
-                                                       ShapeDecoration(
-                                                         color: Color(
-                                                             0xFF53B175),
-                                                         shape: RoundedRectangleBorder(
-                                                             borderRadius:
-                                                             BorderRadius.circular(
-                                                                 15)),
-                                                       ),
-                                                       child: Center(
-                                                         child: Text(
-                                                           'Out of Stock',
-                                                           textAlign:
-                                                           TextAlign
-                                                               .center,
-                                                           style:
-                                                           TextStyle(
-                                                             color: Colors
-                                                                 .white,
-                                                             fontSize:
-                                                             10,
-                                                             fontFamily:
-                                                             'Gilroy-SemiBold',
-                                                             fontWeight:
-                                                             FontWeight
-                                                                 .w400,
-                                                           ),
-                                                         ),
-                                                       ),
-                                                     ))),
-                                                ],
+                                                                  )
+                                                            : Container(
+                                                                width: Get.width *
+                                                                    0.28,
+                                                                height:
+                                                                    Get.height *
+                                                                        0.05,
+                                                                decoration:
+                                                                    ShapeDecoration(
+                                                                  color: Color(
+                                                                      0xFF53B175),
+                                                                  shape: RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              15)),
+                                                                ),
+                                                                child: Center(
+                                                                  child: Text(
+                                                                    'Out of Stock',
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          10,
+                                                                      fontFamily:
+                                                                          'Gilroy-SemiBold',
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ))),
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           ),

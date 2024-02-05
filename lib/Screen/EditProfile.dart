@@ -185,7 +185,8 @@ class _EditeMyProfileState extends State<EditeMyProfile> {
   void initState() {
     // TODO: implement initState
 
-    adressUpdateController.setControllerData();
+    adressUpdateController.setControllerData(context);
+
     nameUpdateController.setControllerData();
     phoneUpdateController.setControllerData();
     emailUpdateController.setControllerData();
@@ -288,7 +289,7 @@ class _EditeMyProfileState extends State<EditeMyProfile> {
 
                                   borderRadius: BorderRadius.circular(70),
                                   child: profileDetailsController
-                                      .profiledetails.value.userDetails![0].profilePicture!=""?
+                                      .profiledetails.value.userDetails![0].profilePicture!="null"?
                                   CachedNetworkImage(
 
                                     imageUrl:profileDetailsController
@@ -352,7 +353,7 @@ class _EditeMyProfileState extends State<EditeMyProfile> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                " ${
+                                "${
                                     profileDetailsController
                                         .profiledetails.value.userDetails![0].userName.toString()
                                 } ${
@@ -376,6 +377,9 @@ class _EditeMyProfileState extends State<EditeMyProfile> {
                                     width: Get.width * 0.005,
                                   ),
                                   Text(
+                                    profileDetailsController.profiledetails.value
+                                        .userDetails![0].userAddress!.address_1==""?
+                                    "Update Address":
                                     profileDetailsController.profiledetails.value
                                         .userDetails![0].userAddress!.address_1,
                                     overflow: TextOverflow.ellipsis,
@@ -429,7 +433,7 @@ class _EditeMyProfileState extends State<EditeMyProfile> {
                                         ),
                                       ),
                                       Text(
-                                        " ${
+                                        "${
                                             profileDetailsController
                                                 .profiledetails.value.userDetails![0].userName.toString()
                                         } ${
@@ -706,7 +710,9 @@ class _EditeMyProfileState extends State<EditeMyProfile> {
                                         ),
                                       ),
                                       Text(
-                                        profileDetailsController
+                                        profileDetailsController.profiledetails.value
+                                            .userDetails![0].userAddress!.address_1==""?
+                                        "Update Address": profileDetailsController
                                             .profiledetails
                                             .value
                                             .userDetails![0]
@@ -729,7 +735,7 @@ class _EditeMyProfileState extends State<EditeMyProfile> {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    adressUpdateController.setControllerData();
+                                    adressUpdateController.setControllerData(context);
                                     ShowbuttonShett();
                                   },
                                   child: Image.asset(
@@ -1451,6 +1457,32 @@ class _EditeMyProfileState extends State<EditeMyProfile> {
                                       onCompleted: (pin) => print(pin),
                                     ),
                                   ),
+                                  SizedBox(
+                                    height: 25,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      emailUpdateController.ResendEmailSendOtp(context);
+                                    },
+                                    child: Center(
+                                      child: RichText(
+                                          text: TextSpan(children: [
+                                            TextSpan(
+                                                text: "I don't received OTP!",
+                                                style: TextStyle(
+                                                    color: Color(0xff030303),
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 14)),
+                                            TextSpan(
+                                                text: " Resend again",
+                                                style: TextStyle(
+                                                  color: ColorConstants.appColor,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500,
+                                                ))
+                                          ])),
+                                    ),
+                                  )
                                 ],
                               ),
                             SizedBox(

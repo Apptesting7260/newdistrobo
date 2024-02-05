@@ -1,9 +1,12 @@
 class AppUrl {
   static const String baseUrl="https://distrobo.com/wp-json/custom/";
   static const String loginApi = 'https://distrobo.com/wp-json/custom/v1/login';
+  static const String ResetPassOtpApi =
+      'https://distrobo.com/wp-json/custom/v1/reset_password_mail_otp';
+
 
   static const String ResetPassApi =
-      'https://distrobo.com/wp-json/custom/v1/reset_password_mail_otp';
+      'https://distrobo.com/wp-json/custom/v1/change_password';
 
   static const String SignupApi =
       'https://distrobo.com/wp-json/custom/v1/registeration-form';
@@ -34,11 +37,13 @@ static const String subproCategarory =
       '${baseUrl}v1/update_name';
   static const String ImageUpdate =
       'https://distrobo.com/wp-json/custom/v1/profile_upload-api';
+  static const String ViewApiWHilistApi =
+      'https://distrobo.com/wp-json/custom/v1/wishlist';
   static const String emailSendOtp =
       '${baseUrl}v1/email_sent_otp';
 
   static const String emailUpdate =
-      '${baseUrl}v1/email_update';
+      'https://distrobo.com/wp-json/custom/v1/email_update';
   static const String otpVerify =
       '${baseUrl}v1/email_otp_varify';
   static const String phoneUpdate =
@@ -55,4 +60,8 @@ static const String subproCategarory =
       'https://distrobo.com/wp-json/custom/v1/contact_form';
   static const String cartQuantityUpdateApi =
       'https://distrobo.com/wp-json/cocart/v2/cart/item/';
+  static const String cartDeleteApi =
+      'https://distrobo.com/wp-json/cocart/v2/cart/clear';
+  static const String SingleProductModel =
+      'https://distrobo.com/wp-json/custom/v1/single_product';
 }

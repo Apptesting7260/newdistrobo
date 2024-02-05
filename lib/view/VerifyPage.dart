@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:newdistrobo/Widgets/appColor.dart';
 import 'package:newdistrobo/controllers/VerifyPage_controller/VerifyPage_controller.dart';
 import 'package:pinput/pinput.dart';
 import '../Widgets/MyButton.dart';
+import '../controllers/ResetPasswordController/ResetPassController.dart';
 
 class OtpVerification extends StatefulWidget {
   var email;
@@ -18,9 +21,41 @@ class OtpVerification extends StatefulWidget {
 class _OtpVerificationState extends State<OtpVerification> {
   bool route = false;
   final VerifyPageVm = Get.put(VerifyPageViewModal());
+  ResetPasswordViewModal resetPasswordViewModal=Get.put(ResetPasswordViewModal());
   final validatekey = GlobalKey<FormState>();
 
   // String verificationStatus = '';
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    startTimer();
+
+  }
+  var time=60;
+  var count="00";
+  late Timer _timer;
+  void startTimer() {
+    const oneSecond = Duration(seconds: 1);
+    _timer = Timer.periodic(oneSecond, (timer) {
+
+      if(time>=1){
+        setState(() {
+          time--;
+          if( time.toString().length==2){
+            count=time.toString();
+          }
+          else{
+            count="0$time";
+          }
+
+        });
+      }
+
+
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +131,12 @@ class _OtpVerificationState extends State<OtpVerification> {
                 // **********************  for pinput to generate opt verifications ***********************
 
                 Center(
+                  child:Text(count.toString(),style: TextStyle(color: ColorConstants.appColor,fontWeight: FontWeight.bold,fontSize: 25),) ,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Center(
                   child: Form(
                     key: validatekey,
                     child: Pinput(
@@ -148,22 +189,32 @@ class _OtpVerificationState extends State<OtpVerification> {
                   height: 25,
                 ),
                 Center(
-                  child: RichText(
-                      text: TextSpan(children: [
-                    TextSpan(
-                        text: "I don't received OTP!",
-                        style: TextStyle(
-                            color: Color(0xff030303),
+                  child: GestureDetector(
+                    onTap: () {
+                      resetPasswordViewModal.ResetPassHitApi(context,widget.email);
+                     // startTimer();
+                    },
+                    child: RichText(
+
+                        text: TextSpan(
+
+                            children: [
+                      TextSpan(
+
+                          text: "I don't received OTP!",
+                          style: TextStyle(
+                              color: Color(0xff030303),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14)),
+                      TextSpan(
+                          text: " Resend again",
+                          style: TextStyle(
+                            color: ColorConstants.appColor,
+                            fontSize: 14,
                             fontWeight: FontWeight.w500,
-                            fontSize: 14)),
-                    TextSpan(
-                        text: " Resend again",
-                        style: TextStyle(
-                          color: ColorConstants.appColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ))
-                  ])),
+                          ))
+                    ])),
+                  ),
                 )
               ],
             ),

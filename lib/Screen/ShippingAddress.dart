@@ -6,6 +6,9 @@ import 'package:newdistrobo/Widgets/MyButton.dart';
 import 'package:newdistrobo/Widgets/TextFilled.dart';
 import 'package:newdistrobo/Widgets/appColor.dart';
 
+import '../controllers/OrderController.dart';
+import 'PayementScreen/PaymentScreen.dart';
+
 class ShippingAddress extends StatefulWidget {
   const ShippingAddress({
     super.key,
@@ -16,15 +19,13 @@ class ShippingAddress extends StatefulWidget {
 }
 
 class _ShippingAddressState extends State<ShippingAddress> {
-  TextEditingController addressController = TextEditingController();
-  TextEditingController cityController = TextEditingController();
-  TextEditingController stateController = TextEditingController();
-  TextEditingController pinController = TextEditingController();
+  OrderController orderController = Get.put(OrderController());
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-    ;
+
   }
 
   @override
@@ -62,7 +63,9 @@ class _ShippingAddressState extends State<ShippingAddress> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 25, right: 25),
-                  child: Column(
+                  child: Form(
+                    key: formKey,
+                      child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -78,11 +81,17 @@ class _ShippingAddressState extends State<ShippingAddress> {
                         height: Get.height * 0.01,
                       ),
                       TextFilled(
-                          controller: addressController,
-                          textColor: Color(0xFF7C7C7C),
-                          borderColor: ColorConstants.appColor,
-                          hintText: 'Enter address',
-                          validator: null),
+                        controller: orderController.addressController.value,
+                        textColor: Color(0xFF7C7C7C),
+                        borderColor: ColorConstants.appColor,
+                        hintText: 'Enter address',
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Enter your Address';
+                          }
+                          return null;
+                        },
+                      ),
                       SizedBox(
                         height: Get.height * 0.03,
                       ),
@@ -99,11 +108,17 @@ class _ShippingAddressState extends State<ShippingAddress> {
                         height: Get.height * 0.01,
                       ),
                       TextFilled(
-                          controller: cityController,
-                          textColor: Color(0xFF7C7C7C),
-                          borderColor: ColorConstants.appColor,
-                          hintText: 'Enter city',
-                          validator: null),
+                        controller: orderController.cityController.value,
+                        textColor: Color(0xFF7C7C7C),
+                        borderColor: ColorConstants.appColor,
+                        hintText: 'Enter city',
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Enter your City';
+                          }
+                          return null;
+                        },
+                      ),
                       SizedBox(
                         height: Get.height * 0.03,
                       ),
@@ -123,11 +138,18 @@ class _ShippingAddressState extends State<ShippingAddress> {
                                 ),
                               ),
                               TextFilled(
-                                  controller: stateController,
-                                  textColor: Color(0xFF7C7C7C),
-                                  borderColor: ColorConstants.appColor,
-                                  hintText: 'Enter state',
-                                  validator: null),
+                                controller:
+                                    orderController.stateController.value,
+                                textColor: Color(0xFF7C7C7C),
+                                borderColor: ColorConstants.appColor,
+                                hintText: 'Enter state',
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Enter your State';
+                                  }
+                                  return null;
+                                },
+                              ),
                             ],
                           )),
                           SizedBox(
@@ -147,14 +169,48 @@ class _ShippingAddressState extends State<ShippingAddress> {
                                 ),
                               ),
                               TextFilled(
-                                  controller: stateController,
-                                  textColor: Color(0xFF7C7C7C),
-                                  borderColor: ColorConstants.appColor,
-                                  hintText: 'Enter zip code',
-                                  validator: null),
+                                controller:
+                                    orderController.pinController.value,
+                                textColor: Color(0xFF7C7C7C),
+                                borderColor: ColorConstants.appColor,
+                                hintText: 'Enter zip code',
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Enter your zip code';
+                                  }
+                                  return null;
+                                },
+                              ),
                             ],
                           ))
                         ],
+                      ),
+                      SizedBox(
+                        height: Get.height * 0.03,
+                      ),
+                      Text(
+                        'Country',
+                        style: TextStyle(
+                          color: Color(0xFF181725),
+                          fontSize: 18,
+                          fontFamily: 'Gilroy-SemiBold',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      SizedBox(
+                        height: Get.height * 0.01,
+                      ),
+                      TextFilled(
+                        controller: orderController.contryController.value,
+                        textColor: Color(0xFF7C7C7C),
+                        borderColor: ColorConstants.appColor,
+                        hintText: 'Enter Conuntry',
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Enter your Country';
+                          }
+                          return null;
+                        },
                       ),
                       SizedBox(
                         height: Get.height * 0.04,
@@ -163,14 +219,25 @@ class _ShippingAddressState extends State<ShippingAddress> {
                         title: 'Save',
                         width: Get.width,
                         bgColor: ColorConstants.appColor,
-                        onTap: () {},
+                        onTap: () {
+                          _onValidate();
+
+                        },
                       )
                     ],
-                  ),
+                  )),
                 )
               ],
             ),
           )),
     );
+  }
+  void _onValidate() {
+    if (formKey.currentState?.validate() ?? false) {
+      print('valid!');
+      Get.to(PaymentScreen());
+    } else {
+      print('invalid!');
+    }
   }
 }

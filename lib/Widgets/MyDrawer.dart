@@ -69,7 +69,7 @@ class _DrawerClassState extends State<DrawerClass> {
 
                           borderRadius: BorderRadius.circular(70),
                           child: profileDetailsController
-                              .profiledetails.value.userDetails![0].profilePicture!=""?
+                              .profiledetails.value.userDetails![0].profilePicture!="null"?
                           CachedNetworkImage(
 
                             imageUrl:profileDetailsController
@@ -133,7 +133,7 @@ class _DrawerClassState extends State<DrawerClass> {
                       height: 16,
                     ),
                     Text(
-                     " ${
+                     "${
                         profileDetailsController
                             .profiledetails.value.userDetails![0].userName.toString()
                       } ${
@@ -150,9 +150,11 @@ class _DrawerClassState extends State<DrawerClass> {
                       height: 2,
                     ),
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          width: Get.width * 0.12,
+                          width: Get.width * 0.10,
                         ),
                         Image.asset(
                           "assets/images/locationW.png",
@@ -162,6 +164,7 @@ class _DrawerClassState extends State<DrawerClass> {
                           width: Get.width * 0.02,
                         ),
                         Flexible(
+
                           child: Text(
                             currentAddress.toString()=="null"?"Update Adress":currentAddress.toString(),
                             style: TextStyle(
@@ -169,7 +172,8 @@ class _DrawerClassState extends State<DrawerClass> {
                                 fontWeight: FontWeight.w500,
                                 color: Colors.grey[200],
                                 fontFamily: "Gilroy-rg"),
-                            textAlign: TextAlign.start,
+                            textAlign: TextAlign.start
+                            ,
                           ),
                         ),
                       ],
@@ -243,11 +247,10 @@ class _DrawerClassState extends State<DrawerClass> {
                   onTap: () {
 
                   latestProduct.clear();
-                 new_arri_page = 1.obs;
-                    noDataArival = false.obs;
-                    new_currentPage=0.obs;
-                   callArrivalPagination = true.obs;
-                   newcurrentPage=0.obs;
+                  latestProduct.clear();
+                  callArrivalPagination.value=true;
+                  new_arri_page.value=0;
+                  new_currentPage.value=1;
                     Get.to(NewArrivals());
                   },
                   horizontalTitleGap: 0,

@@ -10,5 +10,11 @@ class ResetPassRepository {
     print(response);
     return response;
   }
+  Future<dynamic> SendOtp(var data) async {
+    // print("apihit");
+    dynamic response = _apiService.postApi(AppUrl.ResetPassOtpApi, data);
+    print(response);
+    return response;
+  }
 
 }

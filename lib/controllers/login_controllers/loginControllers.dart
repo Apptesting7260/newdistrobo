@@ -38,6 +38,9 @@ class LoginViewModal extends GetxController {
       Get.offAll(Tab_view(
         index: 0,
       ));
+      emailController.value.clear();
+      passwordController.value.clear();
+
     }).onError((error, stackTrace) {
       loading.value = false;
       // Utils.SnackBar('Error', error.toString());

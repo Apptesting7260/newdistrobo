@@ -167,14 +167,18 @@ class _CreatePasswordState extends State<CreatePassword> {
                   height: Get.height * 0.078,
                   width: Get.width,
                   child: Center(
-                    child: MyButton(
-                      title: "Confirm",
-                      bgColor: ColorConstants.appColor,
-                      loading: false,
-                      onTap: () {
-                        // Get.off(OtpVerification());
-                        passwordController.CreatePassHitApi(widget.email);
-                      },
+                    child: Obx(()=>
+                       MyButton(
+                        title: "Confirm",
+                        bgColor: ColorConstants.appColor,
+                        loading:  passwordController.resendVisible.value,
+                        onTap: () {
+                          // Get.off(OtpVerification());
+                          if (_formkey.currentState!.validate()) {
+                            passwordController.CreatePassHitApi(widget.email);
+                          }
+                        },
+                      ),
                     ),
                   ),
                 ),

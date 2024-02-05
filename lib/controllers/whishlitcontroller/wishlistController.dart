@@ -11,15 +11,18 @@ import '../../repository/Signup_repository/Signup_repository.dart';
 import '../../utils/StatusClass.dart';
 import '../CatagarryDetailsController/CategoryDetailsController.dart';
 import '../CategoryPageController/CategoryPageController.dart';
+import '../SingleProductControlller/SingleProductController.dart';
 import '../SubCategortController/SubCategoryControoler.dart';
 import '../homePageController/HomePageController.dart';
+import 'ViewWhishLishController.dart';
 
 
 
 class WhishlistAddController extends GetxController {
   final _api = ApiRepo();
   //int? seekerRequestlenght;
-
+  GetSingleProductController getSingleProductController =
+  Get.put(GetSingleProductController());
   final rxRequestStatus = Status.LOADING.obs;
   final homepage = HomePageModel().obs;
   RxString error = ''.obs;
@@ -61,6 +64,8 @@ class WhishlistAddController extends GetxController {
       setError(error.toString());
       setRxRequestStatus(Status.ERROR);
       print(error.toString());
+      homeComtroller.homepage.value.data!.categoryDetails![categoryDetails].catPosts![product].isLoding.value=false;
+
     });
   }
 
@@ -89,6 +94,8 @@ class WhishlistAddController extends GetxController {
       setError(error.toString());
       setRxRequestStatus(Status.ERROR);
       print(error.toString());
+      catagoryDetailsController.categeaoryData.value.data![categoryDetails].productData![product].isLoding.value=false;
+
     });
   }
   Future<void> SubCategoryWhishLisAddPageApi( categoryDetails,) async {
@@ -116,6 +123,7 @@ class WhishlistAddController extends GetxController {
       setError(error.toString());
       setRxRequestStatus(Status.ERROR);
       print(error.toString());
+      ProductCategoryLists![categoryDetails].isLoding.value=false;
     });
   }
   Future<void> ProSubCategoryWhishLisAddPageApi(product, index,) async {
@@ -132,10 +140,10 @@ class WhishlistAddController extends GetxController {
     _api.addWishlist(data).then((value) {
 
       setRxRequestStatus(Status.COMPLETED);
-      print(ProsubCategoryCotroller.subCategoryPage.value.data![index].products![product].productInWishlist);
-      ProsubCategoryCotroller.subCategoryPage.value.data![index].products![product].productInWishlist=ProsubCategoryCotroller.subCategoryPage.value.data![index].products![product].productInWishlist=="false"?"true":"false";
-      ProsubCategoryCotroller.subCategoryPage.value.data![index].products![product].isLoding.value=false;
-   print(ProsubCategoryCotroller.subCategoryPage.value.data![index].products![product].productInWishlist);
+      print(ProsubCategoryCotroller.subCategoryPage.value.data![index].catPosts![product].productWishlist);
+      ProsubCategoryCotroller.subCategoryPage.value.data![index].catPosts![product].productWishlist=ProsubCategoryCotroller.subCategoryPage.value.data![index].catPosts![product].productWishlist=="false"?"true":"false";
+      ProsubCategoryCotroller.subCategoryPage.value.data![index].catPosts![product].isLoding.value=false;
+   print(ProsubCategoryCotroller.subCategoryPage.value.data![index].catPosts![product].productWishlist);
       print(value);
 
 
@@ -143,6 +151,7 @@ class WhishlistAddController extends GetxController {
       setError(error.toString());
       setRxRequestStatus(Status.ERROR);
       print(error.toString());
+      ProsubCategoryCotroller.subCategoryPage.value.data![index].catPosts![product].isLoding.value=false;
     });
   }
   Future<void> latestProductWhishLisAddPageApi( categoryDetails,) async {
@@ -170,7 +179,41 @@ class WhishlistAddController extends GetxController {
       setError(error.toString());
       setRxRequestStatus(Status.ERROR);
       print(error.toString());
+      latestProduct![categoryDetails].isLoding.value=false;
     });
   }
+  Future<void> SingleWhishLisAddPageApi( ) async {
+    ViewWhishListcontroller viewWhishListcontroller =
+    Get.put(ViewWhishListcontroller());
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var user=prefs.getString("userId");
+    Map data = {
+      'product_id':productId,
+      'user_id':user
+    };
+    print(data);
+    setRxRequestStatus(Status.LOADING);
 
+    _api.addWishlist(data).then((value) {
+
+      setRxRequestStatus(Status.COMPLETED);
+
+      getSingleProductController.getSinglePageData.value
+          .singleProduct!.productWishlist= getSingleProductController.getSinglePageData.value
+          .singleProduct!.productWishlist==false?true:false;
+      getSingleProductController.getSinglePageData.value
+          .singleProduct!.isLoding.value=false;
+            viewWhishListcontroller.ViewWhislistApiHit();
+
+      print(value);
+
+
+    }).onError((error, stackTrace) {
+      setError(error.toString());
+      setRxRequestStatus(Status.ERROR);
+      print(error.toString());
+      getSingleProductController.getSinglePageData.value
+          .singleProduct!.isLoding.value=false;
+    });
+  }
 }
