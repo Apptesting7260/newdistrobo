@@ -268,7 +268,7 @@ class _MyCartState extends State<MyCart> {
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
                               itemCount: GetAllCartControllerin
-                                  .getAllCartModel.value.data!.items!.length,
+                                  .getAllCartModel.value.data?.items!.length,
                               itemBuilder: (context, index) {
                                 // Parse price as double
                                 print(GetAllCartControllerin

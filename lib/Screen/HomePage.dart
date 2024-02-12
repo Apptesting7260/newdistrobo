@@ -95,7 +95,8 @@ class _HomePageState extends State<HomePage> {
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Location services are disabled. Please enable the services')));
+          content: Text(
+              'Location services are disabled. Please enable the services')));
       return false;
     }
 
@@ -113,21 +114,21 @@ class _HomePageState extends State<HomePage> {
     if (permission == LocationPermission.whileInUse) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Background location permission is required')));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Background location permission is required')));
         return false;
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Location permissions are permanently denied, we cannot request permissions.')));
+          content: Text(
+              'Location permissions are permanently denied, we cannot request permissions.')));
       return false;
     }
 
     return true;
   }
-
 
   Future<void> _getCurrentPosition() async {
     final hasPermission = await _handleLocationPermission();
@@ -286,7 +287,7 @@ class _HomePageState extends State<HomePage> {
                                   child: InkWell(
                                       onTap: () {
                                         // Get.to(MyCart());
-                                        selectedIndex=3;
+                                        selectedIndex = 3;
                                         Get.offAll(Tab_view(index: 3));
                                       },
                                       child: Image.asset(
@@ -326,10 +327,7 @@ class _HomePageState extends State<HomePage> {
                                       color: Colors.green[50],
                                       borderRadius: BorderRadius.circular(12)),
                                   child: TextField(
-
-                                    onChanged: (value) {
-
-                                    },
+                                    onChanged: (value) {},
                                     onTap: () {
                                       Get.to(ProductSearchPage());
                                     },
@@ -349,17 +347,13 @@ class _HomePageState extends State<HomePage> {
                                           scale: 0.9,
                                         ),
                                         hintText: 'Search',
-
                                         hintStyle: TextStyle(
                                             fontFamily: 'Gilroy-rg',
                                             fontSize: 14),
                                         enabledBorder: InputBorder.none,
                                         focusedBorder: InputBorder.none,
-
                                         contentPadding: EdgeInsets.symmetric(
                                             vertical: 14, horizontal: 0)),
-
-
                                   ),
                                 ),
                                 SizedBox(
@@ -513,7 +507,7 @@ class _HomePageState extends State<HomePage> {
                                     const EdgeInsets.only(right: 25, top: 11),
                                 child: GestureDetector(
                                   onTap: () {
-                                    selectedIndex=1;
+                                    selectedIndex = 1;
                                     Get.offAll(Tab_view(index: 1));
                                   },
                                   child: const Text(
@@ -959,21 +953,23 @@ class _HomePageState extends State<HomePage> {
 
                                         return GestureDetector(
                                           onTap: () {
-                                            productId= homeComtroller
+                                            productId = homeComtroller
                                                 .homepage
                                                 .value
                                                 .data!
                                                 .categoryDetails![
-                                            category_index]
-                                                .catPosts![
-                                            c_index].productId.toString();
+                                                    category_index]
+                                                .catPosts![c_index]
+                                                .productId
+                                                .toString();
                                             print(productId);
-                                            if(productId!=null){
+                                            if (productId != null) {
                                               Get.to(ProductDetailais());
                                             }
                                           },
                                           child: Padding(
-                                            padding: EdgeInsets.only(left: 18.0),
+                                            padding:
+                                                EdgeInsets.only(left: 18.0),
                                             child: Card(
                                               child: Container(
                                                 // height: Get.height * 0.2,
@@ -987,30 +983,35 @@ class _HomePageState extends State<HomePage> {
                                                 child: Column(
                                                   children: [
                                                     SizedBox(
-                                                      height: Get.height * 0.018,
+                                                      height:
+                                                          Get.height * 0.018,
                                                     ),
                                                     Stack(
                                                       children: [
                                                         GestureDetector(
                                                           onTap: () {
-                                                            productId= homeComtroller
+                                                            productId = homeComtroller
                                                                 .homepage
                                                                 .value
                                                                 .data!
                                                                 .categoryDetails![
-                                                            category_index]
+                                                                    category_index]
                                                                 .catPosts![
-                                                            c_index].productId.toString();
+                                                                    c_index]
+                                                                .productId
+                                                                .toString();
                                                             print(productId);
-                                                            if(productId!=null){
-                                                              Get.to(ProductDetailais());
+                                                            if (productId !=
+                                                                null) {
+                                                              Get.to(
+                                                                  ProductDetailais());
                                                             }
                                                           },
                                                           child: Container(
-                                                            height:
-                                                                Get.height * 0.18,
-                                                            width:
-                                                                Get.width * 0.32,
+                                                            height: Get.height *
+                                                                0.18,
+                                                            width: Get.width *
+                                                                0.32,
                                                             decoration: BoxDecoration(
                                                                 color: Color
                                                                     .fromRGBO(
@@ -1043,9 +1044,8 @@ class _HomePageState extends State<HomePage> {
                                                                     Center(
                                                                         child:
                                                                             CircularProgressIndicator(
-                                                                  color:
-                                                                      ColorConstants
-                                                                          .appColor,
+                                                                  color: ColorConstants
+                                                                      .appColor,
                                                                 )),
                                                                 errorWidget: (context,
                                                                         url,
@@ -1079,15 +1079,14 @@ class _HomePageState extends State<HomePage> {
                                                                           .appColor,
                                                                     )
                                                                   : GestureDetector(
-                                                                      onTap: () {
+                                                                      onTap:
+                                                                          () {
                                                                         productId = homeComtroller
                                                                             .homepage
                                                                             .value
                                                                             .data!
-                                                                            .categoryDetails![
-                                                                                category_index]
-                                                                            .catPosts![
-                                                                                c_index]
+                                                                            .categoryDetails![category_index]
+                                                                            .catPosts![c_index]
                                                                             .productId
                                                                             .toString();
                                                                         if (productId !=
@@ -1134,6 +1133,7 @@ class _HomePageState extends State<HomePage> {
                                                     ),
                                                     SizedBox(
                                                       height: Get.height * 0.02,
+
                                                     ),
                                                     Padding(
                                                       padding:
@@ -1141,17 +1141,21 @@ class _HomePageState extends State<HomePage> {
                                                               left: 15.0),
                                                       child: GestureDetector(
                                                         onTap: () {
-                                                          productId= homeComtroller
+                                                          productId = homeComtroller
                                                               .homepage
                                                               .value
                                                               .data!
                                                               .categoryDetails![
-                                                          category_index]
+                                                                  category_index]
                                                               .catPosts![
-                                                          c_index].productId.toString();
+                                                                  c_index]
+                                                              .productId
+                                                              .toString();
                                                           print(productId);
-                                                          if(productId!=null){
-                                                            Get.to(ProductDetailais());
+                                                          if (productId !=
+                                                              null) {
+                                                            Get.to(
+                                                                ProductDetailais());
                                                           }
                                                         },
                                                         child: Container(
@@ -1168,8 +1172,9 @@ class _HomePageState extends State<HomePage> {
                                                                     c_index]
                                                                 .productTitle,
                                                             maxLines: 2,
-                                                            overflow: TextOverflow
-                                                                .ellipsis,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
                                                             style: TextStyle(
                                                                 fontSize: 10,
                                                                 fontWeight:
@@ -1196,45 +1201,52 @@ class _HomePageState extends State<HomePage> {
                                                               left: 15.0),
                                                       child: Row(
                                                         children: [
-                                                          Text(
-                                                            "\$${homeComtroller.homepage.value.data!.categoryDetails![category_index].catPosts![c_index].perItemPrice.toString()}/ea "
-                                                            ,
-                                                            overflow: TextOverflow.ellipsis,
-
-                                                            style: TextStyle(
-                                                                fontSize: 16,
-                                                                fontWeight:
-                                                                FontWeight
-                                                                    .w600,
-                                                                fontFamily:
-                                                                'Gilroy',
-                                                                color: Color
-                                                                    .fromRGBO(
-                                                                    214,
-                                                                    51,
-                                                                    72,
-                                                                    1)),
+                                                          Container(
+                                                            width: Get.width *.15,
+                                                            child: Text(
+                                                              "\$${homeComtroller.homepage.value.data!.categoryDetails![category_index].catPosts![c_index].perItemPrice.toString()}/ea ",
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style: TextStyle(
+                                                                  fontSize: 16,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  fontFamily:
+                                                                      'Gilroy',
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          214,
+                                                                          51,
+                                                                          72,
+                                                                          1)),
+                                                            ),
                                                           ),
-                                                          Text(
-                                                            "\$${homeComtroller.homepage.value.data!.categoryDetails![category_index].catPosts![c_index].productPrice.toString()}/case"
-                                                            ,
-                                                            overflow: TextOverflow.ellipsis,
-
-                                                            style: TextStyle(
-                                                                fontSize: 12,
-                                                                fontWeight:
-                                                                FontWeight
-                                                                    .w400,
-                                                                fontFamily:
-                                                                'Gilroy',
-                                                                color: ColorConstants.subTextColor
+                                                          Container(
+                                                            width:  Get.width *.15,
+                                                            child: Text(
+                                                              "\$${homeComtroller.homepage.value.data!.categoryDetails![category_index].catPosts![c_index].productPrice.toString()}/case",
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style: TextStyle(
+                                                                  fontSize: 12,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  fontFamily:
+                                                                      'Gilroy',
+                                                                  color: ColorConstants
+                                                                      .subTextColor),
                                                             ),
                                                           ),
                                                         ],
                                                       ),
                                                     ),
                                                     SizedBox(
-                                                      height: Get.height * 0.015,
+                                                      height:
+                                                          Get.height * 0.015,
                                                     ),
                                                     Obx(() => Container(
                                                         child: homeComtroller
@@ -1265,22 +1277,17 @@ class _HomePageState extends State<HomePage> {
                                                                       GestureDetector(
                                                                         child:
                                                                             Container(
-                                                                          height: Get.height *
-                                                                              0.05,
-                                                                          width: Get.width *
-                                                                              0.1,
+                                                                          height:
+                                                                              Get.height * 0.05,
+                                                                          width:
+                                                                              Get.width * 0.1,
                                                                           decoration: BoxDecoration(
-                                                                              color: ColorConstants
-                                                                                  .appColor,
-                                                                              border: Border.all(
-                                                                                  color: ColorConstants.appColor,
-                                                                                  width: 0.2,
-                                                                                  style: BorderStyle.solid),
+                                                                              color: ColorConstants.appColor,
+                                                                              border: Border.all(color: ColorConstants.appColor, width: 0.2, style: BorderStyle.solid),
                                                                               borderRadius: BorderRadius.circular(8)),
                                                                           child: Center(
                                                                               child: Icon(
-                                                                            Icons
-                                                                                .remove,
+                                                                            Icons.remove,
                                                                             color:
                                                                                 Colors.white,
                                                                           )),
@@ -1289,17 +1296,10 @@ class _HomePageState extends State<HomePage> {
                                                                             () {
                                                                           if (homeComtroller.homepage.value.data!.categoryDetails![category_index].catPosts![c_index].productlocalCartQuantity.value >
                                                                               1) {
-                                                                            homeComtroller
-                                                                                .homepage
-                                                                                .value
-                                                                                .data!
-                                                                                .categoryDetails![category_index]
-                                                                                .catPosts![c_index]
-                                                                                .productlocalCartQuantity
-                                                                                .value -= 1;
+                                                                            homeComtroller.homepage.value.data!.categoryDetails![category_index].catPosts![c_index].productlocalCartQuantity.value -=
+                                                                                1;
 
-                                                                            Future
-                                                                                .delayed(
+                                                                            Future.delayed(
                                                                               Duration(seconds: 1),
                                                                               () {
                                                                                 cartQuantityUpdateController.cartQuantityUpdateApi(
@@ -1319,10 +1319,9 @@ class _HomePageState extends State<HomePage> {
                                                                         style: const TextStyle(
                                                                             fontSize:
                                                                                 14,
-                                                                            fontWeight: FontWeight
-                                                                                .bold,
-                                                                            fontFamily:
-                                                                                'Gilroy'),
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                            fontFamily: 'Gilroy'),
                                                                       )),
                                                                       GestureDetector(
                                                                         onTap:
@@ -1338,8 +1337,7 @@ class _HomePageState extends State<HomePage> {
 
                                                                           Future
                                                                               .delayed(
-                                                                            Duration(
-                                                                                seconds: 1),
+                                                                            Duration(seconds: 1),
                                                                             () {
                                                                               cartQuantityUpdateController.cartQuantityUpdateApi(
                                                                                   homeComtroller.homepage.value.data!.categoryDetails![category_index].catPosts![c_index].productKey,
@@ -1351,22 +1349,17 @@ class _HomePageState extends State<HomePage> {
                                                                         },
                                                                         child:
                                                                             Container(
-                                                                          height: Get.height *
-                                                                              0.05,
-                                                                          width: Get.width *
-                                                                              0.1,
+                                                                          height:
+                                                                              Get.height * 0.05,
+                                                                          width:
+                                                                              Get.width * 0.1,
                                                                           decoration: BoxDecoration(
-                                                                              color: ColorConstants
-                                                                                  .appColor,
-                                                                              border: Border.all(
-                                                                                  color: ColorConstants.appColor,
-                                                                                  width: 0.2,
-                                                                                  style: BorderStyle.solid),
+                                                                              color: ColorConstants.appColor,
+                                                                              border: Border.all(color: ColorConstants.appColor, width: 0.2, style: BorderStyle.solid),
                                                                               borderRadius: BorderRadius.circular(8)),
                                                                           child: Center(
                                                                               child: Icon(
-                                                                            Icons
-                                                                                .add,
+                                                                            Icons.add,
                                                                             color:
                                                                                 Colors.white,
                                                                           )),
@@ -1405,10 +1398,8 @@ class _HomePageState extends State<HomePage> {
                                                                             .homepage
                                                                             .value
                                                                             .data!
-                                                                            .categoryDetails![
-                                                                                category_index]
-                                                                            .catPosts![
-                                                                                c_index]
+                                                                            .categoryDetails![category_index]
+                                                                            .catPosts![c_index]
                                                                             .cartLoding
                                                                             .value = true;
                                                                         addToCartController.HomeAddToCartApiHit(
@@ -1439,8 +1430,9 @@ class _HomePageState extends State<HomePage> {
                                                                     ),
                                                                   )
                                                             : Container(
-                                                                width: Get.width *
-                                                                    0.28,
+                                                                width:
+                                                                    Get.width *
+                                                                        0.28,
                                                                 height:
                                                                     Get.height *
                                                                         0.05,
