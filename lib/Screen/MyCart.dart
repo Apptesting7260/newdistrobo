@@ -47,7 +47,6 @@ class _MyCartState extends State<MyCart> {
 
   @override
   void initState() {
-
     SchedulerBinding.instance.addPostFrameCallback((_) {
       GetAllCartControllerin.GetAllCartModelApiHit();
 // cartDeleteController.
@@ -139,15 +138,12 @@ class _MyCartState extends State<MyCart> {
               );
             }
           } else {
-
-            if(GetAllCartControllerin
-                .getAllCartModel.value.data?.items?.length ==
+            if (GetAllCartControllerin
+                    .getAllCartModel.value.data?.items?.length ==
                 0) {
-
-            }
-            else{
+            } else {
               GetAllCartControllerin
-                  .getAllCartModel.value.data?.cartTotal?.localTotal.value =
+                      .getAllCartModel.value.data?.cartTotal?.localTotal.value =
                   double.parse(GetAllCartControllerin
                       .getAllCartModel.value.data!.cartTotal!.subtotal
                       .toString());
@@ -221,29 +217,30 @@ class _MyCartState extends State<MyCart> {
                               SizedBox(
                                 height: 30,
                               ),
-                         Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                              Obx(() =>       Text(
-                                "Subtotal: \$ ${double.parse(GetAllCartControllerin.getAllCartModel.value.data!.cartTotal!.localTotal.value.toStringAsFixed(2))}",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    fontFamily: 'Gilroy'),
-                              ),),
-                                    Text(
-                                      "${ItemCountCartControllerin.itemCountCartModel.value.cartCount} items",
-                                      style: const TextStyle(
-                                          color: Colors.red,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Obx(
+                                    () => Text(
+                                      "Subtotal: \$ ${double.parse(GetAllCartControllerin.getAllCartModel.value.data!.cartTotal!.localTotal.value.toStringAsFixed(2))}",
+                                      style: TextStyle(
+                                          color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 16,
-                                          fontFamily: 'Gilroy-sb'),
+                                          fontFamily: 'Gilroy'),
                                     ),
-                                  ],
-                                ),
-
+                                  ),
+                                  Text(
+                                    "${ItemCountCartControllerin.itemCountCartModel.value.cartCount} items",
+                                    style: const TextStyle(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                        fontFamily: 'Gilroy-sb'),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ),
@@ -255,8 +252,6 @@ class _MyCartState extends State<MyCart> {
                           bgColor: ColorConstants.appColor,
                           width: Get.width * 0.9,
                           onTap: () {
-
-
                             Get.to(ShippingAddressss());
                           },
                         ),
@@ -268,7 +263,7 @@ class _MyCartState extends State<MyCart> {
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
                               itemCount: GetAllCartControllerin
-                                  .getAllCartModel.value.data?.items!.length,
+                                  .getAllCartModel.value.data!.items!.length,
                               itemBuilder: (context, index) {
                                 // Parse price as double
                                 print(GetAllCartControllerin
@@ -447,15 +442,13 @@ class _MyCartState extends State<MyCart> {
 //
 //
 
-
-
                                                           if (GetAllCartControllerin
-                                                              .getAllCartModel
-                                                              .value
-                                                              .data!
-                                                              .items![index]
-                                                              .quantityy
-                                                              .value >
+                                                                  .getAllCartModel
+                                                                  .value
+                                                                  .data!
+                                                                  .items![index]
+                                                                  .quantityy
+                                                                  .value >
                                                               1) {
                                                             cartQuantityUpdateController
                                                                 .addToCart
@@ -472,55 +465,51 @@ class _MyCartState extends State<MyCart> {
                                                             print(
                                                                 "${double.parse(GetAllCartControllerin.getAllCartModel.value.data!.items![index].price.toString()) * GetAllCartControllerin.getAllCartModel.value.data!.items![index].quantityy.value}+++++++++");
                                                             GetAllCartControllerin
-                                                                .getAllCartModel
-                                                                .value
-                                                                .data!
-                                                                .cartTotal
-                                                                ?.localTotal
-                                                                .value -=
-                                                                double.parse(GetAllCartControllerin
                                                                     .getAllCartModel
                                                                     .value
                                                                     .data!
-                                                                    .items![
-                                                                index]
-                                                                    .price) ;
+                                                                    .cartTotal
+                                                                    ?.localTotal
+                                                                    .value -=
+                                                                double.parse(
+                                                                    GetAllCartControllerin
+                                                                        .getAllCartModel
+                                                                        .value
+                                                                        .data!
+                                                                        .items![
+                                                                            index]
+                                                                        .price);
 
-
-                                                              Future.delayed(
-                                                                Duration(
-                                                                    seconds: 1),
-
-
-                                                                    () {
-
-                                                                        cartQuantityUpdateController
-                                                                            .cartQuantityUpdateApi(
-                                                                            GetAllCartControllerin
-                                                                                .getAllCartModel
-                                                                                .value
-                                                                                .data!
-                                                                                .items![index]
-                                                                                .itemKey
-                                                                                .toString(),
-                                                                            (int.parse(
-                                                                            GetAllCartControllerin
-                                                                                .getAllCartModel
-                                                                                .value
-                                                                                .data!
-                                                                                .items![index]
-                                                                                .quantityy
+                                                            Future.delayed(
+                                                              Duration(
+                                                                  seconds: 1),
+                                                              () {
+                                                                cartQuantityUpdateController
+                                                                    .cartQuantityUpdateApi(
+                                                                        GetAllCartControllerin
+                                                                            .getAllCartModel
                                                                             .value
+                                                                            .data!
+                                                                            .items![index]
+                                                                            .itemKey
                                                                             .toString(),
+                                                                        (int.parse(
+                                                                          GetAllCartControllerin
+                                                                              .getAllCartModel
+                                                                              .value
+                                                                              .data!
+                                                                              .items![index]
+                                                                              .quantityy
+                                                                              .value
+                                                                              .toString(),
                                                                         )).toString());
-
-                                                                },
-                                                              );
-                                                            SchedulerBinding.instance.addPostFrameCallback((_){});
-
-
+                                                              },
+                                                            );
+                                                            SchedulerBinding
+                                                                .instance
+                                                                .addPostFrameCallback(
+                                                                    (_) {});
                                                           }
-
                                                         },
                                                         child: Container(
                                                           height:
@@ -590,54 +579,47 @@ class _MyCartState extends State<MyCart> {
                                                           print(
                                                               "${double.parse(GetAllCartControllerin.getAllCartModel.value.data!.items![index].price.toString()) * GetAllCartControllerin.getAllCartModel.value.data!.items![index].quantityy.value}+++++++++");
                                                           GetAllCartControllerin
-                                                              .getAllCartModel
-                                                              .value
-                                                              .data!
-                                                              .cartTotal
-                                                              ?.localTotal
-                                                              .value +=
+                                                                  .getAllCartModel
+                                                                  .value
+                                                                  .data!
+                                                                  .cartTotal
+                                                                  ?.localTotal
+                                                                  .value +=
                                                               double.parse(
                                                                   GetAllCartControllerin
                                                                       .getAllCartModel
                                                                       .value
                                                                       .data!
                                                                       .items![
-                                                                  index]
-                                                                      .price) ;
-
-
+                                                                          index]
+                                                                      .price);
 
                                                           Future.delayed(
                                                             Duration(
                                                                 seconds: 1),
-
-
-                                                                () {
-
-                                                                cartQuantityUpdateController
-                                                                    .cartQuantityUpdateApi(
-                                                                    GetAllCartControllerin
-                                                                        .getAllCartModel
-                                                                        .value
-                                                                        .data!
-                                                                        .items![index]
-                                                                        .itemKey
-                                                                        .toString(),
-                                                                    (int.parse(
+                                                            () {
+                                                              cartQuantityUpdateController
+                                                                  .cartQuantityUpdateApi(
                                                                       GetAllCartControllerin
                                                                           .getAllCartModel
                                                                           .value
                                                                           .data!
-                                                                          .items![index]
-                                                                          .quantityy
-                                                                          .value
+                                                                          .items![
+                                                                              index]
+                                                                          .itemKey
                                                                           .toString(),
-                                                                    )).toString());
-
+                                                                      (int.parse(
+                                                                        GetAllCartControllerin
+                                                                            .getAllCartModel
+                                                                            .value
+                                                                            .data!
+                                                                            .items![index]
+                                                                            .quantityy
+                                                                            .value
+                                                                            .toString(),
+                                                                      )).toString());
                                                             },
                                                           );
-
-
 
                                                           if (cartQuantityUpdateController
                                                                   .addToCart

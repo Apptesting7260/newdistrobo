@@ -30,10 +30,8 @@ import '../data/modals/SubCategoryModel/SubcategoryModel.dart';
 import '../data/modals/WhishListModel/WhishListModel.dart';
 import '../data/modals/profilrModel/ProfileModel.dart';
 
-
-class ApiRepo{
+class ApiRepo {
   final _apiService = NetworkApiServices();
-
 
   //**************************************create password****************************************
   Future<dynamic> createPass(var data) async {
@@ -79,7 +77,9 @@ class ApiRepo{
     // print("apihit");
 
     try {
-      final response = await http.post(Uri.parse(AppUrl.homeApi), body: data).timeout(Duration(seconds: 10));
+      final response = await http
+          .post(Uri.parse(AppUrl.homeApi), body: data)
+          .timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         // Parse the JSON response
@@ -96,28 +96,27 @@ class ApiRepo{
         }
       } else {
         // If the response status code is not 200, throw an exception
-        throw Exception('Failed to load data. Status code: ${response.statusCode}');
+        throw Exception(
+            'Failed to load data. Status code: ${response.statusCode}');
       }
-    }on SocketException {
+    } on SocketException {
       throw InternetException('');
-    }
-
-    catch (e) {
+    } catch (e) {
       // Handle exceptions during the API call
       print('Error during API call: $e');
       throw Exception('Failed to load data: $e');
     }
-
   }
 
 //*********************Item count cart ************************************************
-
 
   Future<ItemCountCartModel> ItemCountApi(var data) async {
     // print("apihit");
 
     try {
-      final response = await http.post(Uri.parse(AppUrl.ItmCountApi), body: data).timeout(Duration(seconds: 10));
+      final response = await http
+          .post(Uri.parse(AppUrl.ItmCountApi), body: data)
+          .timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         // Parse the JSON response
@@ -134,22 +133,17 @@ class ApiRepo{
         }
       } else {
         // If the response status code is not 200, throw an exception
-        throw Exception('Failed to load data. Status code: ${response.statusCode}');
+        throw Exception(
+            'Failed to load data. Status code: ${response.statusCode}');
       }
-    }on SocketException {
+    } on SocketException {
       throw InternetException('');
-    }
-
-    catch (e) {
+    } catch (e) {
       // Handle exceptions during the API call
       print('Error during API call: $e');
       throw Exception('Failed to load data: $e');
     }
-
   }
-
-
-
 
   //**************************************addWishlist ****************************************
   Future<dynamic> addWishlist(var data) async {
@@ -164,7 +158,9 @@ class ApiRepo{
     // print("apihit");
 
     try {
-      final response = await http.get(Uri.parse(AppUrl.shopApi)).timeout(Duration(seconds: 10));
+      final response = await http
+          .get(Uri.parse(AppUrl.shopApi))
+          .timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         // Parse the JSON response
@@ -181,26 +177,26 @@ class ApiRepo{
         }
       } else {
         // If the response status code is not 200, throw an exception
-        throw Exception('Failed to load data. Status code: ${response.statusCode}');
+        throw Exception(
+            'Failed to load data. Status code: ${response.statusCode}');
       }
-    }on SocketException {
+    } on SocketException {
       throw InternetException('');
-    }
-
-    catch (e) {
+    } catch (e) {
       // Handle exceptions during the API call
       print('Error during API call: $e');
       throw Exception('Failed to load data: $e');
     }
   }
 
-
   //**************************************Shop  sub categorry ApiRepo ****************************************
   Future<SubCategoryModel> SubcategoryPageApi(var data) async {
     // print("apihit");
 
     try {
-      final response = await http.post(Uri.parse(AppUrl.subCategarory), body: data).timeout(Duration(seconds: 10));
+      final response = await http
+          .post(Uri.parse(AppUrl.subCategarory), body: data)
+          .timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         // Parse the JSON response
@@ -217,25 +213,25 @@ class ApiRepo{
         }
       } else {
         // If the response status code is not 200, throw an exception
-        throw Exception('Failed to load data. Status code: ${response.statusCode}');
+        throw Exception(
+            'Failed to load data. Status code: ${response.statusCode}');
       }
-    }on SocketException {
+    } on SocketException {
       throw InternetException('');
-    }
-
-    catch (e) {
+    } catch (e) {
       // Handle exceptions during the API call
       print('Error during API call: $e');
       throw Exception('Failed to load data: $e');
     }
-
   }
 
   Future<CategoryDetailasModel> CategoryDetailasApi(var data) async {
     // print("apihit");
 
     try {
-      final response = await http.post(Uri.parse(AppUrl.subproCategarory), body: data).timeout(Duration(seconds: 10));
+      final response = await http
+          .post(Uri.parse(AppUrl.subproCategarory), body: data)
+          .timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         // Parse the JSON response
@@ -252,28 +248,26 @@ class ApiRepo{
         }
       } else {
         // If the response status code is not 200, throw an exception
-        throw Exception('Failed to load data. Status code: ${response.statusCode}');
+        throw Exception(
+            'Failed to load data. Status code: ${response.statusCode}');
       }
-    }on SocketException {
+    } on SocketException {
       throw InternetException('');
-    }
-
-    catch (e) {
+    } catch (e) {
       // Handle exceptions during the API call
       print('Error during API call: $e');
       throw Exception('Failed to load data: $e');
     }
-
   }
-
 
   //**************************************product categary deatils  ****************************************
   Future<ProductCategoryDetailasModel> productCategoryDetails(var data) async {
     // print("apihit");
 
-
     try {
-      final response = await http.post(Uri.parse(AppUrl.pagenationApi),body: data).timeout(Duration(seconds: 10));
+      final response = await http
+          .post(Uri.parse(AppUrl.pagenationApi), body: data)
+          .timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         // Parse the JSON response
@@ -290,13 +284,12 @@ class ApiRepo{
         }
       } else {
         // If the response status code is not 200, throw an exception
-        throw Exception('Failed to load data. Status code: ${response.statusCode}');
+        throw Exception(
+            'Failed to load data. Status code: ${response.statusCode}');
       }
-    }on SocketException {
+    } on SocketException {
       throw InternetException('');
-    }
-
-    catch (e) {
+    } catch (e) {
       // Handle exceptions during the API call
       print('Error during API call: $e');
       throw Exception('Failed to load data: $e');
@@ -309,7 +302,9 @@ class ApiRepo{
     // print("apihit");
 
     try {
-      final response = await http.post(Uri.parse(AppUrl.profileDetailsApi), body: data).timeout(Duration(seconds: 10));
+      final response = await http
+          .post(Uri.parse(AppUrl.profileDetailsApi), body: data)
+          .timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         // Parse the JSON response
@@ -326,18 +321,16 @@ class ApiRepo{
         }
       } else {
         // If the response status code is not 200, throw an exception
-        throw Exception('Failed to load data. Status code: ${response.statusCode}');
+        throw Exception(
+            'Failed to load data. Status code: ${response.statusCode}');
       }
-    }on SocketException {
+    } on SocketException {
       throw InternetException('');
-    }
-
-    catch (e) {
+    } catch (e) {
       // Handle exceptions during the API call
       print('Error during API call: $e');
       throw Exception('Failed to load data: $e');
     }
-
   }
 
 //**************************************product categary deatils  ****************************************
@@ -347,60 +340,65 @@ class ApiRepo{
     print(response);
     return response;
   }
+
   //**************************************product categary deatils  ****************************************
   // **************************************product categary deatils  ****************************************
-  Future<dynamic>NameUpdateApi(var data) async {
+  Future<dynamic> NameUpdateApi(var data) async {
     // print("apihit");
     dynamic response = _apiService.postApi(AppUrl.nameUpdate, data);
     print(response);
     return response;
   }
+
   //**************************************product categary deatils  ****************************************
   // **************************************product categary deatils  ****************************************//**************************************product categary deatils  ****************************************
-  Future<dynamic>NumberUpdateApi(var data) async {
+  Future<dynamic> NumberUpdateApi(var data) async {
     // print("apihit");
     dynamic response = _apiService.postApi(AppUrl.phoneUpdate, data);
     print(response);
     return response;
   }
+
   //**************************************product categary deatils  ****************************************
   Future<dynamic> EmailSendOtp(var data) async {
     // print("apihit");
     dynamic response = _apiService.postApi(AppUrl.emailSendOtp, data);
     print(response);
     return response;
-  }  //**************************************product categary deatils  ****************************************
+  } //**************************************product categary deatils  ****************************************
+
   Future<dynamic> otpVerify(var data) async {
     // print("apihit");
     dynamic response = _apiService.postApi(AppUrl.otpVerify, data);
     print(response);
     return response;
-  }  //**************************************product categary deatils  ****************************************
+  } //**************************************product categary deatils  ****************************************
+
   Future<dynamic> emailUpdate(var data) async {
     // print("apihit");
     dynamic response = _apiService.postApi(AppUrl.emailUpdate, data);
     print(response);
     return response;
   }
+
   // **************************************product categary deatils  ****************************************
-  Future<dynamic>PassUpdateApi(var data) async {
+  Future<dynamic> PassUpdateApi(var data) async {
     // print("apihit");
     dynamic response = _apiService.postApi(AppUrl.changePass, data);
     print(response);
     return response;
   }
+
 //**************************************product categary deatils  ****************************************
-
-
-
 
   //**************************************product categary deatils  ****************************************
   Future<NewArivallProductModel> NewArrivalDetails(var data) async {
     // print("apihit");
 
-
     try {
-      final response = await http.post(Uri.parse(AppUrl.newArrival),body: data).timeout(Duration(seconds: 10));
+      final response = await http
+          .post(Uri.parse(AppUrl.newArrival), body: data)
+          .timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         // Parse the JSON response
@@ -417,13 +415,12 @@ class ApiRepo{
         }
       } else {
         // If the response status code is not 200, throw an exception
-        throw Exception('Failed to load data. Status code: ${response.statusCode}');
+        throw Exception(
+            'Failed to load data. Status code: ${response.statusCode}');
       }
-    }on SocketException {
+    } on SocketException {
       throw InternetException('');
-    }
-
-    catch (e) {
+    } catch (e) {
       // Handle exceptions during the API call
       print('Error during API call: $e');
       throw Exception('Failed to load data: $e');
@@ -432,20 +429,19 @@ class ApiRepo{
 
 //**************************************ProfileDetailasApi  deatils  ****************************************
 
-
   // **************************************product categary deatils  ****************************************
-  Future<dynamic>AddToCartApi(var data) async {
+  Future<dynamic> AddToCartApi(var data) async {
     // print("apihit");
     dynamic response = _apiService.postApi2(AppUrl.addToCartApi, data);
     print(response);
     return response;
   }
-//**************************************product categary deatils  ****************************************  // **************************************product categary deatils  ****************************************
-  Future<GerCartDetailsModel>GetCartDatailsApi() async {
-    SharedPreferences prefs =await  SharedPreferences.getInstance() ;
-    var pass=prefs.getString("pass");
-    var email=prefs.getString("email");
 
+//**************************************product categary deatils  ****************************************  // **************************************product categary deatils  ****************************************
+  Future<GerCartDetailsModel> GetCartDatailsApi() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var pass = prefs.getString("pass");
+    var email = prefs.getString("email");
 
     final Map<String, String> headers = {
       'Content-Type': 'application/json',
@@ -454,15 +450,17 @@ class ApiRepo{
     // print("apihit");
 
     try {
-      final response = await http.get(Uri.parse("https://distrobo.com/wp-json/cocart/v2/cart"),
-          headers: headers).timeout(Duration(seconds: 10));
+      final response = await http
+          .get(Uri.parse("https://distrobo.com/wp-json/cocart/v2/cart"),
+              headers: headers)
+          .timeout(Duration(seconds: 10));
       if (response.statusCode == 301) {
         // If there's a redirect, extract the new location from headers
         var newLocation = response.headers['location'];
         if (newLocation != null) {
           // Perform another request to the new location
-         var response = await http.get(Uri.parse(newLocation));
-         print(response.headers);
+          var response = await http.get(Uri.parse(newLocation));
+          print(response.headers);
         }
       }
       if (response.statusCode == 200) {
@@ -482,13 +480,12 @@ class ApiRepo{
         }
       } else {
         // If the response status code is not 200, throw an exception
-        throw Exception('Failed to load data. Status code: ${response.statusCode}');
+        throw Exception(
+            'Failed to load data. Status code: ${response.statusCode}');
       }
-    }on SocketException {
+    } on SocketException {
       throw InternetException('');
-    }
-
-    catch (e) {
+    } catch (e) {
       // Handle exceptions during the API call
       print('Error during API call: $e');
       throw Exception('Failed to load data: $e');
@@ -499,11 +496,10 @@ class ApiRepo{
   }
 
   /////// *****************************************Get AlL Cart details*******************************************
-   Future<GetAllCartModel>GetAllCartApi(var data) async {
+  Future<GetAllCartModel> GetAllCartApi(var data) async {
     // SharedPreferences prefs =await  SharedPreferences.getInstance() ;
     // var pass=prefs.getString("pass");
     // var email=prefs.getString("email");
-
 
     // final Map<String, String> headers = {
     //   'Content-Type': 'application/json',
@@ -512,15 +508,18 @@ class ApiRepo{
     // print("apihit");
 
     try {
-      final response = await http.post(Uri.parse("https://distrobo.com/wp-json/custom/v1/cart_product"),body: data
-         ).timeout(Duration(seconds: 10));
+      final response = await http
+          .post(
+              Uri.parse("https://distrobo.com/wp-json/custom/v1/cart_product"),
+              body: data)
+          .timeout(Duration(seconds: 10));
       if (response.statusCode == 301) {
         // If there's a redirect, extract the new location from headers
         var newLocation = response.headers['location'];
         if (newLocation != null) {
           // Perform another request to the new location
-         var response = await http.get(Uri.parse(newLocation));
-         print(response.headers);
+          var response = await http.get(Uri.parse(newLocation));
+          print(response.headers);
         }
       }
       if (response.statusCode == 200) {
@@ -540,13 +539,12 @@ class ApiRepo{
         }
       } else {
         // If the response status code is not 200, throw an exception
-        throw Exception('Failed to load data. Status code: ${response.statusCode}');
+        throw Exception(
+            'Failed to load data. Status code: ${response.statusCode}');
       }
-    }on SocketException {
+    } on SocketException {
       throw InternetException('');
-    }
-
-    catch (e) {
+    } catch (e) {
       // Handle exceptions during the API call
       print('Error during API call: $e');
       throw Exception('Failed to load data: $e');
@@ -555,6 +553,7 @@ class ApiRepo{
     // print(response);
     // return GerCartDetailsModel.fromJson(response);
   }
+
 //**************************************product categary deatils  ****************************************//**************************************product categary deatils  ****************************************  // **************************************product categary deatils  ****************************************
 //   Future<dynamic>GetCartDatailsApi(var data) async {
 //     // print("apihit");
@@ -564,12 +563,13 @@ class ApiRepo{
 //   }
 //**************************************product categary deatils  ****************************************
 
-
   Future<AboutUsModel> AboutUsApi() async {
     // print("apihit");
 
     try {
-      final response = await http.get(Uri.parse(AppUrl.aboutUsApi)).timeout(Duration(seconds: 10));
+      final response = await http
+          .get(Uri.parse(AppUrl.aboutUsApi))
+          .timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         // Parse the JSON response
@@ -586,23 +586,21 @@ class ApiRepo{
         }
       } else {
         // If the response status code is not 200, throw an exception
-        throw Exception('Failed to load data. Status code: ${response.statusCode}');
+        throw Exception(
+            'Failed to load data. Status code: ${response.statusCode}');
       }
-    }on SocketException {
+    } on SocketException {
       throw InternetException('');
-    }
-
-    catch (e) {
+    } catch (e) {
       // Handle exceptions during the API call
       print('Error during API call: $e');
       throw Exception('Failed to load data: $e');
     }
-
   }
 
-
-  Future<dynamic> cartQuantityUpdateApi(var data,String productId) async {
-    dynamic response = await _apiService.postApi2( "${AppUrl.cartQuantityUpdateApi}${productId}",data);
+  Future<dynamic> cartQuantityUpdateApi(var data, String productId) async {
+    dynamic response = await _apiService.postApi2(
+        "${AppUrl.cartQuantityUpdateApi}${productId}", data);
     return response;
   }
 
@@ -612,56 +610,57 @@ class ApiRepo{
     print(response);
     return response;
   }
+
   // **************************************product categary deatils  ****************************************
-  Future<dynamic>ImageUpdateApi(var data) async {
+  Future<dynamic> ImageUpdateApi(var data) async {
     // print("apihit");
     dynamic response = _apiService.postApi(AppUrl.ImageUpdate, data);
     print(response);
     return response;
-
   }
+
 //**************************************product categary deatils  ****************************************  Future<dynamic>ImageUpdateApi(var data) async {
-    // print("apihit");
-   Future<ViewWhishListModel>ViewWhishListApi(var data)async{
-
-     dynamic response = await _apiService.postApi(AppUrl.ViewApiWHilistApi, data);
-     print(response);
-     return ViewWhishListModel.fromJson(response);
-   }
-
+  // print("apihit");
+  Future<ViewWhishListModel> ViewWhishListApi(var data) async {
+    dynamic response =
+        await _apiService.postApi(AppUrl.ViewApiWHilistApi, data);
+    print(response);
+    return ViewWhishListModel.fromJson(response);
+  }
 
 //**************************************product categary deatils  ****************************************
   Future<dynamic> CartDetailsDelete() async {
-    dynamic response = await _apiService.postApi3( AppUrl.cartDeleteApi);
+    dynamic response = await _apiService.postApi3(AppUrl.cartDeleteApi);
     return response;
   }
-  
+
   //**************************************product categary deatils  ****************************************  Future<dynamic>ImageUpdateApi(var data) async {
   // print("apihit");
-  Future<SingleProductPageModel>SingleProductApi(var data)async{
-
-    dynamic response = await _apiService.postApi(AppUrl.SingleProductModel, data);
+  Future<SingleProductPageModel> SingleProductApi(var data) async {
+    dynamic response =
+        await _apiService.postApi(AppUrl.SingleProductModel, data);
     print(response);
     return SingleProductPageModel.fromJson(response);
   }
-
 
 //**************************************product categary deatils  ****************************************
 
 //*************************************Delete cart Item********************************************** */
 
   Future<DeleteCartModel> CartDeleteItem(var data) async {
-    dynamic response = await _apiService.postApi( AppUrl.cartDeleteItemApi,data);
+    dynamic response =
+        await _apiService.postApi(AppUrl.cartDeleteItemApi, data);
     return DeleteCartModel.fromJson(response);
   }
 
   Future<ShedulDeleveryDateModel> CheckOrderDelevery(var data) async {
-    dynamic response = await _apiService.postApi( AppUrl.CheckOrderDeleveryApi,data);
+    dynamic response =
+        await _apiService.postApi(AppUrl.CheckOrderDeleveryApi, data);
     return ShedulDeleveryDateModel.fromJson(response);
   }
 
   Future<MyOrderModel> MyOrderApi(var data) async {
-    dynamic response = await _apiService.postApi( AppUrl.MyOrderApiHit,data);
+    dynamic response = await _apiService.postApi(AppUrl.MyOrderApiHit, data);
     return MyOrderModel.fromJson(response);
   }
 
@@ -673,12 +672,13 @@ class ApiRepo{
   //   return ShippingDressUpdateModel.fromJson(response);
   // }
 
-
-  Future<ShippingDressUpdateModel>ShippingAdressUpdateApi(var data) async {
+  Future<ShippingDressUpdateModel> ShippingAdressUpdateApi(var data) async {
     // print("apihit");
 
     try {
-      final response = await http.post(Uri.parse(AppUrl.ShippingAdreess),body: data).timeout(Duration(seconds: 10));
+      final response = await http
+          .post(Uri.parse(AppUrl.ShippingAdreess), body: data)
+          .timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         // Parse the JSON response
@@ -686,7 +686,7 @@ class ApiRepo{
         print(jsonData);
 
         // Check if jsonData is a Map and not null
-        if ( jsonData.isNotEmpty) {
+        if (jsonData.isNotEmpty) {
           // Return the parsed model
           return ShippingDressUpdateModel.fromJson(jsonData);
         } else {
@@ -695,29 +695,27 @@ class ApiRepo{
         }
       } else {
         // If the response status code is not 200, throw an exception
-        throw Exception('Failed to load data. Status code: ${response.statusCode}');
+        throw Exception(
+            'Failed to load data. Status code: ${response.statusCode}');
       }
-    }on SocketException {
+    } on SocketException {
       throw InternetException('');
-    }
-
-    catch (e) {
+    } catch (e) {
       // Handle exceptions during the API call
       print('Error during API call: $e');
       throw Exception('Failed to load data: $e');
     }
-
   }
 
-
-
   Future<GetShippingafressModel> ShippingAdressApi(var data) async {
-    dynamic response = await _apiService.postApi( AppUrl.GetShippingAdreess,data);
+    dynamic response =
+        await _apiService.postApi(AppUrl.GetShippingAdreess, data);
     return GetShippingafressModel.fromJson(response);
   }
 
   Future<SearchProductModel> ProductSearchApi(var data) async {
-    dynamic response = await _apiService.postApi( AppUrl.ProductSearchApiHit,data);
+    dynamic response =
+        await _apiService.postApi(AppUrl.ProductSearchApiHit, data);
     return SearchProductModel.fromJson(response);
   }
 
@@ -726,16 +724,16 @@ class ApiRepo{
   //   return GetShippingafressModel.fromJson(response);
   // }
   Future<CategorySearchModel> CategorySearchApi(var data) async {
-    dynamic response = await _apiService.postApi( AppUrl.CategorySearchApiHit,data);
+    dynamic response =
+        await _apiService.postApi(AppUrl.CategorySearchApiHit, data);
     return CategorySearchModel.fromJson(response);
   }
 
-
-  Future<OrderDetailsTocart>OrderDetailsTocartOrderDetailsTocart(var data) async {
+  Future<OrderDetailsTocart> OrderDetailsTocartOrderDetailsTocart(
+      var data) async {
     // SharedPreferences prefs =await  SharedPreferences.getInstance() ;
     // var pass=prefs.getString("pass");
     // var email=prefs.getString("email");
-
 
     // final Map<String, String> headers = {
     //   'Content-Type': 'application/json',
@@ -744,8 +742,11 @@ class ApiRepo{
     // print("apihit");
 
     try {
-      final response = await http.post(Uri.parse("https://distrobo.com/wp-json/custom/v1/cart_product"),body: data
-      ).timeout(Duration(seconds: 10));
+      final response = await http
+          .post(
+              Uri.parse("https://distrobo.com/wp-json/custom/v1/cart_product"),
+              body: data)
+          .timeout(Duration(seconds: 10));
       if (response.statusCode == 301) {
         // If there's a redirect, extract the new location from headers
         var newLocation = response.headers['location'];
@@ -772,13 +773,12 @@ class ApiRepo{
         }
       } else {
         // If the response status code is not 200, throw an exception
-        throw Exception('Failed to load data. Status code: ${response.statusCode}');
+        throw Exception(
+            'Failed to load data. Status code: ${response.statusCode}');
       }
-    }on SocketException {
+    } on SocketException {
       throw InternetException('');
-    }
-
-    catch (e) {
+    } catch (e) {
       // Handle exceptions during the API call
       print('Error during API call: $e');
       throw Exception('Failed to load data: $e');

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:newdistrobo/controllers/login_controllers/loginControllers.dart';
-
 import '../Widgets/MyButton.dart';
 import '../Widgets/PasswordTextFilled.dart';
 import '../Widgets/TextFilled.dart';
@@ -187,6 +186,33 @@ class _LoginScreenState extends State<LoginScreen> {
                     }),
                   ),
                 ),
+                // SizedBox(
+                //   height: Get.height * 0.03,
+                // ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //   children: [
+                //     SignInWithAppleButton(
+                //       onPressed: () async {
+                //         final credential =
+                //             await SignInWithApple.getAppleIDCredential(
+                //           scopes: [
+                //             AppleIDAuthorizationScopes.email,
+                //             AppleIDAuthorizationScopes.fullName,
+                //           ],
+                //         );
+                //
+                //         print(credential);
+                //
+                //         // Now send the credential (especially `credential.authorizationCode`) to your server to create a session
+                //         // after they have been validated with Apple (see `Integration` section for more information on how to do this)
+                //       },
+                //     ),
+                //     GoogleAuthButton(
+                //       onPressed: () {},
+                //     ),
+                //   ],
+                // ),
                 SizedBox(
                   height: Get.height * 0.05,
                 ),
@@ -220,5 +246,4 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
 }
